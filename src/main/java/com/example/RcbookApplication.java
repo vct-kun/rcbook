@@ -3,6 +3,8 @@ package com.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,7 +32,7 @@ import java.util.UUID;
 
 @SpringBootApplication
 @RestController
-public class RcbookApplication {
+public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -48,6 +50,13 @@ public class RcbookApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RcbookApplication.class, args);
 	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(applicationClass);
+	}
+
+	private static Class<RcbookApplication> applicationClass = RcbookApplication.class;
 
 
 	@Configuration
