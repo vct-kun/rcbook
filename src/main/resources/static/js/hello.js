@@ -46,8 +46,6 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 
 			}
 
-			authenticate();
-
 			self.credentials = {};
 			self.login = function() {
 				authenticate(self.credentials, function(authenticated) {
