@@ -12,6 +12,10 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 		templateUrl : 'race.html',
 		controller : 'race',
 		controllerAs: 'controller'
+	}).when('/car', {
+		templateUrl : 'car.html',
+		controller : 'car',
+		controllerAs: 'controller'
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
