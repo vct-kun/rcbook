@@ -83,8 +83,8 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 				$scope.master = data;
 			});
 			$scope.addCar = function() {
-				//$scope.master.push($scope.car);
 				var dataObj = {
+					brand : $scope.car.brand,
 					chassis : $scope.car.chassis
 				};
 				var res = $http.post('/addCar', dataObj);

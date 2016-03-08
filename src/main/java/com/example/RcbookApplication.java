@@ -31,7 +31,7 @@ import java.util.*;
 @RestController
 public class RcbookApplication extends SpringBootServletInitializer {
 
-	private static List<Car> carList = new ArrayList<Car>();
+	private static List<Car> carList = new ArrayList<>();
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
