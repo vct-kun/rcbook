@@ -78,8 +78,10 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 				});
 			}
 
-		}).controller('carController', function($scope, $http) {
-			$http.get('/getCar').success(function(data) {
+		}).controller('carController', function($scope, $http, $location) {
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+	console.log(host);
+			$http.get(host + '/getCar').success(function(data) {
 				$scope.master = data;
 			});
 			$scope.addCar = function() {
@@ -87,7 +89,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 					brand : $scope.car.brand,
 					chassis : $scope.car.chassis
 				};
-				var res = $http.post('/addCar', dataObj);
+				var res = $http.post(host + '/addCar', dataObj);
 				res.success(function(data, status, headers, config) {
 					$scope.master = $scope.master.concat(data);
 				});
