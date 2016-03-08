@@ -13,8 +13,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -26,13 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @SpringBootApplication
 @RestController
 public class RcbookApplication extends SpringBootServletInitializer {
+
+	private static List<Car> carList = new ArrayList<Car>();
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -45,6 +44,17 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		model.put("id", UUID.randomUUID().toString());
 		model.put("content", "Hello World");
 		return model;
+	}
+
+	@RequestMapping(value = "/addCar", method = RequestMethod.POST)
+	public @ResponseBody Car addCar(@RequestBody Car car) {
+		carList.add(car);
+		return car;
+	}
+
+	@RequestMapping(value = "/getCar", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Car> getCar() {
+		return carList;
 	}
 
 	public static void main(String[] args) {

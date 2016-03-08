@@ -14,7 +14,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 		controllerAs: 'controller'
 	}).when('/car', {
 		templateUrl : 'car.html',
-		controller : 'car',
+		controller : 'carController',
 		controllerAs: 'controller'
 	}).otherwise('/');
 
@@ -52,7 +52,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 					callback && callback(false);
 				});
 
-			}
+			};
 
 			self.credentials = {};
 			self.login = function() {
@@ -78,4 +78,19 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 				});
 			}
 
-		});
+		}).controller('carController', function($scope, $http) {
+			$http.get('/getCar').success(function(data) {
+				$scope.master = data;
+			});
+			$scope.addCar = function() {
+				//$scope.master.push($scope.car);
+				var dataObj = {
+					chassis : $scope.car.chassis
+				};
+				var res = $http.post('/addCar', dataObj);
+				res.success(function(data, status, headers, config) {
+					$scope.master = $scope.master.concat(data);
+				});
+				$scope.car = '';
+			}
+});
