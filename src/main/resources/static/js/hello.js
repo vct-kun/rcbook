@@ -19,7 +19,6 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 }).controller('navigation',
 
 		function($rootScope, $http, $location, $route) {
@@ -79,7 +78,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 			}
 
 		}).controller('carController', function($scope, $http, $location) {
-	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
 	console.log(host);
 			$http.get(host + '/getCar').success(function(data) {
 				$scope.master = data;
@@ -95,4 +94,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 				});
 				$scope.car = '';
 			}
+	$http.get(host + '/getBrands').success(function(data) {
+		$scope.brands = data;
+	});
 });
