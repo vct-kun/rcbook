@@ -6,9 +6,17 @@ import java.util.List;
  * Created by vctran on 09/03/16.
  */
 public class Brand {
+    private Long id;
+
     private String name;
 
-    private List<Chassis> chassisList;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -18,11 +26,4 @@ public class Brand {
         this.name = name;
     }
 
-    public List<Chassis> getChassisList() {
-        return chassisList;
-    }
-
-    public void setChassisList(List<Chassis> chassisList) {
-        this.chassisList = chassisList;
-    }
 }

@@ -62,16 +62,35 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		List<Brand> brands = new ArrayList<>();
 		Brand brand = new Brand();
 		brand.setName("Tamiya");
-		List<Chassis> chassisList = new ArrayList<>();
-		Chassis chassis = new Chassis();
-		chassis.setName("TRF419");
-		chassisList.add(chassis);
-		brand.setChassisList(chassisList);
+		brand.setId(1L);
 		Brand brand2 = new Brand();
 		brand2.setName("Yokomo");
+		brand2.setId(2L);
 		brands.add(brand);
 		brands.add(brand2);
 		return brands;
+	}
+
+	@RequestMapping(value = "/getChassis", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Chassis> getChassisByBrandId() {
+		List<Chassis> chassisList = new ArrayList<>();
+			Chassis chassis = new Chassis();
+			chassis.setName("TRF419");
+			chassis.setBrandId(1L);
+			Chassis chassis2 = new Chassis();
+			chassis2.setName("TT-02");
+			chassis2.setBrandId(1L);
+			chassisList.add(chassis);
+			chassisList.add(chassis2);
+			Chassis chassis3 = new Chassis();
+			chassis3.setName("BD7 2016");
+			chassis3.setBrandId(2L);
+			Chassis chassis4 = new Chassis();
+			chassis4.setName("BD7 RS");
+			chassis4.setBrandId(2L);
+			chassisList.add(chassis3);
+			chassisList.add(chassis4);
+		return chassisList;
 	}
 
 	public static void main(String[] args) {

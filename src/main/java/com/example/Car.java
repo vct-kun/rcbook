@@ -4,23 +4,23 @@ package com.example;
  * Created by vctran on 08/03/16.
  */
 public class Car {
-    private String brand;
+    private Brand brand;
 
-    private String chassis;
+    private Chassis chassis;
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getChassis() {
+    public Chassis getChassis() {
         return chassis;
     }
 
-    public void setChassis(String chassis) {
+    public void setChassis(Chassis chassis) {
         this.chassis = chassis;
     }
 }

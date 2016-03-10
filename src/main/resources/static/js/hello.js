@@ -93,8 +93,11 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 					$scope.master = $scope.master.concat(data);
 				});
 				$scope.car = '';
-			}
+			};
 	$http.get(host + '/getBrands').success(function(data) {
 		$scope.brands = data;
+	});
+	$http.get(host + '/getChassis').success(function(data) {
+		$scope.chassisList = data;
 	});
 });
