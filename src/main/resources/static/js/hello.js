@@ -10,11 +10,15 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 		controllerAs: 'controller'
 	}).when('/race', {
 		templateUrl : 'race.html',
-		controller : 'race',
+		controller : 'raceController',
 		controllerAs: 'controller'
 	}).when('/car', {
 		templateUrl : 'car.html',
 		controller : 'carController',
+		controllerAs: 'controller'
+	}).when('/club', {
+		templateUrl : 'club.html',
+		controller : 'clubController',
 		controllerAs: 'controller'
 	}).otherwise('/');
 
@@ -100,4 +104,18 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 	$http.get(host + '/getChassis').success(function(data) {
 		$scope.chassisList = data;
 	});
+}).controller('raceController', function($scope, $http, $location) {
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+	$scope.master = [];
+	$scope.addRace = function() {
+		var dataObj = {
+			startDate: $scope.currentRace.startDate,
+			nbDriver : $scope.currentRace.nbDriver
+		};
+		var res = $http.post(host + '/addRace', dataObj);
+		res.success(function(data, status, headers, config) {
+			$scope.master = $scope.master.concat(data);
+		});
+		$scope.currentRace = '';
+	};
 });

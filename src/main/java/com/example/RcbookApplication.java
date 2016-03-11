@@ -33,6 +33,8 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	private static List<Car> carList = new ArrayList<>();
 
+	private static List<Race> raceList = new ArrayList<>();
+
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
 		return user;
@@ -50,6 +52,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	public @ResponseBody Car addCar(@RequestBody Car car) {
 		carList.add(car);
 		return car;
+	}
+
+	@RequestMapping(value = "/addRace", method = RequestMethod.POST)
+	public @ResponseBody Race addRace(@RequestBody Race race) {
+		raceList.add(race);
+		return race;
 	}
 
 	@RequestMapping(value = "/getCar", method = RequestMethod.GET, produces = "application/json")
