@@ -1,31 +1,55 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <h1 class="page-header">Car</h1>
 <div ng-controller="carController">
-    <form ng-submit="addCar(car)" class="form-horizontal">
-        <div class="form-group">
-            <label for="brand" class="col-sm-2 control-label">Brand</label>
-            <div class="col-sm-10">
-                <select id="brand" ng-model="car.brand" class="form-control"
-                        ng-options="brand.name for brand in brands" name="brand" ng-change="getChassis()">
-                    <option value="">---Please select---</option>
-                    <!--<option ng-repeat="brand in brands" value="{{brand.name}}">{{brand.name}}</option>-->
-                </select>
+    <div class="panel panel-default">
+        <div class="panel-heading">Your car list</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Brand</th>
+                    <th>Chassis</th>
+                </tr>
+            </thead>
+
+            <tr ng-repeat="car in master">
+                <td>{{car.id}}</td>
+                <td>{{car.brand.name}}</td>
+                <td>{{car.chassis.name}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Add a new car</div>
+        <div class="panel-body">
+        <form ng-submit="addCar(car)" class="form-horizontal">
+            <div class="form-group">
+                <label for="brand" class="col-sm-2 control-label">Brand</label>
+                <div class="col-sm-10">
+                    <select id="brand" ng-model="car.brand" class="form-control"
+                            ng-options="brand.name for brand in brands" name="brand" ng-change="getChassis()">
+                        <option value="">---Please select---</option>
+                        <!--<option ng-repeat="brand in brands" value="{{brand.name}}">{{brand.name}}</option>-->
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="chassis" class="col-sm-2 control-label">Chassis</label>
-            <div class="col-sm-10">
-                <select id="chassis" ng-model="car.chassis" class="form-control" ng-options="chassis.name for chassis in chassisList | filter:{brandId:car.brand.id}">
-                    <option value="">---Please select---</option>
-                </select>
+            <div class="form-group">
+                <label for="chassis" class="col-sm-2 control-label">Chassis</label>
+                <div class="col-sm-10">
+                    <select id="chassis" ng-model="car.chassis" class="form-control" ng-options="chassis.name for chassis in chassisList | filter:{brandId:car.brand.id}">
+                        <option value="">---Please select---</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default" aria-label="Left Align">Save</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" aria-label="Left Align">Save</button>
+                </div>
             </div>
+        </form>
         </div>
-    </form>
-    <pre>car = {{master | json}}</pre>
+    </div>
+    <!--<pre>car = {{master | json}}</pre>-->
 </div>
 </div>

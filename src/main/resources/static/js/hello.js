@@ -1,4 +1,4 @@
-angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
+angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(function($routeProvider, $httpProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl : 'login.html',
@@ -107,6 +107,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 }).controller('raceController', function($scope, $http, $location) {
 	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
 	$scope.master = [];
+	$scope.myDate = new Date();
 	$scope.addRace = function() {
 		var dataObj = {
 			startDate: $scope.currentRace.startDate,
