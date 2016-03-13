@@ -106,11 +106,13 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 	});
 }).controller('raceController', function($scope, $http, $location) {
 	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	$scope.master = [];
+	$http.get(host + '/getRace').success(function(data) {
+		$scope.master = data;
+	});
 	$scope.myDate = new Date();
 	$scope.addRace = function() {
 		var dataObj = {
-			startDate: $scope.currentRace.startDate,
+			startDate: $scope.myDate,
 			nbDriver : $scope.currentRace.nbDriver
 		};
 		var res = $http.post(host + '/addRace', dataObj);
