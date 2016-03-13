@@ -4,9 +4,19 @@ package com.example;
  * Created by vctran on 11/03/2016.
  */
 public class Race {
+    private Long id;
+
     private String startDate;
 
     private String nbDriver;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getStartDate() {
         return startDate;

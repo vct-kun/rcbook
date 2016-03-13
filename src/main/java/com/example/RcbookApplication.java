@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 @SpringBootApplication
 @RestController
@@ -34,6 +35,9 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	private static List<Car> carList = new ArrayList<>();
 
 	private static List<Race> raceList = new ArrayList<>();
+
+	private static AtomicLong carId = new AtomicLong(1);
+	private static AtomicLong raceId = new AtomicLong(1);
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -50,12 +54,14 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/addCar", method = RequestMethod.POST)
 	public @ResponseBody Car addCar(@RequestBody Car car) {
+		car.setId(carId.getAndIncrement());
 		carList.add(car);
 		return car;
 	}
 
 	@RequestMapping(value = "/addRace", method = RequestMethod.POST)
 	public @ResponseBody Race addRace(@RequestBody Race race) {
+		race.setId(raceId.getAndIncrement());
 		raceList.add(race);
 		return race;
 	}
