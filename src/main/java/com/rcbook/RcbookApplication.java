@@ -66,7 +66,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<Void> createUser(@RequestBody UserCreateForm userCreateForm, HttpServletRequest request) {
 		Optional<User> user = userService.getUserByEmail(userCreateForm.getEmail());
-		if (user == null) {
+		if (!user.isPresent()) {
 			userService.create(userCreateForm);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
