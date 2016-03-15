@@ -69,6 +69,7 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 			};
 
 			self.logout = function() {
+				$rootScope.userStatus = '';
 				$http.post('logout', {}).finally(function() {
 					$rootScope.authenticated = false;
 					$location.path("/");
@@ -82,6 +83,7 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 				};
 				$http.post('signup', newUser).success(function(data, status, headers, config) {
 					console.log("user created!");
+					$rootScope.userStatus = 'User created!';
 					$location.path("/login");
 				});
 			}
