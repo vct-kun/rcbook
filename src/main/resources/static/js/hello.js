@@ -26,21 +26,16 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 }).controller('navigation',
 
 		function($rootScope, $http, $location, $route) {
-			
 			var self = this;
-
 			self.tab = function(route) {
 				return $route.current && route === $route.current.controller;
 			};
-
 			var authenticate = function(credentials, callback) {
-
 				var headers = credentials ? {
 					authorization : "Basic "
 							+ btoa(credentials.username + ":"
 									+ credentials.password)
 				} : {};
-
 				$http.get('user', {
 					headers : headers
 				}).success(function(data) {
@@ -54,7 +49,6 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 					$rootScope.authenticated = false;
 					callback && callback(false);
 				});
-
 			};
 
 			self.credentials = {};
@@ -79,8 +73,18 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 					$rootScope.authenticated = false;
 					$location.path("/");
 				});
+			};
+			$rootScope.isNewUser = false;
+			self.signup = function(credentials) {
+				var newUser = {
+					email: self.credentials.username,
+					password: self.credentials.password
+				};
+				$http.post('signup', newUser).success(function(data, status, headers, config) {
+					console.log("user created!");
+					$location.path("/login");
+				});
 			}
-
 		}).controller('carController', function($scope, $http, $location) {
 	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
 	console.log(host);

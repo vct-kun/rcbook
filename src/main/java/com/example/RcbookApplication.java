@@ -1,5 +1,6 @@
 package com.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -7,8 +8,19 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -39,6 +51,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	private static AtomicLong carId = new AtomicLong(1);
 	private static AtomicLong raceId = new AtomicLong(1);
 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
 		return user;
@@ -50,6 +68,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		model.put("id", UUID.randomUUID().toString());
 		model.put("content", "Hello World");
 		return model;
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ResponseEntity<Void> createUser(@RequestBody UserCreateForm userCreateForm, HttpServletRequest request) {
+		userService.create(userCreateForm);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/addCar", method = RequestMethod.POST)
@@ -127,10 +151,14 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@Configuration
 	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 	protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+		@Autowired
+		private UserDetailsService userDetailsService;
+
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.httpBasic().and().authorizeRequests()
-					.antMatchers("/index.html", "/login.html", "/").permitAll().anyRequest()
+					.antMatchers("/index.html", "/login.html", "/", "/signup").permitAll().anyRequest()
 					.authenticated().and().csrf()
 					.csrfTokenRepository(csrfTokenRepository()).and()
 					.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
@@ -163,6 +191,13 @@ public class RcbookApplication extends SpringBootServletInitializer {
 			HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
 			repository.setHeaderName("X-XSRF-TOKEN");
 			return repository;
+		}
+
+		@Override
+		public void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth
+					.userDetailsService(userDetailsService)
+					.passwordEncoder(new BCryptPasswordEncoder());
 		}
 	}
 
