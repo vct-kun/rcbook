@@ -1,4 +1,4 @@
-package com.example;
+package com.rcbook.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

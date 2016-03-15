@@ -1,4 +1,4 @@
-package com.example;
+package com.rcbook.domain;
 
 /**
  * Created by vctran on 11/03/2016.

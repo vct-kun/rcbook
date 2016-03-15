@@ -1,19 +1,19 @@
-package com.example;
+package com.rcbook.domain;
 
 /**
  * Created by vctran on 09/03/16.
  */
-public class Chassis {
-    private Long brandId;
+public class Brand {
+    private Long id;
 
     private String name;
 
-    public Long getBrandId() {
-        return brandId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,4 +23,5 @@ public class Chassis {
     public void setName(String name) {
         this.name = name;
     }
+
 }

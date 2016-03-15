@@ -1,4 +1,4 @@
-package com.example;
+package com.rcbook.domain;
 
 public enum Role {
 

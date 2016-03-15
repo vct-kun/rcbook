@@ -1,5 +1,7 @@
-package com.example;
+package com.rcbook.service.currentuser;
 
+import com.rcbook.domain.Role;
+import com.rcbook.domain.User;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
