@@ -6,7 +6,7 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 		controllerAs: 'controller'
 	}).when('/home', {
 		templateUrl : 'home.html',
-		controller : 'home',
+		controller : 'homeController',
 		controllerAs: 'controller'
 	}).when('/race', {
 		templateUrl : 'race.html',
@@ -127,4 +127,9 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 		});
 		$scope.currentRace = '';
 	};
+}).controller('homeController', function($scope, $http, $location) {
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+	$http.get(host + '/dashboard').success(function(data) {
+		$scope.dashboard = data;
+	});
 });

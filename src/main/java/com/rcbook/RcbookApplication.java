@@ -55,11 +55,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return user;
 	}
 
-	@RequestMapping("/resource")
+	@RequestMapping("/dashboard")
 	public Map<String, Object> home() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("id", UUID.randomUUID().toString());
-		model.put("content", "Hello World");
+		model.put("nbRace", raceList.size());
+		model.put("nbCar", carList.size());
 		return model;
 	}
 
