@@ -132,6 +132,16 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return chassisList;
 	}
 
+	@RequestMapping(value = "/race/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Race getRace(@PathVariable String id) {
+		for (Race race : raceList) {
+			if (race.getId() == Long.valueOf(id)) {
+				return race;
+			}
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RcbookApplication.class, args);
 	}

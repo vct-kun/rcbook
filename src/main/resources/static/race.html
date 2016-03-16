@@ -13,7 +13,7 @@
             </tr>
             </thead>
 
-            <tr ng-repeat="race in master">
+            <tr ng-repeat="race in master" ng-click="go(race)">
                 <td>{{race.id}}</td>
                 <td>{{race.startDate}}</td>
                 <td>{{race.nbDriver}}</td>

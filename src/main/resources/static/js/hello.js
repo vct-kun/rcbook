@@ -1,4 +1,8 @@
-angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(function($routeProvider, $httpProvider) {
+//angular.module('hello', ['ngResource']).factory('Race', function($resource) {
+//	return $resource('/race/:id');
+//});
+
+angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource']).config(function($routeProvider, $httpProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl : 'login.html',
@@ -19,6 +23,10 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 	}).when('/club', {
 		templateUrl : 'club.html',
 		controller : 'clubController',
+		controllerAs: 'controller'
+	}).when('/racedetails/:race_id', {
+		templateUrl : 'racedetails.html',
+		controller : 'racedetailsController',
 		controllerAs: 'controller'
 	}).otherwise('/');
 
@@ -127,6 +135,10 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 		});
 		$scope.currentRace = '';
 	};
+	$scope.go = function(race) {
+		console.log(race.id);
+		$location.path('/racedetails/'+race.id);
+	};
 }).controller('homeController', function($scope, $http, $location) {
 	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
 	$http.get(host + '/dashboard').success(function(data) {
@@ -135,4 +147,14 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 	$scope.go = function (path) {
 		$location.path(path);
 	}
+}).factory('Race', function($location, $resource) {
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+	return $resource(host + '/race/:id');
+}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race) {
+	var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+	var self = this;
+	self.race_id = $routeParams.race_id;
+	$scope.race = Race.get({id: self.race_id}, function(){
+		console.log($scope.race);
+	});
 });
