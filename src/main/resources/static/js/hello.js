@@ -132,4 +132,7 @@ angular.module('hello', [ 'ngRoute', 'ngMaterial', 'ngMessages']).config(functio
 	$http.get(host + '/dashboard').success(function(data) {
 		$scope.dashboard = data;
 	});
+	$scope.go = function (path) {
+		$location.path(path);
+	}
 });
