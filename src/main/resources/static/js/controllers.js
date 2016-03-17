@@ -19,7 +19,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
             }).success(function(data) {
                 if (data.name) {
                     $rootScope.authenticated = true;
-                    $rootScope.userEmail = data.name;
+                    $rootScope.user = data.principal.user;
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -126,10 +126,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.race = Race.get({id: self.race_id}, function(){
         console.log($scope.race);
     });
+
     $scope.join = function() {
         $http.get(host + '/user').success(function(data){
-            console.log(data.principal.user);
-            $scope.race.joinedDriver = $scope.race.joinedDriver.concat(data.principal.user);
+            console.log($rootScope.user);
+            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($rootScope.user);
             $scope.race.$update(function() {
                 console.log('ok updating!');
             });
