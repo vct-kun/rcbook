@@ -13,7 +13,7 @@ public class Race {
 
     private String nbDriver;
 
-    private User joinedDriver;
+    private List<User> joinedDriver;
 
     public Long getId() {
         return id;
@@ -39,11 +39,11 @@ public class Race {
         this.nbDriver = nbDriver;
     }
 
-    public User getJoinedDriver() {
+    public List<User> getJoinedDriver() {
         return joinedDriver;
     }
 
-    public void setJoinedDriver(User joinedDriver) {
+    public void setJoinedDriver(List<User> joinedDriver) {
         this.joinedDriver = joinedDriver;
     }
 }

@@ -98,7 +98,8 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.addRace = function() {
         var dataObj = {
             startDate: $scope.myDate,
-            nbDriver : $scope.currentRace.nbDriver
+            nbDriver : $scope.currentRace.nbDriver,
+            joinedDriver: []
         };
         var res = $http.post(host + '/addRace', dataObj);
         res.success(function(data, status, headers, config) {
@@ -128,7 +129,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.join = function() {
         $http.get(host + '/user').success(function(data){
             console.log(data.principal.user);
-            $scope.race.joinedDriver = data.principal.user;
+            $scope.race.joinedDriver = $scope.race.joinedDriver.concat(data.principal.user);
             $scope.race.$update(function() {
                 console.log('ok updating!');
             });
