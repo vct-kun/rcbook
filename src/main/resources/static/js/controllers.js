@@ -19,6 +19,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
             }).success(function(data) {
                 if (data.name) {
                     $rootScope.authenticated = true;
+                    $rootScope.userEmail = data.name;
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -116,11 +117,22 @@ angular.module('rcbook.controllers', []).controller('navigation',
     });
     $scope.go = function (path) {
         $location.path(path);
-    }
-}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race) {
+    };
+}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     var self = this;
     self.race_id = $routeParams.race_id;
     $scope.race = Race.get({id: self.race_id}, function(){
         console.log($scope.race);
     });
+    $scope.join = function() {
+        $http.get(host + '/user').success(function(data){
+            console.log(data.principal.user);
+            $scope.race.joinedDriver = data.principal.user;
+            $scope.race.$update(function() {
+                console.log('ok updating!');
+            });
+        });
+
+    };
 });

@@ -142,6 +142,18 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return null;
 	}
 
+	@RequestMapping(value = "/race/{id}", method = RequestMethod.PUT, produces = "application/json")
+	public ResponseEntity<Void> updateRace(@RequestBody Race raceUpdated) {
+		for (Race race : raceList) {
+			if (race.getId() == raceUpdated.getId()) {
+				raceList.remove(race);
+				break;
+			}
+		}
+		raceList.add(raceUpdated);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RcbookApplication.class, args);
 	}
