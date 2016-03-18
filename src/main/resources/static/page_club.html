@@ -11,7 +11,7 @@
                 </tr>
                 </thead>
 
-                <tr ng-repeat="club in clubs">
+                <tr ng-repeat="club in clubs" ng-click="go(club)">
                     <td>{{club.id}}</td>
                     <td>{{club.name}}</td>
                 </tr>

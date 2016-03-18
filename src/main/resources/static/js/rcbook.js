@@ -28,6 +28,10 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		templateUrl : 'adminclub.html',
 		controller : 'adminclubController',
 		controllerAs: 'controller'
+	}).when('/clubdetails/:club_id', {
+		templateUrl : 'page_club_details.html',
+		controller : 'clubdetailsController',
+		controllerAs: 'controller'
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

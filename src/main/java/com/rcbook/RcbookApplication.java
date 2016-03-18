@@ -167,6 +167,16 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return clubList;
 	}
 
+	@RequestMapping(value = "/club/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Club getClub(@PathVariable String id) {
+		for (Club club : clubList) {
+			if (club.getId() == Long.valueOf(id)) {
+				return club;
+			}
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RcbookApplication.class, args);
 	}
