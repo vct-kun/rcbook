@@ -17,7 +17,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'carController',
 		controllerAs: 'controller'
 	}).when('/club', {
-		templateUrl : 'club.html',
+		templateUrl : 'page_club.html',
 		controller : 'clubController',
 		controllerAs: 'controller'
 	}).when('/racedetails/:race_id', {

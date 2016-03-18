@@ -1,0 +1,21 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1>Club</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Club List</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="club in clubs">
+                    <td>{{club.id}}</td>
+                    <td>{{club.name}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

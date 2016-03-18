@@ -172,4 +172,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
            console.log("saving club");
         });
     };
+}).controller('clubController', function($scope, $http, $location, Club) {
+    var test = Club.query(function(){
+       console.log($scope.clubs);
+    });
+    $scope.clubs = test;
 });

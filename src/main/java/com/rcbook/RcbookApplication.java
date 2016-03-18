@@ -156,10 +156,15 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	}
 
 	@RequestMapping(value = "/club", method = RequestMethod.POST)
-	public ResponseEntity<Void> addRace(@RequestBody Club club) {
+	public ResponseEntity<Void> addClub(@RequestBody Club club) {
 		club.setId(clubId.getAndIncrement());
 		clubList.add(club);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/club", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Club> getAllClubs() {
+		return clubList;
 	}
 
 	public static void main(String[] args) {
