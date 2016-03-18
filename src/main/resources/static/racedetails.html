@@ -2,6 +2,7 @@
     <h1>Race details</h1>
     {{race.id}}
     {{race.startDate}}
-    <button type="button" ng-click="join()" class="btn">Join the race</button>
+    <button type="button" ng-click="join()" class="btn" ng-disabled="userHasJoined">Join</button>
+    <button type="button" ng-click="leave()" class="btn" ng-disabled="!userHasJoined">Leave</button>
     <pre>race = {{race | json}}</pre>
 </div>
