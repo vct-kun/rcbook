@@ -1,12 +1,12 @@
 package com.rcbook.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vctran on 11/03/2016.
  */
 public class Race {
+
     private Long id;
 
     private String startDate;

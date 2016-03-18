@@ -164,4 +164,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $scope.userHasJoined = false;
         });
     };
+}).controller('clubController', function($scope, $http, $location, Club) {
+    $scope.club = new Club();
+    $scope.addClub = function() {
+        $scope.club.$save(function(){
+           console.log("saving club");
+        });
+    };
 });

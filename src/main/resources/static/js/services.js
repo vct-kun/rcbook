@@ -8,4 +8,11 @@ angular.module('rcbook.services', []).factory('Race', function($location, $resou
             method: 'PUT'
         }
     });
+}).factory('Club', function($location, $resource) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+    return $resource(host + '/club/:id', { id: '@id'}, {
+        update: {
+            method: 'PUT'
+        }
+    });
 });

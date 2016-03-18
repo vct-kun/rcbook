@@ -41,11 +41,12 @@ import java.util.concurrent.atomic.AtomicLong;
 public class RcbookApplication extends SpringBootServletInitializer {
 
 	private static List<Car> carList = new ArrayList<>();
-
 	private static List<Race> raceList = new ArrayList<>();
+	private static List<Club> clubList = new ArrayList<>();
 
 	private static AtomicLong carId = new AtomicLong(1);
 	private static AtomicLong raceId = new AtomicLong(1);
+	private static AtomicLong clubId = new AtomicLong(1);
 
 	@Autowired
 	private UserService userService;
@@ -151,6 +152,13 @@ public class RcbookApplication extends SpringBootServletInitializer {
 			}
 		}
 		raceList.add(raceUpdated);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/club", method = RequestMethod.POST)
+	public ResponseEntity<Void> addRace(@RequestBody Club club) {
+		club.setId(clubId.getAndIncrement());
+		clubList.add(club);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
