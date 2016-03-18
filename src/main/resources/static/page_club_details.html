@@ -2,4 +2,6 @@
     <h1>Club details</h1>
     {{club.id}}
     {{club.name}}
+    <button type="button" ng-click="join()" class="btn" ng-disabled="userHasJoined">Join</button>
+    <button type="button" ng-click="leave()" class="btn" ng-disabled="!userHasJoined">Leave</button>
 </div>

@@ -167,6 +167,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 }).controller('adminclubController', function($scope, $http, $location, Club) {
     $scope.club = new Club();
+    $scope.club.users = [];
     $scope.addClub = function() {
         $scope.club.$save(function(){
            console.log("saving club");
@@ -181,10 +182,41 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $location.path('/clubdetails/'+club.id);
     };
 }).controller('clubdetailsController', function($scope, $http, $location, $routeParams, Club, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     var self = this;
     self.club_id = $routeParams.club_id;
     $scope.club = Club.get({id: self.club_id}, function(){
-
+        var checkUserInClub = function() {
+            for (var i = 0;i<$scope.club.users.length;i++) {
+                if ($scope.club.users[i].id == $rootScope.user.id) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        $scope.userHasJoined = checkUserInClub();
     });
+
+    $scope.join = function() {
+        $scope.club.users = $scope.club.users.concat($rootScope.user);
+        $scope.club.$update(function() {
+            $scope.userHasJoined = true;
+        });
+    };
+
+    function indexOfObject(array, object) {
+        for (var i=0;i<array.length;i++) {
+            if (angular.equals(array[i], object)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    $scope.leave = function() {
+        var index = indexOfObject($scope.club.users, $rootScope.user);
+        $scope.club.users.splice(index, 1);
+        $scope.club.$update(function() {
+            $scope.userHasJoined = false;
+        });
+    };
 });
