@@ -20,6 +20,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 if (data.name) {
                     $rootScope.authenticated = true;
                     $rootScope.user = data.principal.user;
+                    $rootScope.isAdmin = data.principal.user.role == 'ADMIN';
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -164,7 +165,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $scope.userHasJoined = false;
         });
     };
-}).controller('clubController', function($scope, $http, $location, Club) {
+}).controller('adminclubController', function($scope, $http, $location, Club) {
     $scope.club = new Club();
     $scope.addClub = function() {
         $scope.club.$save(function(){

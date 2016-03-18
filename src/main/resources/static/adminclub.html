@@ -1,0 +1,21 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1>Club</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Add a new club</div>
+        <div class="panel-body">
+            <form ng-submit="addClub()" class="form-horizontal">
+                <div class="form-group">
+                    <label for="clubName" class="col-sm-4 control-label">Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="clubName" ng-model="club.name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default" aria-label="Left Align">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
