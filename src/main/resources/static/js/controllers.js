@@ -229,5 +229,12 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.club.$update(function() {
 
         });
-    }
+    };
+
+    $scope.decline = function(user) {
+        console.log("decline user id"+user.id);
+        var index = indexOfObject($scope.club.waitingUsers, user);
+        $scope.club.waitingUsers.splice(index, 1);
+        $scope.club.$update();
+    };
 });

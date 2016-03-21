@@ -30,7 +30,8 @@
         <tr ng-repeat="user in club.waitingUsers">
             <td>{{user.id}}</td>
             <td>{{user.email}}</td>
-            <td><button type="button" class="btn" ng-click="approve(user)">Approve</button></td>
+            <td><button type="button" class="btn" ng-click="approve(user)">Approve</button>
+                <button type="button" class="btn" ng-click="decline(user)">Decline</button></td>
         </tr>
     </table>
 </div>
