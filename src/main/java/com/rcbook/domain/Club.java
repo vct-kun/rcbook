@@ -12,6 +12,8 @@ public class Club {
 
     private List<User> users;
 
+    private List<User> waitingUsers;
+
     public Long getId() {
         return id;
     }
@@ -34,5 +36,13 @@ public class Club {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<User> getWaitingUsers() {
+        return waitingUsers;
+    }
+
+    public void setWaitingUsers(List<User> waitingUsers) {
+        this.waitingUsers = waitingUsers;
     }
 }

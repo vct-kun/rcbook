@@ -4,4 +4,33 @@
     {{club.name}}
     <button type="button" ng-click="join()" class="btn" ng-disabled="userHasJoined">Join</button>
     <button type="button" ng-click="leave()" class="btn" ng-disabled="!userHasJoined">Leave</button>
+    <h2>Current users</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+
+        <tr ng-repeat="user in club.users">
+            <td>{{user.id}}</td>
+            <td>{{user.email}}</td>
+        </tr>
+    </table>
+    <table class="table table-striped" ng-show="isAdmin">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tr ng-repeat="user in club.waitingUsers">
+            <td>{{user.id}}</td>
+            <td>{{user.email}}</td>
+            <td><button type="button" class="btn" ng-click="approve(user)">Approve</button></td>
+        </tr>
+    </table>
 </div>

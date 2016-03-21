@@ -168,6 +168,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
 }).controller('adminclubController', function($scope, $http, $location, Club) {
     $scope.club = new Club();
     $scope.club.users = [];
+    $scope.club.waitingUsers = [];
     $scope.addClub = function() {
         $scope.club.$save(function(){
            console.log("saving club");
@@ -197,7 +198,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     });
 
     $scope.join = function() {
-        $scope.club.users = $scope.club.users.concat($rootScope.user);
+        $scope.club.waitingUsers = $scope.club.waitingUsers.concat($rootScope.user);
         $scope.club.$update(function() {
             $scope.userHasJoined = true;
         });
@@ -219,4 +220,14 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $scope.userHasJoined = false;
         });
     };
+
+    $scope.approve = function(user) {
+        console.log("approve user id"+user.id);
+        $scope.club.users = $scope.club.users.concat(user);
+        var index = indexOfObject($scope.club.waitingUsers, user);
+        $scope.club.waitingUsers.splice(index, 1);
+        $scope.club.$update(function() {
+
+        });
+    }
 });
