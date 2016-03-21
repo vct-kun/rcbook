@@ -6,14 +6,18 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Name</th>
+                    <th>Town</th>
+                    <th>Country</th>
+                    <th>Nb members</th>
                 </tr>
                 </thead>
 
                 <tr ng-repeat="club in clubs" ng-click="go(club)">
-                    <td>{{club.id}}</td>
                     <td>{{club.name}}</td>
+                    <td>{{club.town}}</td>
+                    <td>{{club.country}}</td>
+                    <td>{{club.users.length}}</td>
                 </tr>
             </table>
         </div>
