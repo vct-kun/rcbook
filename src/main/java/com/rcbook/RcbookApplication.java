@@ -190,6 +190,16 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
+	@RequestMapping(value = "/getOwnerClub", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Club getOwnerClub(@RequestParam  String userId) {
+		for (Club club : clubList) {
+			if (club.getOwner().getId() == Long.valueOf(userId)) {
+				return club;
+			}
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RcbookApplication.class, args);
 	}

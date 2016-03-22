@@ -22,6 +22,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
                     $rootScope.user = data.principal.user;
                     $rootScope.isAdmin = data.principal.user.role == 'ADMIN';
                     $rootScope.isOwner = data.principal.user.role == 'OWNER';
+                    if ($rootScope.isOwner) {
+                        $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+                            $rootScope.ownerClub = data;
+                        });
+                    }
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -241,6 +246,20 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.club.$update();
     };
 
-}).controller('clubmgtController', function($scope, $http, $location, Club) {
-    
+}).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+    $scope.currentClub = $rootScope.ownerClub;
+    $scope.addRace = function() {
+        var dataObj = {
+            startDate: $scope.myDate,
+            nbDriver : $scope.currentRace.nbDriver,
+            joinedDriver: [],
+            raceClub : $scope.currentClub
+        };
+        var res = $http.post(host + '/addRace', dataObj);
+        res.success(function(data, status, headers, config) {
+            console.log("add race to club");
+        });
+        $scope.currentRace = '';
+    };
 });

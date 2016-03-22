@@ -15,6 +15,8 @@ public class Race {
 
     private List<User> joinedDriver;
 
+    private Club raceClub;
+
     public Long getId() {
         return id;
     }
@@ -45,5 +47,13 @@ public class Race {
 
     public void setJoinedDriver(List<User> joinedDriver) {
         this.joinedDriver = joinedDriver;
+    }
+
+    public Club getRaceClub() {
+        return raceClub;
+    }
+
+    public void setRaceClub(Club raceClub) {
+        this.raceClub = raceClub;
     }
 }
