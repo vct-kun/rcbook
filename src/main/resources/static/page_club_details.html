@@ -39,7 +39,7 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-4">
                         <button type="button" ng-click="join()" class="btn btn-default" ng-disabled="userHasJoined" ng-show="!userHasJoined" aria-label="Left Align">Join</button>
                         <button type="button" ng-click="leave()" class="btn btn-default" ng-disabled="!userHasJoined" ng-show="userHasJoined" aria-label="Left Align">Leave</button>
                     </div>
@@ -49,34 +49,45 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">Members</div>
-        <div class="panel-body">    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-        </tr>
-        </thead>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last name</th>
+                        <th>Town</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
 
-        <tr ng-repeat="user in club.users">
-            <td>{{user.id}}</td>
-            <td>{{user.email}}</td>
-        </tr>
-    </table>
-            </div>
-    <table class="table table-striped" ng-show="isAdmin">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Status</th>
-        </tr>
-        </thead>
+                <tr ng-repeat="user in club.users">
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.town}}</td>
+                    <td>{{user.country}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-show="isAdmin">
+        <div class="panel-heading">Members</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
 
-        <tr ng-repeat="user in club.waitingUsers">
-            <td>{{user.id}}</td>
-            <td>{{user.email}}</td>
-            <td><button type="button" class="btn" ng-click="approve(user)">Approve</button>
-                <button type="button" class="btn" ng-click="decline(user)">Decline</button></td>
-        </tr>
-    </table>
+                <tr ng-repeat="user in club.waitingUsers">
+                    <td>{{user.id}}</td>
+                    <td>{{user.email}}</td>
+                    <td><button type="button" class="btn" ng-click="approve(user)">Approve</button>
+                        <button type="button" class="btn" ng-click="decline(user)">Decline</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

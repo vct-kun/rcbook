@@ -21,6 +21,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "town")
+    private String town;
+
+    @Column(name = "country")
+    private String country;
+
     public Long getId() {
         return id;
     }
@@ -49,6 +61,38 @@ public class User {
         this.role = role;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -56,6 +100,10 @@ public class User {
                 ", email='" + email.replaceFirst("@.*", "@***") +
                 ", passwordHash='" + passwordHash.substring(0, 10) +
                 ", role=" + role +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", town=" + town +
+                ", country=" + country +
                 '}';
     }
 }
