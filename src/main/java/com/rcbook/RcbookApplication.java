@@ -159,6 +159,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	public ResponseEntity<Void> addClub(@RequestBody Club club) {
 		club.setId(clubId.getAndIncrement());
 		clubList.add(club);
+		userService.updateRole(club.getOwner().getId());
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 

@@ -20,6 +20,8 @@ public class Club {
 
     private List<User> waitingUsers;
 
+    private User owner;
+
     public Long getId() {
         return id;
     }
@@ -74,5 +76,13 @@ public class Club {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

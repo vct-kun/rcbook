@@ -16,4 +16,6 @@ public interface UserService {
 
     User create(UserCreateForm form);
 
+    void updateRole(long id);
+
 }

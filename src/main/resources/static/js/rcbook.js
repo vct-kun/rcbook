@@ -32,7 +32,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		templateUrl : 'page_club_details.html',
 		controller : 'clubdetailsController',
 		controllerAs: 'controller'
-	}).when('/mgtclub/:club_id', {
+	}).when('/mgtclub', {
 		templateUrl : 'page_club_mgt.html',
 		controller : 'clubmgtController',
 		controllerAs: 'controller'

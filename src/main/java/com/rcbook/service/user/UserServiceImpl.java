@@ -1,5 +1,6 @@
 package com.rcbook.service.user;
 
+import com.rcbook.domain.Role;
 import com.rcbook.repository.UserRepository;
 import com.rcbook.domain.User;
 import com.rcbook.domain.UserCreateForm;
@@ -49,6 +50,15 @@ public class UserServiceImpl implements UserService {
         user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
         user.setRole(form.getRole());
         return userRepository.save(user);
+    }
+
+    @Override
+    public void updateRole(long id) {
+        Optional<User> user = Optional.ofNullable(userRepository.findOne(id));
+        if (user.isPresent()) {
+            user.get().setRole(Role.OWNER);
+            userRepository.save(user.get());
+        }
     }
 
 }

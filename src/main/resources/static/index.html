@@ -40,8 +40,8 @@
 			<li><a href="#/car">Car</a></li>
 			<li><a href="#/race">Race</a></li>
 			<li><a href="#/club">Club</a></li>
-			<li ng-show="isAdmin"><a href="#/adminclub">Admin Club</a></li>
-			<li ng-show="isAdmin"><a href="#/mgtclub">Club management</a></li>
+			<li><a href="#/adminclub">Admin Club</a></li>
+			<li ng-show="isOwner"><a href="#/mgtclub">Club management</a></li>
 		</ul>
 	</div>
 	<div ng-view class="container"></div>

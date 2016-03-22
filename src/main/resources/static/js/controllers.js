@@ -21,6 +21,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
                     $rootScope.authenticated = true;
                     $rootScope.user = data.principal.user;
                     $rootScope.isAdmin = data.principal.user.role == 'ADMIN';
+                    $rootScope.isOwner = data.principal.user.role == 'OWNER';
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -169,6 +170,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.club = new Club();
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
+    $scope.club.owner = $rootScope.user;
     $scope.addClub = function() {
         $scope.club.$save(function(){
            console.log("saving club");
@@ -238,4 +240,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.club.waitingUsers.splice(index, 1);
         $scope.club.$update();
     };
+
+}).controller('clubmgtController', function($scope, $http, $location, Club) {
+    
 });
