@@ -172,6 +172,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.addClub = function() {
         $scope.club.$save(function(){
            console.log("saving club");
+            $location.path('/club');
         });
     };
 }).controller('clubController', function($scope, $http, $location, Club) {
