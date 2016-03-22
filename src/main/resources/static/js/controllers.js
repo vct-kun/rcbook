@@ -166,7 +166,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $scope.userHasJoined = false;
         });
     };
-}).controller('adminclubController', function($scope, $http, $location, Club) {
+}).controller('adminclubController', function($scope, $http, $location, Club, $rootScope) {
     $scope.club = new Club();
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
