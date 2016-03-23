@@ -1,8 +1,96 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1>Race details</h1>
-    {{race.id}}
-    {{race.startDate}}
-    <button type="button" ng-click="join()" class="btn" ng-disabled="userHasJoined">Join</button>
-    <button type="button" ng-click="leave()" class="btn" ng-disabled="!userHasJoined">Leave</button>
-    <pre>race = {{race | json}}</pre>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Race informations</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Name</label>
+                    <div class="col-sm-8">
+                        {{race.name}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Start date</label>
+                    <div class="col-sm-8">
+                        {{race.startDate}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">End date</label>
+                    <div class="col-sm-8">
+                        {{race.endDate}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Track</label>
+                    <div class="col-sm-8">
+                        {{race.track}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Town</label>
+                    <div class="col-sm-8">
+                        {{race.town}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Country</label>
+                    <div class="col-sm-8">
+                        {{race.country}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Total joined drivers</label>
+                    <div class="col-sm-8">
+                        {{race.joinedDriver.length}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button type="button" ng-click="join()" class="btn btn-default" ng-show="!userHasJoined" aria-label="Left Align">Join</button>
+                        <button type="button" ng-click="leave()" class="btn btn-default" ng-show="userHasJoined" aria-label="Left Align">Leave</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Current drivers on race</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last name</th>
+                    <th>Town</th>
+                    <th>Country</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="user in race.joinedDriver">
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.town}}</td>
+                    <td>{{user.country}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!--<pre>race = {{race | json}}</pre>-->
 </div>

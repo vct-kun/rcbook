@@ -239,6 +239,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.club.$update();
     };
 
+    $scope.go = function(race) {
+        console.log(race.id);
+        $location.path('/racedetails/'+race.id);
+    };
+
 }).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
     $scope.currentClub = $rootScope.ownerClub;
     $scope.goToRace = function() {

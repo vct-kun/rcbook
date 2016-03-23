@@ -2,24 +2,31 @@
     <h1>Club management</h1>
 
     <div class="panel panel-default">
-        <div class="panel-heading">Current club races</div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Starting date</th>
-                <th>Number of driver max</th>
-                <th>Number of current driver</th>
-            </tr>
-            </thead>
-
-            <tr ng-repeat="race in currentClub.races" ng-click="go(race)">
-                <td>{{race.id}}</td>
-                <td>{{race.startDate}}</td>
-                <td>{{race.nbDriver}}</td>
-                <td>{{race.joinedDriver.length}}</td>
-            </tr>
-        </table>
+        <div class="panel-heading">Club races</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Track</th>
+                    <th>Town</th>
+                    <th>Country</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="race in currentClub.races" ng-click="go(race)">
+                    <td>{{race.id}}</td>
+                    <td>{{race.name}}</td>
+                    <td>{{race.startDate}}</td>
+                    <td>{{race.endDate}}</td>
+                    <td>{{race.track}}</td>
+                    <td>{{race.town}}</td>
+                    <td>{{race.country}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <div class="list-group">
