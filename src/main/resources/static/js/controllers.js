@@ -98,14 +98,18 @@ angular.module('rcbook.controllers', []).controller('navigation',
     });
 }).controller('raceController', function($scope, $http, $location, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $scope.myDate = new Date();
     $scope.currentClub = $rootScope.ownerClub;
     $scope.addRace = function() {
         var dataObj = {
-            startDate: $scope.myDate,
-            nbDriver : $scope.currentRace.nbDriver,
+            startDate: $scope.race.startDate,
+            nbDriver : $scope.race.nbDriver,
             joinedDriver: [],
-            raceClub : $scope.currentClub
+            raceClub : $scope.currentClub,
+            name : $scope.race.name,
+            endDate: $scope.race.endDate,
+            track: $scope.race.track,
+            town: $scope.race.town,
+            country: $scope.race.country
         };
         var res = $http.post(host + '/addRace', dataObj);
         res.success(function(data, status, headers, config) {

@@ -8,14 +8,15 @@ import java.util.List;
 public class Race {
 
     private Long id;
-
     private String startDate;
-
     private String nbDriver;
-
     private List<User> joinedDriver;
-
     private Club raceClub;
+    private String name;
+    private String endDate;
+    private String track;
+    private String town;
+    private String country;
 
     public Long getId() {
         return id;
@@ -55,5 +56,45 @@ public class Race {
 
     public void setRaceClub(Club raceClub) {
         this.raceClub = raceClub;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getTrack() {
+        return track;
+    }
+
+    public void setTrack(String track) {
+        this.track = track;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
