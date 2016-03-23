@@ -26,9 +26,6 @@ public class Chassis {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chassis")
-    private List<Car> carList;
-
     public Long getId() {
         return id;
     }
@@ -51,13 +48,5 @@ public class Chassis {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Car> getCarList() {
-        return carList;
-    }
-
-    public void setCarList(List<Car> carList) {
-        this.carList = carList;
     }
 }

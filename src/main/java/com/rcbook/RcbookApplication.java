@@ -1,6 +1,7 @@
 package com.rcbook;
 
 import com.rcbook.service.user.BrandService;
+import com.rcbook.service.user.CarService;
 import com.rcbook.service.user.ChassisService;
 import com.rcbook.service.user.UserService;
 import com.rcbook.domain.*;
@@ -59,6 +60,9 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@Autowired
 	private ChassisService chassisService;
 
+	@Autowired
+	private CarService carService;
+
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
 		return user;
@@ -83,9 +87,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/car", method = RequestMethod.POST)
 	public @ResponseBody Car addCar(@RequestBody Car car) {
-		car.setId(carId.getAndIncrement());
-		carList.add(car);
-		return car;
+		return carService.createCar(car);
 	}
 
 	@RequestMapping(value = "/race", method = RequestMethod.POST)

@@ -81,6 +81,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.car = new Car();
     $scope.car.user = $rootScope.user;
     $scope.addCar = function() {
+        $scope.car.chassis.brand = $scope.currentBrand;
         //var dataObj = {
         //    chassis : $scope.car.chassis
         //    //user : $rootScope.user
