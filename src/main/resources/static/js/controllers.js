@@ -93,9 +93,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $http.get(host + '/getBrands').success(function(data) {
         $scope.brands = data;
     });
-    $http.get(host + '/getChassis').success(function(data) {
-        $scope.chassisList = data;
-    });
+    $scope.getChassis = function() {
+        $scope.chassisList = $scope.car.brand.chassisList;
+    };
 }).controller('raceController', function($scope, $http, $location, $rootScope, Race) {
     $scope.currentClub = $rootScope.ownerClub;
     $scope.race = new Race();

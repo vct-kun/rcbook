@@ -114,11 +114,6 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return brandService.getAllBrands();
 	}
 
-	@RequestMapping(value = "/getChassis", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Chassis> getChassisByBrandId() {
-		return chassisService.getAllChassis();
-	}
-
 	@RequestMapping(value = "/race/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Race getRace(@PathVariable String id) {
 		for (Race race : raceList) {
