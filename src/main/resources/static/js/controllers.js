@@ -179,6 +179,8 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.addClub = function() {
         $scope.club.$save(function(){
            console.log("saving club");
+            $rootScope.isOwner = true;
+            $rootScope.ownerClub = $scope.club;
             $location.path('/club');
         });
     };

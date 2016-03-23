@@ -160,11 +160,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	}
 
 	@RequestMapping(value = "/club", method = RequestMethod.POST)
-	public ResponseEntity<Void> addClub(@RequestBody Club club) {
+	public @ResponseBody Club addClub(@RequestBody Club club) {
 		club.setId(clubId.getAndIncrement());
 		clubList.add(club);
 		userService.updateRole(club.getOwner().getId());
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return club;
 	}
 
 	@RequestMapping(value = "/club", method = RequestMethod.GET, produces = "application/json")
