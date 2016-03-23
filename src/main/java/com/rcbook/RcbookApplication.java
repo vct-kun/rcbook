@@ -1,5 +1,7 @@
 package com.rcbook;
 
+import com.rcbook.service.user.BrandService;
+import com.rcbook.service.user.ChassisService;
 import com.rcbook.service.user.UserService;
 import com.rcbook.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BrandService brandService;
+
+	@Autowired
+	private ChassisService chassisService;
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -103,38 +111,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/getBrands", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Brand> getBrands() {
-		List<Brand> brands = new ArrayList<>();
-		Brand brand = new Brand();
-		brand.setName("Tamiya");
-		brand.setId(1L);
-		Brand brand2 = new Brand();
-		brand2.setName("Yokomo");
-		brand2.setId(2L);
-		brands.add(brand);
-		brands.add(brand2);
-		return brands;
+		return brandService.getAllBrands();
 	}
 
 	@RequestMapping(value = "/getChassis", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Chassis> getChassisByBrandId() {
-		List<Chassis> chassisList = new ArrayList<>();
-			Chassis chassis = new Chassis();
-			chassis.setName("TRF419");
-			chassis.setBrandId(1L);
-			Chassis chassis2 = new Chassis();
-			chassis2.setName("TT-02");
-			chassis2.setBrandId(1L);
-			chassisList.add(chassis);
-			chassisList.add(chassis2);
-			Chassis chassis3 = new Chassis();
-			chassis3.setName("BD7 2016");
-			chassis3.setBrandId(2L);
-			Chassis chassis4 = new Chassis();
-			chassis4.setName("BD7 RS");
-			chassis4.setBrandId(2L);
-			chassisList.add(chassis3);
-			chassisList.add(chassis4);
-		return chassisList;
+		return chassisService.getAllChassis();
 	}
 
 	@RequestMapping(value = "/race/{id}", method = RequestMethod.GET, produces = "application/json")

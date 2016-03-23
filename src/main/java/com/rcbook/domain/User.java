@@ -1,6 +1,7 @@
 package com.rcbook.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -32,6 +33,9 @@ public class User {
 
     @Column(name = "country")
     private String country;
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    private List<Car> cars;
 
     public Long getId() {
         return id;
@@ -92,6 +96,14 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+
+//    public List<Car> getCars() {
+//        return cars;
+//    }
+//
+//    public void setCars(List<Car> cars) {
+//        this.cars = cars;
+//    }
 
     @Override
     public String toString() {

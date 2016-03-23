@@ -4,3 +4,15 @@ INSERT INTO user (email, password_hash, role, first_name, last_name, town, count
 VALUES ('test@test.com', '$2a$10$ChzgOnCfwBioGU0dbZMj5uzJLsr41kID6xIm1qWkbATWDB/8LvAfC', 'USER', 'Van Charles', 'Tran', 'Le Port Marly', 'France');
 INSERT INTO user (email, password_hash, role, first_name, last_name, town, country)
 VALUES ('admin@test.com', '$2a$10$ngCKnYKRRBz3KHjcm2j9HuBCKqA2NdYTNhUtuvgFzFPkJznnjWbv6', 'ADMIN', 'admin', 'admin', 'Paris', 'France');
+INSERT INTO brand (name)
+VALUES ('Tamiya');
+INSERT INTO brand (name)
+VALUES ('Yokomo');
+INSERT INTO chassis (brand_id, name)
+VALUES (1, 'TRF419');
+INSERT INTO chassis (brand_id, name)
+VALUES (1, 'TT-01');
+INSERT INTO chassis (brand_id, name)
+VALUES (2, 'BD7 2016');
+INSERT INTO chassis (brand_id, name)
+VALUES (2, 'BD7 RS');

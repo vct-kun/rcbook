@@ -1,19 +1,43 @@
 package com.rcbook.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+
 /**
  * Created by vctran on 09/03/16.
  */
+@Entity
+@Table(name = "chassis")
 public class Chassis {
-    private Long brandId;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    @JsonBackReference
+    private Brand brand;
+
+    @Column(name = "name")
     private String name;
 
-    public Long getBrandId() {
-        return brandId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public String getName() {

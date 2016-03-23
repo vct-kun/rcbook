@@ -1,14 +1,26 @@
 package com.rcbook.domain;
 
+import javax.persistence.*;
+
 /**
  * Created by vctran on 08/03/16.
  */
+@Entity
+@Table(name = "car")
 public class Car {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    private Brand brand;
-
+    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", nullable = false)
     private Chassis chassis;
+
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "user", referencedColumnName = "id")
+//    private User user;
 
     public Long getId() {
         return id;
@@ -18,14 +30,6 @@ public class Car {
         this.id = id;
     }
 
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
     public Chassis getChassis() {
         return chassis;
     }
@@ -33,4 +37,12 @@ public class Car {
     public void setChassis(Chassis chassis) {
         this.chassis = chassis;
     }
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
