@@ -81,7 +81,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/addCar", method = RequestMethod.POST)
+	@RequestMapping(value = "/car", method = RequestMethod.POST)
 	public @ResponseBody Car addCar(@RequestBody Car car) {
 		car.setId(carId.getAndIncrement());
 		carList.add(car);

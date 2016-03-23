@@ -73,28 +73,33 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('carController', function($scope, $http, $location) {
+    }).controller('carController', function($scope, $http, $location, Car, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    console.log(host);
     $http.get(host + '/getCar').success(function(data) {
         $scope.master = data;
     });
+    $scope.car = new Car();
+    $scope.car.user = $rootScope.user;
     $scope.addCar = function() {
-        var dataObj = {
-            brand : $scope.car.brand,
-            chassis : $scope.car.chassis
-        };
-        var res = $http.post(host + '/addCar', dataObj);
-        res.success(function(data, status, headers, config) {
-            $scope.master = $scope.master.concat(data);
+        //var dataObj = {
+        //    chassis : $scope.car.chassis
+        //    //user : $rootScope.user
+        //};
+        //var res = $http.post(host + '/addCar', dataObj);
+        //res.success(function(data, status, headers, config) {
+        //    $scope.master = $scope.master.concat(data);
+        //});
+        //$scope.car = '';
+        $scope.car.$save(function(){
+            $scope.master = $scope.master.concat($scope.car);
+            $scope.car = new Car();
         });
-        $scope.car = '';
     };
     $http.get(host + '/getBrands').success(function(data) {
         $scope.brands = data;
     });
     $scope.getChassis = function() {
-        $scope.chassisList = $scope.car.brand.chassisList;
+        $scope.chassisList = $scope.currentBrand.chassisList;
     };
 }).controller('raceController', function($scope, $http, $location, $rootScope, Race) {
     $scope.currentClub = $rootScope.ownerClub;

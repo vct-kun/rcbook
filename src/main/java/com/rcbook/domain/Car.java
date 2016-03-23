@@ -14,13 +14,13 @@ public class Car {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chassis_id")
     private Chassis chassis;
 
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "user", referencedColumnName = "id")
-//    private User user;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getId() {
         return id;
@@ -38,11 +38,11 @@ public class Car {
         this.chassis = chassis;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

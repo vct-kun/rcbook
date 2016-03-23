@@ -13,7 +13,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'raceController',
 		controllerAs: 'controller'
 	}).when('/car', {
-		templateUrl : 'car.html',
+		templateUrl : 'page_car.html',
 		controller : 'carController',
 		controllerAs: 'controller'
 	}).when('/club', {

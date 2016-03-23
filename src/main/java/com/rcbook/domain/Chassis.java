@@ -1,8 +1,10 @@
 package com.rcbook.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by vctran on 09/03/16.
@@ -23,6 +25,9 @@ public class Chassis {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chassis")
+    private List<Car> carList;
 
     public Long getId() {
         return id;
@@ -46,5 +51,13 @@ public class Chassis {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
     }
 }
