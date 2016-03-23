@@ -253,4 +253,6 @@ angular.module('rcbook.controllers', []).controller('navigation',
         console.log(race.id);
         $location.path('/racedetails/'+race.id);
     };
+}).controller('profileController', function($scope, $http, $location, $rootScope) {
+    $scope.user = $rootScope.user;
 });
