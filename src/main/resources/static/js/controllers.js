@@ -81,7 +81,8 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.car = new Car();
     $scope.car.user = $rootScope.user;
     $scope.addCar = function() {
-        $scope.car.chassis.brand = $scope.currentBrand;
+        $scope.car.chassis = $scope.currentChassis;
+        //$scope.car.chassis.brand = $scope.currentBrand;
         //var dataObj = {
         //    chassis : $scope.car.chassis
         //    //user : $rootScope.user
@@ -100,7 +101,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.brands = data;
     });
     $scope.getChassis = function() {
-        $scope.chassisList = $scope.currentBrand.chassisList;
+        $http.post(host + '/getChassis', $scope.currentBrand).success(function(data){
+            $scope.chassisList = data;
+        });
     };
 }).controller('raceController', function($scope, $http, $location, $rootScope, Race) {
     $scope.currentClub = $rootScope.ownerClub;

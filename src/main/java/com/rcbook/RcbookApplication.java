@@ -101,6 +101,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return race;
 	}
 
+	@RequestMapping(value = "/getChassis", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody List<Chassis> getChassisByBrand(@RequestBody Brand brand) {
+		return chassisService.getChassisByBrand(brand);
+	}
+
 	@RequestMapping(value = "/getCar", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Car> getCar() {
 		return carList;

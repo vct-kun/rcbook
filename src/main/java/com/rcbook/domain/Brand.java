@@ -19,10 +19,6 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
-    @JsonManagedReference
-    private List<Chassis> chassisList;
-
     public Long getId() {
         return id;
     }
@@ -37,13 +33,5 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Chassis> getChassisList() {
-        return chassisList;
-    }
-
-    public void setChassisList(List<Chassis> chassisList) {
-        this.chassisList = chassisList;
     }
 }

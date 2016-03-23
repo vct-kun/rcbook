@@ -18,9 +18,8 @@ public class Chassis {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
-    @JsonBackReference
     private Brand brand;
 
     @Column(name = "name")
