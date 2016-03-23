@@ -9,7 +9,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'homeController',
 		controllerAs: 'controller'
 	}).when('/newrace', {
-		templateUrl : 'page_new_race.html',
+		templateUrl : 'page_race_new.html',
 		controller : 'raceController',
 		controllerAs: 'controller'
 	}).when('/car', {
@@ -21,11 +21,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'clubController',
 		controllerAs: 'controller'
 	}).when('/racedetails/:race_id', {
-		templateUrl : 'racedetails.html',
+		templateUrl : 'page_race_details.html',
 		controller : 'racedetailsController',
 		controllerAs: 'controller'
 	}).when('/adminclub', {
-		templateUrl : 'adminclub.html',
+		templateUrl : 'page_club_new.html',
 		controller : 'adminclubController',
 		controllerAs: 'controller'
 	}).when('/clubdetails/:club_id', {
@@ -33,7 +33,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'clubdetailsController',
 		controllerAs: 'controller'
 	}).when('/mgtclub', {
-		templateUrl : 'page_club_mgt.html',
+		templateUrl : 'page_club_owner.html',
 		controller : 'clubmgtController',
 		controllerAs: 'controller'
 	}).otherwise('/');
