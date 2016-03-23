@@ -259,6 +259,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         var res = $http.post(host + '/addRace', dataObj);
         res.success(function(data, status, headers, config) {
             console.log("add race to club");
+            $scope.currentClub.races = $scope.currentClub.races.concat(data);
         });
         $scope.currentRace = '';
     };

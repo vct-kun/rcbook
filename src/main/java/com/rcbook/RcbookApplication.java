@@ -84,6 +84,10 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	public @ResponseBody Race addRace(@RequestBody Race race) {
 		race.setId(raceId.getAndIncrement());
 		raceList.add(race);
+		Club club = getClubById(race.getRaceClub().getId());
+		if (club!=null) {
+			club.getRaces().add(race);
+		}
 		return race;
 	}
 
@@ -170,8 +174,16 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/club/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Club getClub(@PathVariable String id) {
+		Club club = getClubById(Long.valueOf(id));
+		if (club != null) {
+			return club;
+		}
+		return null;
+	}
+
+	private Club getClubById(Long id) {
 		for (Club club : clubList) {
-			if (club.getId() == Long.valueOf(id)) {
+			if (club.getId() == id) {
 				return club;
 			}
 		}

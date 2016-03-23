@@ -1,5 +1,6 @@
 package com.rcbook.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public class Club {
     private List<User> waitingUsers;
 
     private User owner;
+
+    private List<Race> races = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -84,5 +87,13 @@ public class Club {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(List<Race> races) {
+        this.races = races;
     }
 }
