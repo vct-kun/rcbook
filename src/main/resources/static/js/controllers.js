@@ -96,29 +96,18 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $http.get(host + '/getChassis').success(function(data) {
         $scope.chassisList = data;
     });
-}).controller('raceController', function($scope, $http, $location, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+}).controller('raceController', function($scope, $http, $location, $rootScope, Race) {
     $scope.currentClub = $rootScope.ownerClub;
+    $scope.race = new Race();
+    $scope.race.joinedDriver = [];
+    $scope.race.raceClub = $scope.currentClub;
     $scope.addRace = function() {
-        var dataObj = {
-            startDate: $scope.race.startDate,
-            nbDriver : $scope.race.nbDriver,
-            joinedDriver: [],
-            raceClub : $scope.currentClub,
-            name : $scope.race.name,
-            endDate: $scope.race.endDate,
-            track: $scope.race.track,
-            town: $scope.race.town,
-            country: $scope.race.country
-        };
-        var res = $http.post(host + '/addRace', dataObj);
-        res.success(function(data, status, headers, config) {
+        $scope.race.$save(function(){
             console.log("add race to club");
-            $scope.currentClub.races = $scope.currentClub.races.concat(data);
+            $scope.currentClub.races = $scope.currentClub.races.concat($scope.race);
             $rootScope.ownerClub = $scope.currentClub;
             $location.path('/mgtclub');
         });
-        $scope.currentRace = '';
     };
 }).controller('homeController', function($scope, $http, $location) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
@@ -183,7 +172,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
            console.log("saving club");
             $rootScope.isOwner = true;
             $rootScope.ownerClub = $scope.club;
-            $location.path('/club');
+            $location.path('/mgtclub');
         });
     };
 }).controller('clubController', function($scope, $http, $location, Club) {
@@ -253,7 +242,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
 }).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
     $scope.currentClub = $rootScope.ownerClub;
     $scope.goToRace = function() {
-      $location.path('/race');
+      $location.path('/newrace');
     };
     $scope.go = function(race) {
         console.log(race.id);

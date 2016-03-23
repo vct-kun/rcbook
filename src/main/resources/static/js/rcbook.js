@@ -8,8 +8,8 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		templateUrl : 'home.html',
 		controller : 'homeController',
 		controllerAs: 'controller'
-	}).when('/race', {
-		templateUrl : 'race.html',
+	}).when('/newrace', {
+		templateUrl : 'page_new_race.html',
 		controller : 'raceController',
 		controllerAs: 'controller'
 	}).when('/car', {

@@ -80,7 +80,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return car;
 	}
 
-	@RequestMapping(value = "/addRace", method = RequestMethod.POST)
+	@RequestMapping(value = "/race", method = RequestMethod.POST)
 	public @ResponseBody Race addRace(@RequestBody Race race) {
 		race.setId(raceId.getAndIncrement());
 		raceList.add(race);
