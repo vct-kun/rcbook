@@ -96,27 +96,25 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $http.get(host + '/getChassis').success(function(data) {
         $scope.chassisList = data;
     });
-}).controller('raceController', function($scope, $http, $location) {
+}).controller('raceController', function($scope, $http, $location, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $http.get(host + '/getRace').success(function(data) {
-        $scope.master = data;
-    });
     $scope.myDate = new Date();
+    $scope.currentClub = $rootScope.ownerClub;
     $scope.addRace = function() {
         var dataObj = {
             startDate: $scope.myDate,
             nbDriver : $scope.currentRace.nbDriver,
-            joinedDriver: []
+            joinedDriver: [],
+            raceClub : $scope.currentClub
         };
         var res = $http.post(host + '/addRace', dataObj);
         res.success(function(data, status, headers, config) {
-            $scope.master = $scope.master.concat(data);
+            console.log("add race to club");
+            $scope.currentClub.races = $scope.currentClub.races.concat(data);
+            $rootScope.ownerClub = $scope.currentClub;
+            $location.path('/mgtclub');
         });
         $scope.currentRace = '';
-    };
-    $scope.go = function(race) {
-        console.log(race.id);
-        $location.path('/racedetails/'+race.id);
     };
 }).controller('homeController', function($scope, $http, $location) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
@@ -249,20 +247,12 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 
 }).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     $scope.currentClub = $rootScope.ownerClub;
-    $scope.addRace = function() {
-        var dataObj = {
-            startDate: $scope.myDate,
-            nbDriver : $scope.currentRace.nbDriver,
-            joinedDriver: [],
-            raceClub : $scope.currentClub
-        };
-        var res = $http.post(host + '/addRace', dataObj);
-        res.success(function(data, status, headers, config) {
-            console.log("add race to club");
-            $scope.currentClub.races = $scope.currentClub.races.concat(data);
-        });
-        $scope.currentRace = '';
+    $scope.goToRace = function() {
+      $location.path('/race');
+    };
+    $scope.go = function(race) {
+        console.log(race.id);
+        $location.path('/racedetails/'+race.id);
     };
 });

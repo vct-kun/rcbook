@@ -2,27 +2,6 @@
 <h1>Race</h1>
 <div ng-controller="raceController">
     <div class="panel panel-default">
-        <div class="panel-heading">Your race list</div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Starting date</th>
-                <th>Number of driver max</th>
-                <th>Number of current driver</th>
-            </tr>
-            </thead>
-
-            <tr ng-repeat="race in master" ng-click="go(race)">
-                <td>{{race.id}}</td>
-                <td>{{race.startDate}}</td>
-                <td>{{race.nbDriver}}</td>
-                <td>{{race.joinedDriver.length}}</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="panel panel-default">
         <div class="panel-heading">Add a new race</div>
         <div class="panel-body">
     <form ng-submit="addRace(race)" class="form-horizontal">
