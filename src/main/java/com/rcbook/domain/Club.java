@@ -1,29 +1,47 @@
 package com.rcbook.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vctran on 18/03/16.
  */
+@Entity
+@Table(name = "club")
 public class Club {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "town")
     private String town;
 
+    @Column(name = "country")
     private String country;
 
+    @Column(name = "url")
     private String url;
 
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<User> users;
 
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<User> waitingUsers;
 
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    private List<Race> races = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "raceClub")
+//    @JsonManagedReference
+//    private List<Race> races = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -89,11 +107,11 @@ public class Club {
         this.owner = owner;
     }
 
-    public List<Race> getRaces() {
-        return races;
-    }
-
-    public void setRaces(List<Race> races) {
-        this.races = races;
-    }
+//    public List<Race> getRaces() {
+//        return races;
+//    }
+//
+//    public void setRaces(List<Race> races) {
+//        this.races = races;
+//    }
 }

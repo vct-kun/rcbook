@@ -103,7 +103,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.addRace = function() {
         $scope.race.$save(function(){
             console.log("add race to club");
-            $scope.currentClub.races = $scope.currentClub.races.concat($scope.race);
+            //$scope.currentClub.races = $scope.currentClub.races.concat($scope.race);
             $rootScope.ownerClub = $scope.currentClub;
             $location.path('/mgtclub');
         });
@@ -135,14 +135,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     });
 
     $scope.join = function() {
-        $http.get(host + '/user').success(function(data){
-            console.log($rootScope.user);
             $scope.race.joinedDriver = $scope.race.joinedDriver.concat($rootScope.user);
             $scope.race.$update(function() {
                 console.log('ok updating!');
                 $scope.userHasJoined = true;
             });
-        });
     };
 
     function indexOfObject(array, object) {
@@ -244,7 +241,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 
 }).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     $scope.currentClub = $rootScope.ownerClub;
+    $http.get(host + '/getRacesByClub', {params: {clubId: $scope.currentClub.id}}).success(function(data){
+        $scope.races = data;
+    });
     $scope.goToRace = function() {
       $location.path('/newrace');
     };

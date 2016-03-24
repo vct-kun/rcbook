@@ -1,9 +1,6 @@
 package com.rcbook;
 
-import com.rcbook.service.user.BrandService;
-import com.rcbook.service.user.CarService;
-import com.rcbook.service.user.ChassisService;
-import com.rcbook.service.user.UserService;
+import com.rcbook.service.user.*;
 import com.rcbook.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -43,13 +40,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class RcbookApplication extends SpringBootServletInitializer {
 
-	private static List<Car> carList = new ArrayList<>();
 	private static List<Race> raceList = new ArrayList<>();
-	private static List<Club> clubList = new ArrayList<>();
-
-	private static AtomicLong carId = new AtomicLong(1);
-	private static AtomicLong raceId = new AtomicLong(1);
-	private static AtomicLong clubId = new AtomicLong(1);
 
 	@Autowired
 	private UserService userService;
@@ -62,6 +53,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@Autowired
 	private CarService carService;
+
+	@Autowired
+	private ClubService clubService;
+
+	@Autowired
+	private RaceService raceService;
 
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
@@ -93,13 +90,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/race", method = RequestMethod.POST)
 	public @ResponseBody Race addRace(@RequestBody Race race) {
-		race.setId(raceId.getAndIncrement());
-		raceList.add(race);
-		Club club = getClubById(race.getRaceClub().getId());
-		if (club!=null) {
-			club.getRaces().add(race);
-		}
-		return race;
+		return raceService.createRace(race);
 	}
 
 	@RequestMapping(value = "/getChassis", method = RequestMethod.GET, produces = "application/json")
@@ -114,6 +105,12 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return carService.getAllCarByUser(user.get());
 	}
 
+	@RequestMapping(value = "/getRacesByClub", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Race> getRacesbyClub(@RequestParam String clubId) {
+		Club club = clubService.getClubById(Long.valueOf(clubId));
+		return raceService.getRacesByClub(club);
+	}
+
 	@RequestMapping(value = "/getRace", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Race> getRace() {
 		return raceList;
@@ -126,77 +123,51 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/race/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Race getRace(@PathVariable String id) {
-		for (Race race : raceList) {
-			if (race.getId() == Long.valueOf(id)) {
-				return race;
-			}
-		}
-		return null;
+		return raceService.getRaceById(Long.valueOf(id));
 	}
 
 	@RequestMapping(value = "/race/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Void> updateRace(@RequestBody Race raceUpdated) {
-		for (Race race : raceList) {
-			if (race.getId() == raceUpdated.getId()) {
-				raceList.remove(race);
-				break;
-			}
-		}
-		raceList.add(raceUpdated);
+//		for (Race race : raceList) {
+//			if (race.getId() == raceUpdated.getId()) {
+//				raceList.remove(race);
+//				break;
+//			}
+//		}
+//		raceList.add(raceUpdated);
+		raceService.createRace(raceUpdated);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/club", method = RequestMethod.POST)
 	public @ResponseBody Club addClub(@RequestBody Club club) {
-		club.setId(clubId.getAndIncrement());
-		clubList.add(club);
+		Club createdClub = clubService.createClub(club);
 		userService.updateRole(club.getOwner().getId());
-		return club;
+		return createdClub;
 	}
 
 	@RequestMapping(value = "/club", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Club> getAllClubs() {
-		return clubList;
+		return clubService.getAllClubs();
 	}
 
 	@RequestMapping(value = "/club/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Club getClub(@PathVariable String id) {
-		Club club = getClubById(Long.valueOf(id));
-		if (club != null) {
-			return club;
-		}
-		return null;
-	}
-
-	private Club getClubById(Long id) {
-		for (Club club : clubList) {
-			if (club.getId() == id) {
-				return club;
-			}
-		}
-		return null;
+		Club club = clubService.getClubById(Long.valueOf(id));
+//		club.setRaces(raceService.getRacesByClub(club));
+		return club;
 	}
 
 	@RequestMapping(value = "/club/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Void> updateClub(@RequestBody Club clubUpdated) {
-		for (Club club : clubList) {
-			if (club.getId() == clubUpdated.getId()) {
-				clubList.remove(club);
-				break;
-			}
-		}
-		clubList.add(clubUpdated);
+		clubService.createClub(clubUpdated);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/getOwnerClub", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Club getOwnerClub(@RequestParam  String userId) {
-		for (Club club : clubList) {
-			if (club.getOwner().getId() == Long.valueOf(userId)) {
-				return club;
-			}
-		}
-		return null;
+	public @ResponseBody Club getOwnerClub(@RequestParam String userId) {
+		Optional<User> user = userService.getUserById(Long.valueOf(userId));
+		return clubService.getClubByUser(user.get());
 	}
 
 	public static void main(String[] args) {

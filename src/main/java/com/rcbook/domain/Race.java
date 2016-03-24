@@ -1,21 +1,48 @@
 package com.rcbook.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by vctran on 11/03/2016.
  */
+@Entity
+@Table(name = "race")
 public class Race {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
+
+    @Column(name = "startDate")
     private String startDate;
+
+    @Column(name = "nbDriver")
     private String nbDriver;
+
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<User> joinedDriver;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "club_id")
     private Club raceClub;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "endDate")
     private String endDate;
+
+    @Column(name = "track")
     private String track;
+
+    @Column(name = "town")
     private String town;
+
+    @Column(name = "country")
     private String country;
 
     public Long getId() {
