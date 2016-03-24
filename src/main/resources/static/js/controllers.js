@@ -180,6 +180,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $location.path('/clubdetails/'+club.id);
     };
 }).controller('clubdetailsController', function($scope, $http, $location, $routeParams, Club, $rootScope) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     var self = this;
     self.club_id = $routeParams.club_id;
     $scope.club = Club.get({id: self.club_id}, function(){
@@ -193,7 +194,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
         };
         $scope.userHasJoined = checkUserInClub();
     });
-
+    $http.get(host + '/getRacesByClub', {params: {clubId: self.club_id}}).success(function(data){
+        $scope.races = data;
+    });
     $scope.join = function() {
         $scope.club.waitingUsers = $scope.club.waitingUsers.concat($rootScope.user);
         $scope.club.$update(function() {

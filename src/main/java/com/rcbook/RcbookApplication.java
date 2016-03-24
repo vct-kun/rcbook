@@ -128,13 +128,6 @@ public class RcbookApplication extends SpringBootServletInitializer {
 
 	@RequestMapping(value = "/race/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Void> updateRace(@RequestBody Race raceUpdated) {
-//		for (Race race : raceList) {
-//			if (race.getId() == raceUpdated.getId()) {
-//				raceList.remove(race);
-//				break;
-//			}
-//		}
-//		raceList.add(raceUpdated);
 		raceService.createRace(raceUpdated);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
