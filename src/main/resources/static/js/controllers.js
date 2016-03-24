@@ -75,23 +75,13 @@ angular.module('rcbook.controllers', []).controller('navigation',
         }
     }).controller('carController', function($scope, $http, $location, Car, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $http.get(host + '/getCar').success(function(data) {
+    $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).success(function(data) {
         $scope.master = data;
     });
     $scope.car = new Car();
     $scope.car.user = $rootScope.user;
     $scope.addCar = function() {
         $scope.car.chassis = $scope.currentChassis;
-        //$scope.car.chassis.brand = $scope.currentBrand;
-        //var dataObj = {
-        //    chassis : $scope.car.chassis
-        //    //user : $rootScope.user
-        //};
-        //var res = $http.post(host + '/addCar', dataObj);
-        //res.success(function(data, status, headers, config) {
-        //    $scope.master = $scope.master.concat(data);
-        //});
-        //$scope.car = '';
         $scope.car.$save(function(){
             $scope.master = $scope.master.concat($scope.car);
             $scope.car = new Car();
@@ -118,9 +108,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $location.path('/mgtclub');
         });
     };
-}).controller('homeController', function($scope, $http, $location) {
+}).controller('homeController', function($scope, $http, $location, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $http.get(host + '/dashboard').success(function(data) {
+    $http.get(host + '/dashboard', {params: {userId: $rootScope.user.id}}).success(function(data) {
         $scope.dashboard = data;
     });
     $scope.go = function (path) {

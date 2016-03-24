@@ -69,10 +69,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	}
 
 	@RequestMapping("/dashboard")
-	public Map<String, Object> home() {
-		Map<String, Object> model = new HashMap<String, Object>();
+	public Map<String, Object> home(@RequestParam String userId) {
+		Optional<User> user = userService.getUserById(Long.valueOf(userId));
+		Map<String, Object> model = new HashMap<>();
 		model.put("nbRace", raceList.size());
-		model.put("nbCar", carList.size());
+		model.put("nbCar", carService.countCarByUser(user.get()));
 		return model;
 	}
 
@@ -107,9 +108,10 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return chassisService.getChassisByBrand(brand);
 	}
 
-	@RequestMapping(value = "/getCar", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Car> getCar() {
-		return carList;
+	@RequestMapping(value = "/getCarByUserId", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Car> getCar(@RequestParam String userId) {
+		Optional<User> user = userService.getUserById(Long.valueOf(userId));
+		return carService.getAllCarByUser(user.get());
 	}
 
 	@RequestMapping(value = "/getRace", method = RequestMethod.GET, produces = "application/json")
