@@ -158,6 +158,10 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $scope.userHasJoined = false;
         });
     };
+
+    $http.get(host + '/getCarByUserId', {params : {userId: $rootScope.user.id}}).success(function(data){
+        $scope.cars = data;
+    });
 }).controller('adminclubController', function($scope, $http, $location, Club, $rootScope) {
     $scope.club = new Club();
     $scope.club.users = [];
