@@ -31,4 +31,9 @@ public class RaceServiceImpl implements RaceService {
     public List<Race> getRacesByClub(Club club) {
         return raceRepository.findByRaceClub(club);
     }
+
+    @Override
+    public Long countRaces() {
+        return raceRepository.count();
+    }
 }

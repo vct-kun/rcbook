@@ -40,8 +40,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class RcbookApplication extends SpringBootServletInitializer {
 
-	private static List<Race> raceList = new ArrayList<>();
-
 	@Autowired
 	private UserService userService;
 
@@ -69,7 +67,7 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	public Map<String, Object> home(@RequestParam String userId) {
 		Optional<User> user = userService.getUserById(Long.valueOf(userId));
 		Map<String, Object> model = new HashMap<>();
-		model.put("nbRace", raceList.size());
+		model.put("nbRace", raceService.countRaces());
 		model.put("nbCar", carService.countCarByUser(user.get()));
 		return model;
 	}
@@ -111,11 +109,6 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return raceService.getRacesByClub(club);
 	}
 
-	@RequestMapping(value = "/getRace", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Race> getRace() {
-		return raceList;
-	}
-
 	@RequestMapping(value = "/getBrands", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<Brand> getBrands() {
 		return brandService.getAllBrands();
@@ -147,7 +140,6 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@RequestMapping(value = "/club/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Club getClub(@PathVariable String id) {
 		Club club = clubService.getClubById(Long.valueOf(id));
-//		club.setRaces(raceService.getRacesByClub(club));
 		return club;
 	}
 

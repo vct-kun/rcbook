@@ -1,9 +1,6 @@
 package com.rcbook.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,10 +35,6 @@ public class Club {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
-
-//    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "raceClub")
-//    @JsonManagedReference
-//    private List<Race> races = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -107,11 +100,4 @@ public class Club {
         this.owner = owner;
     }
 
-//    public List<Race> getRaces() {
-//        return races;
-//    }
-//
-//    public void setRaces(List<Race> races) {
-//        this.races = races;
-//    }
 }

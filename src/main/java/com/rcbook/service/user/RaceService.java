@@ -16,4 +16,6 @@ public interface RaceService {
 
     List<Race> getRacesByClub(Club club);
 
+    Long countRaces();
+
 }
