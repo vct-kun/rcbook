@@ -52,12 +52,14 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="chassis" class="col-sm-4 control-label">Chassis</label>
-                <div class="col-sm-8">
-                    <select id="chassis" ng-model="currentCar" class="form-control" ng-options="car.chassis.name for car in cars">
-                        <option value="">---Please select---</option>
-                    </select>
+            <div class="row" ng-show="!userHasJoined">
+                <div class="form-group">
+                    <label for="chassis" class="col-sm-4 control-label">Chassis</label>
+                    <div class="col-sm-8">
+                        <select id="chassis" ng-model="currentCar" class="form-control" ng-options="car.chassis.name for car in cars">
+                            <option value="">---Please select---</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -88,14 +90,16 @@
                     <th>Last name</th>
                     <th>Town</th>
                     <th>Country</th>
+                    <th>Chassis</th>
                 </tr>
                 </thead>
 
-                <tr ng-repeat="user in race.joinedDriver">
-                    <td>{{user.firstName}}</td>
-                    <td>{{user.lastName}}</td>
-                    <td>{{user.town}}</td>
-                    <td>{{user.country}}</td>
+                <tr ng-repeat="driver in race.joinedDriver">
+                    <td>{{driver.user.firstName}}</td>
+                    <td>{{driver.user.lastName}}</td>
+                    <td>{{driver.user.town}}</td>
+                    <td>{{driver.user.country}}</td>
+                    <td>{{driver.car.chassis.name}}</td>
                 </tr>
             </table>
         </div>

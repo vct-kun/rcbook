@@ -58,6 +58,9 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@Autowired
 	private RaceService raceService;
 
+	@Autowired
+	private DriverService driverService;
+
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
 		return user;
@@ -89,6 +92,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 	@RequestMapping(value = "/race", method = RequestMethod.POST)
 	public @ResponseBody Race addRace(@RequestBody Race race) {
 		return raceService.createRace(race);
+	}
+
+	@RequestMapping(value = "/driver", method = RequestMethod.POST)
+	public @ResponseBody Driver addDriver(@RequestBody Driver driver) {
+		return driverService.createDriver(driver);
 	}
 
 	@RequestMapping(value = "/getChassis", method = RequestMethod.GET, produces = "application/json")

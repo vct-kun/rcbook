@@ -23,10 +23,10 @@ public class Race {
     @Column(name = "nbDriver")
     private String nbDriver;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private List<User> joinedDriver;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Driver> joinedDriver;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
     private Club raceClub;
 
@@ -69,11 +69,11 @@ public class Race {
         this.nbDriver = nbDriver;
     }
 
-    public List<User> getJoinedDriver() {
+    public List<Driver> getJoinedDriver() {
         return joinedDriver;
     }
 
-    public void setJoinedDriver(List<User> joinedDriver) {
+    public void setJoinedDriver(List<Driver> joinedDriver) {
         this.joinedDriver = joinedDriver;
     }
 

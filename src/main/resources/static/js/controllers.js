@@ -116,7 +116,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.go = function (path) {
         $location.path(path);
     };
-}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope) {
+}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope, Driver) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     var self = this;
     self.race_id = $routeParams.race_id;
@@ -125,7 +125,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         console.log($scope.race);
         var checkUserInRace = function() {
             for (var i = 0;i<$scope.race.joinedDriver.length;i++) {
-                if ($scope.race.joinedDriver[i].id == $rootScope.user.id) {
+                if ($scope.race.joinedDriver[i].user.id == $rootScope.user.id) {
                     return true;
                 }
             }
@@ -135,11 +135,16 @@ angular.module('rcbook.controllers', []).controller('navigation',
     });
 
     $scope.join = function() {
-            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($rootScope.user);
+        $scope.driver = new Driver();
+        $scope.driver.user = $rootScope.user;
+        $scope.driver.car = $scope.currentCar;
+        $scope.driver.$save(function(){
+            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
             $scope.race.$update(function() {
                 console.log('ok updating!');
                 $scope.userHasJoined = true;
             });
+        });
     };
 
     function indexOfObject(array, object) {
