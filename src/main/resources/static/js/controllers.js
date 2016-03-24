@@ -101,7 +101,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.brands = data;
     });
     $scope.getChassis = function() {
-        $http.post(host + '/getChassis', $scope.currentBrand).success(function(data){
+        $http.get(host + '/getChassis', {params: {brandId :$scope.currentBrand.id}}).success(function(data){
             $scope.chassisList = data;
         });
     };
