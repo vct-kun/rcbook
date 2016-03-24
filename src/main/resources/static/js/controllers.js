@@ -126,6 +126,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         var checkUserInRace = function() {
             for (var i = 0;i<$scope.race.joinedDriver.length;i++) {
                 if ($scope.race.joinedDriver[i].user.id == $rootScope.user.id) {
+                    $scope.currentDriver = $scope.race.joinedDriver[i];
                     return true;
                 }
             }
@@ -157,10 +158,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     }
 
     $scope.leave = function() {
-        var index = indexOfObject($scope.race.joinedDriver, $rootScope.user);
+        var index = indexOfObject($scope.race.joinedDriver, $scope.currentDriver);
         $scope.race.joinedDriver.splice(index, 1);
         $scope.race.$update(function() {
             $scope.userHasJoined = false;
+            $scope.currentDriver = '';
         });
     };
 
