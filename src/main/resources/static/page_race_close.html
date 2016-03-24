@@ -1,0 +1,30 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h1>{{race.name}}</h1>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Current drivers on race</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last name</th>
+                    <th>Chassis</th>
+                    <th>Rank</th>
+                    <th>Total time</th>
+                    <th>Best Lap</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="driver in race.joinedDriver">
+                    <td>{{driver.user.firstName}}</td>
+                    <td>{{driver.user.lastName}}</td>
+                    <td>{{driver.car.chassis.name}}</td>
+                    <td>1</td>
+                    <td>10"52"69</td>
+                    <td>00"30"25</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

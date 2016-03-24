@@ -169,6 +169,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $http.get(host + '/getCarByUserId', {params : {userId: $rootScope.user.id}}).success(function(data){
         $scope.cars = data;
     });
+    $scope.close = function(race) {
+        $location.path('/closerace/'+race.id);
+    };
 }).controller('adminclubController', function($scope, $http, $location, Club, $rootScope) {
     $scope.club = new Club();
     $scope.club.users = [];
@@ -278,4 +281,6 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 }).controller('profileController', function($scope, $http, $location, $rootScope) {
     $scope.user = $rootScope.user;
+}).controller('closeRaceController', function($scope, $http, $location, $rootScope, $routeParams, Race) {
+    $scope.race = Race.get({id: $routeParams.race_id});
 });

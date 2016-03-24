@@ -40,6 +40,10 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		templateUrl : 'profile.html',
 		controller : 'profileController',
 		controllerAs: 'controller'
+	}).when('/closerace/:race_id', {
+		templateUrl : 'page_race_close.html',
+		controller : 'closeRaceController',
+		controllerAs: 'controller'
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
