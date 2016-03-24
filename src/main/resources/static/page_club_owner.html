@@ -29,6 +29,28 @@
         </div>
     </div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">Admin</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="user in currentClub.waitingUsers">
+                    <td>{{user.id}}</td>
+                    <td>{{user.email}}</td>
+                    <td><button type="button" class="btn" ng-click="approve(user)">Approve</button>
+                        <button type="button" class="btn" ng-click="decline(user)">Decline</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <div class="list-group">
         <button type="button" class="list-group-item" ng-click="goToRace()">Add a new race</button>
         <button type="button" class="list-group-item">Set training sessions</button>

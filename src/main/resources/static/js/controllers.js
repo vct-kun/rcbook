@@ -221,23 +221,6 @@ angular.module('rcbook.controllers', []).controller('navigation',
         });
     };
 
-    $scope.approve = function(user) {
-        console.log("approve user id"+user.id);
-        $scope.club.users = $scope.club.users.concat(user);
-        var index = indexOfObject($scope.club.waitingUsers, user);
-        $scope.club.waitingUsers.splice(index, 1);
-        $scope.club.$update(function() {
-
-        });
-    };
-
-    $scope.decline = function(user) {
-        console.log("decline user id"+user.id);
-        var index = indexOfObject($scope.club.waitingUsers, user);
-        $scope.club.waitingUsers.splice(index, 1);
-        $scope.club.$update();
-    };
-
     $scope.go = function(race) {
         console.log(race.id);
         $location.path('/racedetails/'+race.id);
@@ -245,8 +228,10 @@ angular.module('rcbook.controllers', []).controller('navigation',
 
 }).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $scope.currentClub = $rootScope.ownerClub;
-    $http.get(host + '/getRacesByClub', {params: {clubId: $scope.currentClub.id}}).success(function(data){
+    $scope.currentClub = Club.get({id:$rootScope.ownerClub.id}, function(){
+
+    });
+    $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).success(function(data){
         $scope.races = data;
     });
     $scope.goToRace = function() {
@@ -255,6 +240,30 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.go = function(race) {
         console.log(race.id);
         $location.path('/racedetails/'+race.id);
+    };
+    function indexOfObject(array, object) {
+        for (var i=0;i<array.length;i++) {
+            if (angular.equals(array[i], object)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    $scope.approve = function(user) {
+        console.log("approve user id"+user.id);
+        $scope.currentClub.users = $scope.currentClub.users.concat(user);
+        var index = indexOfObject($scope.currentClub.waitingUsers, user);
+        $scope.currentClub.waitingUsers.splice(index, 1);
+        $scope.currentClub.$update(function() {
+
+        });
+    };
+
+    $scope.decline = function(user) {
+        console.log("decline user id"+user.id);
+        var index = indexOfObject($scope.currentClub.waitingUsers, user);
+        $scope.currentClub.waitingUsers.splice(index, 1);
+        $scope.currentClub.$update();
     };
 }).controller('profileController', function($scope, $http, $location, $rootScope) {
     $scope.user = $rootScope.user;
