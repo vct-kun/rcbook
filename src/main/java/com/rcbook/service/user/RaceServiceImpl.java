@@ -36,4 +36,9 @@ public class RaceServiceImpl implements RaceService {
     public Long countRaces() {
         return raceRepository.count();
     }
+
+    @Override
+    public List<Race> getAllRaces() {
+        return raceRepository.findAll();
+    }
 }

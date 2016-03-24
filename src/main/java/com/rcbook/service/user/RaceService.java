@@ -18,4 +18,5 @@ public interface RaceService {
 
     Long countRaces();
 
+    List<Race> getAllRaces();
 }

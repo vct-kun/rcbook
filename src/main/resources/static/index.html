@@ -41,6 +41,8 @@
 			<li><a href="#/club">Club list</a></li>
 			<li><a href="#/adminclub">Create a new club</a></li>
 			<li ng-show="isOwner"><a href="#/mgtclub">Club management</a></li>
+			<li ng-show="haveClub"><a href="#/clubdetails/{{club.id}}">Your club</a></li>
+
 		</ul>
 	</div>
 	<div ng-view class="container"></div>

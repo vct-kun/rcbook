@@ -22,6 +22,34 @@
 					<span class="text-muted">You won 1 trophy this season</span>
 				</div>
 			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Opened races</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>From</th>
+							<th>To</th>
+							<th>Track</th>
+							<th>Town</th>
+							<th>Country</th>
+						</tr>
+						</thead>
+						<tr ng-repeat="race in races" ng-click="goRace(race)">
+							<td>{{race.id}}</td>
+							<td>{{race.name}}</td>
+							<td>{{race.startDate}}</td>
+							<td>{{race.endDate}}</td>
+							<td>{{race.track}}</td>
+							<td>{{race.town}}</td>
+							<td>{{race.country}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

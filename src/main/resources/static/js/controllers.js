@@ -20,13 +20,13 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 if (data.name) {
                     $rootScope.authenticated = true;
                     $rootScope.user = data.principal.user;
-                    $rootScope.isAdmin = data.principal.user.role == 'ADMIN';
                     $rootScope.isOwner = data.principal.user.role == 'OWNER';
                     if ($rootScope.isOwner) {
                         $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
                             $rootScope.ownerClub = data;
                         });
                     }
+                    $rootScope.haveClub = false;
                 } else {
                     $rootScope.authenticated = false;
                 }
@@ -108,13 +108,18 @@ angular.module('rcbook.controllers', []).controller('navigation',
             $location.path('/mgtclub');
         });
     };
-}).controller('homeController', function($scope, $http, $location, $rootScope) {
+}).controller('homeController', function($scope, $http, $location, $rootScope, Race) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     $http.get(host + '/dashboard', {params: {userId: $rootScope.user.id}}).success(function(data) {
         $scope.dashboard = data;
     });
+    $scope.races = Race.query();
     $scope.go = function (path) {
         $location.path(path);
+    };
+    $scope.goRace = function(race) {
+        console.log(race.id);
+        $location.path('/racedetails/'+race.id);
     };
 }).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope, Driver) {
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];

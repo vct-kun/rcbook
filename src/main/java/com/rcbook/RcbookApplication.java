@@ -133,6 +133,11 @@ public class RcbookApplication extends SpringBootServletInitializer {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
+	@RequestMapping(value = "/race", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Race> getAllRaces() {
+		return raceService.getAllRaces();
+	}
+
 	@RequestMapping(value = "/club", method = RequestMethod.POST)
 	public @ResponseBody Club addClub(@RequestBody Club club) {
 		Club createdClub = clubService.createClub(club);
