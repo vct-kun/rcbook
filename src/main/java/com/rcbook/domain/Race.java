@@ -1,7 +1,5 @@
 package com.rcbook.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,10 +15,10 @@ public class Race {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     private String startDate;
 
-    @Column(name = "nbDriver")
+    @Column(name = "nb_driver")
     private String nbDriver;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -33,7 +31,7 @@ public class Race {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     private String endDate;
 
     @Column(name = "track")
