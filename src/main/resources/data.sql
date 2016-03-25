@@ -28,7 +28,7 @@ INSERT INTO club_users(club_id, users_id)
 VALUES (1, 2);
 INSERT INTO club_users(club_id, users_id)
 VALUES (1, 3);
--- INSERT INTO driver(user_id, car_id)
--- VALUES (2, 2);
--- INSERT INTO race_joined_driver(race_id, joined_driver_id)
--- VALUES (1, 1);
+INSERT INTO driver(user_id, car_id)
+VALUES (2, 2);
+INSERT INTO race_joined_driver(race_id, joined_driver_id)
+VALUES (1, 1);

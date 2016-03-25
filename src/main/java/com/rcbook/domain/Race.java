@@ -1,7 +1,7 @@
 package com.rcbook.domain;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by vctran on 11/03/2016.
@@ -22,7 +22,7 @@ public class Race {
     private String nbDriver;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Driver> joinedDriver;
+    private Set<Driver> joinedDriver;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
@@ -67,11 +67,11 @@ public class Race {
         this.nbDriver = nbDriver;
     }
 
-    public List<Driver> getJoinedDriver() {
+    public Set<Driver> getJoinedDriver() {
         return joinedDriver;
     }
 
-    public void setJoinedDriver(List<Driver> joinedDriver) {
+    public void setJoinedDriver(Set<Driver> joinedDriver) {
         this.joinedDriver = joinedDriver;
     }
 
