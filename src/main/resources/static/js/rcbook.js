@@ -9,39 +9,39 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'homeController',
 		controllerAs: 'controller'
 	}).when('/newrace', {
-		templateUrl : 'page_race_new.html',
+		templateUrl : 'js/race/page_race_new.html',
 		controller : 'raceController',
 		controllerAs: 'controller'
 	}).when('/car', {
-		templateUrl : 'page_car.html',
+		templateUrl : 'js/car/page_car.html',
 		controller : 'carController',
 		controllerAs: 'controller'
 	}).when('/club', {
-		templateUrl : 'page_club.html',
+		templateUrl : 'js/club/page_club.html',
 		controller : 'clubController',
 		controllerAs: 'controller'
 	}).when('/racedetails/:race_id', {
-		templateUrl : 'page_race_details.html',
+		templateUrl : 'js/race/page_race_details.html',
 		controller : 'racedetailsController',
 		controllerAs: 'controller'
 	}).when('/adminclub', {
-		templateUrl : 'page_club_new.html',
+		templateUrl : 'js/club/page_club_new.html',
 		controller : 'adminclubController',
 		controllerAs: 'controller'
 	}).when('/clubdetails/:club_id', {
-		templateUrl : 'page_club_details.html',
+		templateUrl : 'js/club/page_club_details.html',
 		controller : 'clubdetailsController',
 		controllerAs: 'controller'
 	}).when('/mgtclub', {
-		templateUrl : 'page_club_owner.html',
+		templateUrl : 'js/club/page_club_owner.html',
 		controller : 'clubmgtController',
 		controllerAs: 'controller'
 	}).when('/profile', {
-		templateUrl : 'profile.html',
+		templateUrl : 'js/user/profile.html',
 		controller : 'profileController',
 		controllerAs: 'controller'
 	}).when('/closerace/:race_id', {
-		templateUrl : 'page_race_close.html',
+		templateUrl : 'js/race/page_race_close.html',
 		controller : 'closeRaceController',
 		controllerAs: 'controller'
 	}).otherwise('/');
