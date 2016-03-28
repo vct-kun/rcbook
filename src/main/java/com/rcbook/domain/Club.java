@@ -26,7 +26,8 @@ public class Club {
     @Column(name = "url")
     private String url;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "club_users", joinColumns = @JoinColumn(name = "club_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> users;
 
     @OneToMany(fetch = FetchType.EAGER)

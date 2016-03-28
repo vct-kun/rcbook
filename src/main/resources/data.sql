@@ -24,9 +24,9 @@ INSERT INTO club (name, town, country, url, owner_id)
 VALUES ('RCA', 'Argenteuil', 'France', 'www.rc-argenteuil.com', 1);
 INSERT INTO race (start_date, end_date, track, town, country, club_id, nb_driver)
 VALUES ('2016-03-23T23:00:00.000Z', '2016-03-24T23:00:00.000Z', 'Gymnase Vallon', 'Argenteuil', 'France', 1, '10');
-INSERT INTO club_users(club_id, users_id)
+INSERT INTO club_users(club_id, user_id)
 VALUES (1, 2);
-INSERT INTO club_users(club_id, users_id)
+INSERT INTO club_users(club_id, user_id)
 VALUES (1, 3);
 INSERT INTO driver(user_id, car_id)
 VALUES (2, 2);
