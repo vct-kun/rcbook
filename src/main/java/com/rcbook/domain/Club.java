@@ -1,7 +1,7 @@
 package com.rcbook.domain;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by vctran on 18/03/16.
@@ -27,10 +27,10 @@ public class Club {
     private String url;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<User> users;
+    private Set<User> users;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<User> waitingUsers;
+    private Set<User> waitingUsers;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -52,19 +52,19 @@ public class Club {
         this.name = name;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
-    public List<User> getWaitingUsers() {
+    public Set<User> getWaitingUsers() {
         return waitingUsers;
     }
 
-    public void setWaitingUsers(List<User> waitingUsers) {
+    public void setWaitingUsers(Set<User> waitingUsers) {
         this.waitingUsers = waitingUsers;
     }
 
