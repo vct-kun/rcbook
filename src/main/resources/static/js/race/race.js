@@ -18,7 +18,9 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
     var self = this;
     self.race_id = $routeParams.race_id;
+    $scope.cars = [];
     $scope.userHasJoined = false;
+    $scope.noCarSelected = false;
     $scope.race = Race.get({id: self.race_id}, function(){
         console.log($scope.race);
         var checkUserInRace = function() {
@@ -37,13 +39,18 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
         $scope.driver = new Driver();
         $scope.driver.user = $rootScope.user;
         $scope.driver.car = $scope.currentCar;
-        $scope.driver.$save(function(){
-            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
-            $scope.race.$update(function() {
-                console.log('ok updating!');
-                $scope.userHasJoined = true;
+        if ($scope.currentCar == null) {
+            $scope.noCarSelected = true;
+        } else {
+            $scope.noCarSelected = false;
+            $scope.driver.$save(function(){
+                $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
+                $scope.race.$update(function() {
+                    console.log('ok updating!');
+                    $scope.userHasJoined = true;
+                });
             });
-        });
+        }
     };
 
     function indexOfObject(array, object) {

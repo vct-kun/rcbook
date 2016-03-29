@@ -56,9 +56,10 @@
                 <div class="form-group">
                     <label for="chassis" class="col-sm-4 control-label">Chassis</label>
                     <div class="col-sm-8">
-                        <select id="chassis" ng-model="currentCar" class="form-control" ng-options="car.chassis.name for car in cars">
+                        <select id="chassis" ng-model="currentCar" class="form-control" ng-options="car.chassis.name for car in cars" required>
                             <option value="">---Please select---</option>
                         </select>
+                        <span ng-show="noCarSelected" style="color: #a94442">Please select a car</span>
                     </div>
                 </div>
             </div>
