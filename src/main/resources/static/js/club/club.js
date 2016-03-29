@@ -6,6 +6,7 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
     $scope.club.owner = $rootScope.user;
+    $scope.club.users = $scope.club.users.concat($rootScope.user);
     $scope.addClub = function() {
         $scope.club.$save(function(){
             console.log("saving club");
