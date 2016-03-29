@@ -44,6 +44,10 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		templateUrl : 'js/race/page_race_close.html',
 		controller : 'closeRaceController',
 		controllerAs: 'controller'
+	}).when('/yourclub', {
+		templateUrl : 'js/club/page_club.html',
+		controller : 'yourclubController',
+		controllerAs: 'controller'
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

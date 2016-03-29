@@ -108,4 +108,12 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
         $scope.currentClub.waitingUsers.splice(index, 1);
         $scope.currentClub.$update();
     };
+}).controller('yourclubController', function($scope, $http, $location, $rootScope) {
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+    $http.get(host + '/getClubsByUserId/'+$rootScope.user.id, {}).success(function(data){
+        $scope.clubs = data;
+    });
+    $scope.go = function(club) {
+        $location.path('/clubdetails/'+club.id);
+    };
 });

@@ -18,4 +18,6 @@ public interface ClubService {
 
     Club getClubByUser(User user);
 
+    List<Club> getListClubByUser(User user);
+
 }

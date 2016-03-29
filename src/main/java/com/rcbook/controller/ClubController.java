@@ -54,4 +54,16 @@ public class ClubController {
         return clubService.getClubByUser(user.get());
     }
 
+    @RequestMapping(value = "/userHasClub", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody boolean userHasClub(@RequestParam String userId) {
+        Optional<User> user = userService.getUserById(Long.valueOf(userId));
+        List<Club> clubs = clubService.getListClubByUser(user.get());
+        return clubs.size() > 0;
+    }
+
+    @RequestMapping(value = "/getClubsByUserId/{id}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Club> getClubsByUserId(@PathVariable String id) {
+        Optional<User> user = userService.getUserById(Long.valueOf(id));
+        return clubService.getListClubByUser(user.get());
+    }
 }

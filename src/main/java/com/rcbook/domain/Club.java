@@ -30,7 +30,8 @@ public class Club {
     @JoinTable(name = "club_users", joinColumns = @JoinColumn(name = "club_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> users;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "club_waiting_users", joinColumns = @JoinColumn(name = "club_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> waitingUsers;
 
     @OneToOne(fetch = FetchType.EAGER)

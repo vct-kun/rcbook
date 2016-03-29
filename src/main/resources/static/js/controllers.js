@@ -26,7 +26,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
                             $rootScope.ownerClub = data;
                         });
                     }
-                    $rootScope.haveClub = false;
+                    $http.get('userHasClub', {params: {userId :$rootScope.user.id }}).success(function(data) {
+                        $rootScope.haveClub = data;
+                    });
                 } else {
                     $rootScope.authenticated = false;
                 }

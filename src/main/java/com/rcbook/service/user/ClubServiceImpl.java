@@ -36,4 +36,9 @@ public class ClubServiceImpl implements ClubService {
     public Club getClubByUser(User user) {
         return clubRepository.findByOwner(user);
     }
+
+    @Override
+    public List<Club> getListClubByUser(User user) {
+        return clubRepository.findByUsers(user);
+    }
 }
