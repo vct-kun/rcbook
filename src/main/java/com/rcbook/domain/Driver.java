@@ -25,6 +25,12 @@ public class Driver {
     @Column(name = "rank")
     private String rank;
 
+    @Column(name = "total_time")
+    private String totalTime;
+
+    @Column(name = "best_lap")
+    private String bestLap;
+
     public Long getId() {
         return id;
     }
@@ -55,5 +61,21 @@ public class Driver {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+
+    public String getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(String totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public String getBestLap() {
+        return bestLap;
+    }
+
+    public void setBestLap(String bestLap) {
+        this.bestLap = bestLap;
     }
 }

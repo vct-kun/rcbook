@@ -100,19 +100,22 @@
                     <th>Country</th>
                     <th>Chassis</th>
                     <th ng-show="race.closed">Rank</th>
+                    <th ng-show="race.closed">Total Time</th>
+                    <th ng-show="race.closed">Best Lap</th>
                 </tr>
                 </thead>
 
-                <tr ng-repeat="driver in race.joinedDriver">
+                <tr ng-repeat="driver in race.joinedDriver | orderBy: 'rank'">
                     <td>{{driver.user.firstName}}</td>
                     <td>{{driver.user.lastName}}</td>
                     <td>{{driver.user.town}}</td>
                     <td>{{driver.user.country}}</td>
                     <td>{{driver.car.chassis.name}}</td>
                     <td ng-show="race.closed">{{driver.rank}}</td>
+                    <td ng-show="race.closed">{{driver.totalTime}}</td>
+                    <td ng-show="race.closed">{{driver.bestLap}}</td>
                 </tr>
             </table>
         </div>
     </div>
-    <!--<pre>race = {{race | json}}</pre>-->
 </div>
