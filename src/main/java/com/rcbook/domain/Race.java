@@ -21,7 +21,7 @@ public class Race {
     @Column(name = "nb_driver")
     private String nbDriver;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Driver> joinedDriver;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -42,6 +42,9 @@ public class Race {
 
     @Column(name = "country")
     private String country;
+
+    @Column(name = "closed")
+    private boolean closed;
 
     public Long getId() {
         return id;
@@ -121,5 +124,13 @@ public class Race {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 }

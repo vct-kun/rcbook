@@ -22,6 +22,9 @@ public class Driver {
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @Column(name = "rank")
+    private String rank;
+
     public Long getId() {
         return id;
     }
@@ -44,5 +47,13 @@ public class Driver {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 }

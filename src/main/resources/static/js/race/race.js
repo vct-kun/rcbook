@@ -8,8 +8,6 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     $scope.race.raceClub = $scope.currentClub;
     $scope.addRace = function() {
         $scope.race.$save(function(){
-            console.log("add race to club");
-            //$scope.currentClub.races = $scope.currentClub.races.concat($scope.race);
             $rootScope.ownerClub = $scope.currentClub;
             $location.path('/mgtclub');
         });
@@ -43,12 +41,10 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
             $scope.noCarSelected = true;
         } else {
             $scope.noCarSelected = false;
-            $scope.driver.$save(function(){
-                $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
-                $scope.race.$update(function() {
-                    console.log('ok updating!');
-                    $scope.userHasJoined = true;
-                });
+            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
+            $scope.race.$update(function() {
+                console.log('ok updating!');
+                $scope.userHasJoined = true;
             });
         }
     };
@@ -79,4 +75,11 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     };
 }).controller('closeRaceController', function($scope, $http, $location, $rootScope, $routeParams, Race) {
     $scope.race = Race.get({id: $routeParams.race_id});
+    $scope.close = function(race) {
+        $scope.race = race;
+        $scope.race.closed = true;
+        $scope.race.$update(function(){
+            $location.path('/racedetails/'+race.id);
+        });
+    };
 });

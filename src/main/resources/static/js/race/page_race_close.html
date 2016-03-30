@@ -20,11 +20,12 @@
                     <td>{{driver.user.firstName}}</td>
                     <td>{{driver.user.lastName}}</td>
                     <td>{{driver.car.chassis.name}}</td>
-                    <td>1</td>
+                    <td><input type="text" id="rank" ng-model="driver.rank" /></td>
                     <td>10"52"69</td>
                     <td>00"30"25</td>
                 </tr>
             </table>
+            <button ng-click="close(race)"><i class="fa fa-pencil fa-fw"></i>Save</button>
         </div>
     </div>
 </div>
