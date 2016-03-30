@@ -5,14 +5,9 @@
 	<link
 			href="css/angular-bootstrap.css"
 			rel="stylesheet">
-<style type="text/css">
-[ng\:cloak], [ng-cloak], .ng-cloak {
-	display: none !important;
-}
-</style>
 </head>
 
-<body ng-app="rcbook" ng-cloak class="ng-cloak">
+<body ng-app="rcbook">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -44,7 +39,7 @@
 
 		</ul>
 	</div>
-	<div ng-view class="container"></div>
+	<div ng-view class="container ng-cloak" ng-cloak></div>
 	<script src="js/angular-bootstrap.js" type="text/javascript"></script>
 	<script src="js/rcbook.js"></script>
 	<script src="js/controllers.js"></script>
@@ -52,8 +47,5 @@
 	<script src="js/car/car.js"></script>
 	<script src="js/club/club.js"></script>
 	<script src="js/race/race.js"></script>
-	<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>-->
-	<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>-->
-	<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>-->
 </body>
 </html>
