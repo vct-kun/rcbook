@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>angularjs</artifactId>
-			<version>${angularjs.version}</version>
+			<version>${angular-js.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -67,10 +67,14 @@
 		<wro4j.version>1.7.6</wro4j.version>
 		<java.version>1.8</java.version>
 		<bootstrap.version>3.2.0</bootstrap.version>
-		<angularjs.version>1.3.8</angularjs.version>
-		<fontawesome.version>4.4.0</fontawesome.version>
+		<angular-js.version>1.3.8</angular-js.version>
+		<font-awesome.version>4.4.0</font-awesome.version>
 		<jquery.version>2.1.1</jquery.version>
-		<flagiconcss.version>0.7.1</flagiconcss.version>
+		<flag-icon-css.version>0.7.1</flag-icon-css.version>
+		<angular-material.version>1.0.0</angular-material.version>
+		<angular-animate.version>1.4.8</angular-animate.version>
+		<angular-aria.version>1.4.8</angular-aria.version>
+		<angular-messages.version>1.4.8</angular-messages.version>
 	</properties>
 
 	<build>
@@ -125,7 +129,7 @@
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${project.build.directory}/unpacked/META-INF/resources/webjars/font-awesome/${fontawesome.version}/fonts</directory>
+									<directory>${project.build.directory}/unpacked/META-INF/resources/webjars/font-awesome/${font-awesome.version}/fonts</directory>
 									<includes>
 										<include>**/*</include>
 									</includes>
@@ -165,7 +169,7 @@
 					<dependency>
 						<groupId>org.webjars</groupId>
 						<artifactId>angularjs</artifactId>
-						<version>${angularjs.version}</version>
+						<version>${angular-js.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.webjars</groupId>
@@ -175,12 +179,32 @@
 					<dependency>
 						<groupId>org.webjars</groupId>
 						<artifactId>font-awesome</artifactId>
-						<version>${fontawesome.version}</version>
+						<version>${font-awesome.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.webjars</groupId>
 						<artifactId>flag-icon-css</artifactId>
-						<version>${flagiconcss.version}</version>
+						<version>${flag-icon-css.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.webjars</groupId>
+						<artifactId>angular-material</artifactId>
+						<version>${angular-material.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.webjars.bower</groupId>
+						<artifactId>angular-animate</artifactId>
+						<version>${angular-animate.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.webjars.npm</groupId>
+						<artifactId>angular-aria</artifactId>
+						<version>${angular-aria.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.webjars.bower</groupId>
+						<artifactId>angular-messages</artifactId>
+						<version>${angular-messages.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -204,7 +228,7 @@
 					</additionalContexts>
 					<preloadSources>
 						<source>/lib/angular-bootstrap.js</source>
-						<source>/webjars/angularjs/${angularjs.version}/angular-mocks.js</source>
+						<source>/webjars/angularjs/${angular-js.version}/angular-mocks.js</source>
 					</preloadSources>
 					<jsSrcDir>${project.basedir}/src/main/resources/static/js</jsSrcDir>
 					<jsTestSrcDir>${project.basedir}/src/test/resources/static/js</jsTestSrcDir>
@@ -214,7 +238,7 @@
 					<dependency>
 						<groupId>org.webjars</groupId>
 						<artifactId>angularjs</artifactId>
-						<version>${angularjs.version}</version>
+						<version>${angular-js.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -241,7 +265,7 @@
 								<artifactItem>
 									<groupId>org.webjars</groupId>
 									<artifactId>font-awesome</artifactId>
-									<version>${fontawesome.version}</version>
+									<version>${font-awesome.version}</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 								</artifactItem>
