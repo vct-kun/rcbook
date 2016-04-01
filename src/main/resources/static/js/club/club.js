@@ -15,11 +15,8 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
             $location.path('/mgtclub');
         });
     };
-}).controller('clubController', function($scope, $http, $location, Club) {
-    var test = Club.query(function(){
-        console.log($scope.clubs);
-    });
-    $scope.clubs = test;
+}).controller('clubController', function($scope, $location, clubs) {
+    $scope.clubs = clubs;
     $scope.go = function(club) {
         $location.path('/clubdetails/'+club.id);
     };

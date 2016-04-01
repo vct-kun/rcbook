@@ -43,8 +43,13 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		}
 	}).when('/club', {
 		templateUrl : 'js/club/page_club.html',
-		controller : 'clubController'//,
+		controller : 'clubController',
 		//controllerAs: 'controller'
+		resolve: {
+			clubs : function(Club) {
+				return Club.query();
+			}
+		}
 	}).when('/racedetails/:race_id', {
 		templateUrl : 'js/race/page_race_details.html',
 		controller : 'racedetailsController'//,
