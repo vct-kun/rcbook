@@ -1,7 +1,7 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('club', []).controller('adminclubController', function($scope, $http, $location, Club, $rootScope) {
+angular.module('club', []).controller('adminclubController', function($scope, $location, Club, $rootScope) {
     $scope.club = new Club();
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
@@ -63,19 +63,13 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
         $location.path('/racedetails/'+race.id);
     };
 
-}).controller('clubmgtController', function($scope, $http, $location, Club, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $scope.currentClub = Club.get({id:$rootScope.ownerClub.id}, function(){
-
-    });
-    $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).success(function(data){
-        $scope.races = data;
-    });
+}).controller('clubmgtController', function($scope, $location, Club, currentClub, races) {
+    $scope.currentClub = currentClub;
+    $scope.races = races;
     $scope.goToRace = function() {
         $location.path('/newrace');
     };
     $scope.go = function(race) {
-        console.log(race.id);
         $location.path('/racedetails/'+race.id);
     };
     function indexOfObject(array, object) {
@@ -102,11 +96,8 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
         $scope.currentClub.waitingUsers.splice(index, 1);
         $scope.currentClub.$update();
     };
-}).controller('yourclubController', function($scope, $http, $location, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $http.get(host + '/getClubsByUserId/'+$rootScope.user.id, {}).success(function(data){
-        $scope.clubs = data;
-    });
+}).controller('yourclubController', function($scope, $location, clubs) {
+    $scope.clubs = clubs;
     $scope.go = function(club) {
         $location.path('/clubdetails/'+club.id);
     };

@@ -75,8 +75,19 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		}
 	}).when('/mgtclub', {
 		templateUrl : 'js/club/page_club_owner.html',
-		controller : 'clubmgtController'//,
+		controller : 'clubmgtController',
 		//controllerAs: 'controller'
+		resolve : {
+			currentClub : function(Club, $rootScope) {
+				return Club.get({id:$rootScope.ownerClub.id});
+			},
+			races: function($http, $location, $rootScope) {
+				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+				return $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).then(function (response) {
+					return response.data;
+				})
+			}
+		}
 	}).when('/profile', {
 		templateUrl : 'js/user/profile.html',
 		controller : 'profileController'//,
@@ -87,8 +98,16 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		//controllerAs: 'controller'
 	}).when('/yourclub', {
 		templateUrl : 'js/club/page_club.html',
-		controller : 'yourclubController'//,
+		controller : 'yourclubController',
 		//controllerAs: 'controller'
+		resolve: {
+			clubs: function($http, $location, $rootScope) {
+				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+				return $http.get(host + '/getClubsByUserId/'+$rootScope.user.id).then(function (response) {
+					return response.data;
+				})
+			}
+		}
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
