@@ -3,9 +3,9 @@
  */
 angular.module('rcbook.controllers', []).controller('navigation',
 
-    function($rootScope, $http, $location, $route) {
-        var self = this;
-        self.tab = function(route) {
+    function($rootScope, $http, $location, $route, $scope) {
+        //var self = this;
+        $scope.tab = function(route) {
             return $route.current && route === $route.current.controller;
         };
         var authenticate = function(credentials, callback) {
@@ -39,24 +39,24 @@ angular.module('rcbook.controllers', []).controller('navigation',
             });
         };
 
-        self.credentials = {};
-        self.login = function() {
-            authenticate(self.credentials, function(authenticated) {
+        $scope.credentials = {};
+        $scope.login = function() {
+            authenticate($scope.credentials, function(authenticated) {
                 if (authenticated) {
                     console.log("Login succeeded")
                     $location.path("/home");
-                    self.error = false;
+                    $scope.error = false;
                     $rootScope.authenticated = true;
                 } else {
                     console.log("Login failed")
                     $location.path("/login");
-                    self.error = true;
+                    $scope.error = true;
                     $rootScope.authenticated = false;
                 }
             })
         };
 
-        self.logout = function() {
+        $scope.logout = function() {
             $rootScope.userStatus = '';
             $http.post('logout', {}).finally(function() {
                 $rootScope.authenticated = false;
@@ -64,10 +64,10 @@ angular.module('rcbook.controllers', []).controller('navigation',
             });
         };
         $rootScope.isNewUser = false;
-        self.signup = function(credentials) {
+        $scope.signup = function(credentials) {
             var newUser = {
-                email: self.credentials.username,
-                password: self.credentials.password
+                email: $scope.credentials.username,
+                password: $scope.credentials.password
             };
             $http.post('signup', newUser).success(function(data, status, headers, config) {
                 console.log("user created!");
@@ -75,17 +75,13 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('homeController', function($scope, $http, $location, $rootScope, Race) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    $http.get(host + '/dashboard', {params: {userId: $rootScope.user.id}}).success(function(data) {
-        $scope.dashboard = data;
-    });
-    $scope.races = Race.query();
+    }).controller('homeController', function($scope, $location, dashboard, races) {
+    $scope.dashboard = dashboard;
+    $scope.races = races;
     $scope.go = function (path) {
         $location.path(path);
     };
     $scope.goRace = function(race) {
-        console.log(race.id);
         $location.path('/racedetails/'+race.id);
     };
 }).controller('profileController', function($scope, $http, $location, $rootScope) {
