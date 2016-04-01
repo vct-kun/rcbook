@@ -20,24 +20,21 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
     $scope.go = function(club) {
         $location.path('/clubdetails/'+club.id);
     };
-}).controller('clubdetailsController', function($scope, $http, $location, $routeParams, Club, $rootScope) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    var self = this;
-    self.club_id = $routeParams.club_id;
-    $scope.club = Club.get({id: self.club_id}, function(){
-        var checkUserInClub = function() {
-            for (var i = 0;i<$scope.club.users.length;i++) {
-                if ($scope.club.users[i].id == $rootScope.user.id) {
-                    return true;
-                }
+}).controller('clubdetailsController', function($scope, $location, Club, $rootScope, club, races) {
+    $scope.club = club;
+    $scope.races = races;
+
+    function checkUserInClub(array) {
+        for (var i = 0;i<array.length;i++) {
+            if (array[i].id == $rootScope.user.id) {
+                return true;
             }
-            return false;
-        };
-        $scope.userHasJoined = checkUserInClub();
-    });
-    $http.get(host + '/getRacesByClub', {params: {clubId: self.club_id}}).success(function(data){
-        $scope.races = data;
-    });
+        }
+        return false;
+    }
+
+    $scope.userHasJoined = checkUserInClub($scope.club.users);
+
     $scope.join = function() {
         $scope.club.waitingUsers = $scope.club.waitingUsers.concat($rootScope.user);
         $scope.club.$update(function() {
@@ -63,7 +60,6 @@ angular.module('club', []).controller('adminclubController', function($scope, $h
     };
 
     $scope.go = function(race) {
-        console.log(race.id);
         $location.path('/racedetails/'+race.id);
     };
 

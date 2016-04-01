@@ -60,8 +60,19 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		//controllerAs: 'controller'
 	}).when('/clubdetails/:club_id', {
 		templateUrl : 'js/club/page_club_details.html',
-		controller : 'clubdetailsController'//,
+		controller : 'clubdetailsController',
 		//controllerAs: 'controller'
+		resolve: {
+			club : function(Club, $route) {
+				return Club.get({id: $route.current.params.club_id});
+			},
+			races: function($http, $location, $route) {
+				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+				return $http.get(host + '/getRacesByClub', {params: {clubId: $route.current.params.club_id}}).then(function(response){
+					return response.data;
+				})
+			}
+		}
 	}).when('/mgtclub', {
 		templateUrl : 'js/club/page_club_owner.html',
 		controller : 'clubmgtController'//,
