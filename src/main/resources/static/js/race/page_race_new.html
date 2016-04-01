@@ -1,59 +1,57 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1>Race</h1>
-    <div ng-controller="raceController">
-        <div class="panel panel-default">
-            <div class="panel-heading">Add a new race</div>
-            <div class="panel-body">
-                <form ng-submit="addRace(race)" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="raceName" class="col-sm-5 control-label">Name</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="raceName" ng-model="race.name" class="form-control" />
-                        </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Add a new race</div>
+        <div class="panel-body">
+            <form ng-submit="addRace(race)" class="form-horizontal">
+                <div class="form-group">
+                    <label for="raceName" class="col-sm-5 control-label">Name</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="raceName" ng-model="race.name" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">Start date</label>
-                        <div class="col-sm-7">
-                            <md-datepicker ng-model="race.startDate" md-placeholder="Enter date"></md-datepicker>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Start date</label>
+                    <div class="col-sm-7">
+                        <md-datepicker ng-model="race.startDate" md-placeholder="Enter date"></md-datepicker>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-5 control-label">End date</label>
-                        <div class="col-sm-7">
-                            <md-datepicker ng-model="race.endDate" md-placeholder="Enter date"></md-datepicker>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">End date</label>
+                    <div class="col-sm-7">
+                        <md-datepicker ng-model="race.endDate" md-placeholder="Enter date"></md-datepicker>
                     </div>
-                    <div class="form-group">
-                        <label for="track" class="col-sm-5 control-label">Track</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="track" ng-model="race.track" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="track" class="col-sm-5 control-label">Track</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="track" ng-model="race.track" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label for="town" class="col-sm-5 control-label">Town</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="town" ng-model="race.town" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="town" class="col-sm-5 control-label">Town</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="town" ng-model="race.town" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label for="country" class="col-sm-5 control-label">Country</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="country" ng-model="race.country" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="country" class="col-sm-5 control-label">Country</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="country" ng-model="race.country" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label for="nbDriver" class="col-sm-5 control-label">Number of driver</label>
-                        <div class="col-sm-7">
-                            <input type="text" id="nbDriver" ng-model="race.nbDriver" class="form-control" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="nbDriver" class="col-sm-5 control-label">Number of driver</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="nbDriver" ng-model="race.nbDriver" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default" aria-label="Left Align">Create race</button>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default" aria-label="Left Align">Create race</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
