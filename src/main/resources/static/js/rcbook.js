@@ -1,4 +1,4 @@
-angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race']).config(function($routeProvider, $httpProvider) {
+angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race', 'angular-storage']).config(function($routeProvider, $httpProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl : 'login.html',
@@ -9,9 +9,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		controller : 'homeController',
 		//controllerAs: 'home'//,
 		resolve: {
-			dashboard: function($http, $location, $rootScope) {
+			dashboard: function($http, $location, UserService) {
+				var user = UserService.getCurrentUser();
+				console.log(user);
 				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-				return $http.get(host + '/dashboard', {params: {userId: $rootScope.user.id}}).then(function(response){
+				return $http.get(host + '/dashboard', {params: {userId:user.id}}).then(function(response){
 					return response.data;
 				})
 			},
@@ -133,4 +135,5 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 	}).otherwise('/');
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+	$httpProvider.interceptors.push('APIInterceptor');
 });

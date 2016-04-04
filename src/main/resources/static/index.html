@@ -7,7 +7,7 @@
 			rel="stylesheet">
 </head>
 
-<body ng-app="rcbook">
+<body ng-app="rcbook" ng-controller="mainController as main">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top ng-cloak" ng-cloak>
 		<div class="container">
@@ -22,13 +22,13 @@
 		</div>
 		<div ng-controller="navigation as nav" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right" role="tablist">
-				<li ng-show="authenticated" ng-class="{active:nav.tab('home')}"><a href="#/profile">profile</a></li>
-				<li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
+				<li ng-if="main.currentUser" ng-class="{active:nav.tab('home')}"><a href="#/profile">profile</a></li>
+				<li ng-if="main.currentUser"><a href="" ng-click="logout()">logout</a></li>
 			</ul>
 		</div>
 		</div>
 	</nav>
-	<div ng-show="authenticated" class="col-sm-3 col-md-2 sidebar ng-cloak" ng-cloak>
+	<div ng-if="main.currentUser" class="col-sm-3 col-md-2 sidebar ng-cloak" ng-cloak>
 		<ul class="nav nav-sidebar">
 			<li class="active"><a href="#/home">Overview <span class="sr-only">(current)</span></a></li>
 			<li><a href="#/car">Car</a></li>
@@ -47,5 +47,7 @@
 	<script src="js/car/car.js"></script>
 	<script src="js/club/club.js"></script>
 	<script src="js/race/race.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
 </body>
 </html>
