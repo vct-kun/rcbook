@@ -111,8 +111,13 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		//controllerAs: 'controller'
 	}).when('/closerace/:race_id', {
 		templateUrl : 'js/race/page_race_close.html',
-		controller : 'closeRaceController'//,
+		controller : 'closeRaceController',
 		//controllerAs: 'controller'
+		resolve: {
+			race: function(Race, $route) {
+				return Race.get({id: $route.current.params.race_id});
+			}
+		}
 	}).when('/yourclub', {
 		templateUrl : 'js/club/page_club.html',
 		controller : 'yourclubController',

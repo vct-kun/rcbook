@@ -59,8 +59,8 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     $scope.close = function(race) {
         $location.path('/closerace/'+race.id);
     };
-}).controller('closeRaceController', function($scope, $http, $location, $rootScope, $routeParams, Race) {
-    $scope.race = Race.get({id: $routeParams.race_id});
+}).controller('closeRaceController', function($scope, $http, $location, Race, race) {
+    $scope.race = race;
     $scope.close = function(race) {
         $scope.race = race;
         $scope.race.closed = true;
