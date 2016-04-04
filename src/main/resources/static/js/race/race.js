@@ -12,26 +12,15 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
             $location.path('/mgtclub');
         });
     };
-}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope, Driver) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope, Driver, race, cars, userInRace) {
     var self = this;
     self.race_id = $routeParams.race_id;
     $scope.cars = [];
     $scope.userHasJoined = false;
     $scope.noCarSelected = false;
-    $scope.race = Race.get({id: self.race_id}, function(){
-        console.log($scope.race);
-        var checkUserInRace = function() {
-            for (var i = 0;i<$scope.race.joinedDriver.length;i++) {
-                if ($scope.race.joinedDriver[i].user.id == $rootScope.user.id) {
-                    $scope.currentDriver = $scope.race.joinedDriver[i];
-                    return true;
-                }
-            }
-            return false;
-        };
-        $scope.userHasJoined = checkUserInRace();
-    });
+    $scope.race = race;
+    $scope.cars = cars;
+    $scope.userHasJoined = userInRace;
 
     $scope.join = function() {
         $scope.driver = new Driver();
@@ -67,9 +56,6 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
         });
     };
 
-    $http.get(host + '/getCarByUserId', {params : {userId: $rootScope.user.id}}).success(function(data){
-        $scope.cars = data;
-    });
     $scope.close = function(race) {
         $location.path('/closerace/'+race.id);
     };

@@ -52,8 +52,25 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		}
 	}).when('/racedetails/:race_id', {
 		templateUrl : 'js/race/page_race_details.html',
-		controller : 'racedetailsController'//,
+		controller : 'racedetailsController',
 		//controllerAs: 'controller'
+		resolve: {
+			race: function(Race, $route) {
+				return Race.get({id: $route.current.params.race_id});
+			},
+			userInRace: function($location, $http, $route, $rootScope) {
+				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+				return $http.get(host + '/isUserInRace/'+$route.current.params.race_id+'/'+$rootScope.user.id).then(function (response) {
+					return response.data;
+				})
+			},
+			cars: function($http, $location, $rootScope) {
+				var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+				return $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
+					return response.data;
+				})
+			}
+		}
 	}).when('/adminclub', {
 		templateUrl : 'js/club/page_club_new.html',
 		controller : 'adminclubController'//,

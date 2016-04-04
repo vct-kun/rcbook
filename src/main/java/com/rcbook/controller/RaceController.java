@@ -59,4 +59,15 @@ public class RaceController {
     public @ResponseBody Driver addDriver(@RequestBody Driver driver) {
         return driverService.createDriver(driver);
     }
+
+    @RequestMapping(value = "/isUserInRace/{raceId}/{userId}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody boolean isUserInRace(@PathVariable String raceId, @PathVariable String userId) {
+        Race race = raceService.getRaceById(Long.valueOf(raceId));
+        for (Driver driver : race.getJoinedDriver()) {
+            if (driver.getUser().getId() == Long.valueOf(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
