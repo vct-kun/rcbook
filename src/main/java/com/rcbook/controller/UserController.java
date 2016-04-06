@@ -1,7 +1,10 @@
 package com.rcbook.controller;
 
+import com.rcbook.configuration.PasswordService;
+import com.rcbook.configuration.TokenHandler;
 import com.rcbook.domain.User;
 import com.rcbook.domain.UserCreateForm;
+import com.rcbook.service.currentuser.CurrentUserDetailsService;
 import com.rcbook.service.user.CarService;
 import com.rcbook.service.user.RaceService;
 import com.rcbook.service.user.UserService;
@@ -31,6 +34,12 @@ public class UserController {
     @Autowired
     private RaceService raceService;
 
+    @Autowired
+    private CurrentUserDetailsService currentUserDetailsService;
+
+    @Autowired
+    private TokenHandler tokenHandler;
+
     @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;
@@ -52,6 +61,42 @@ public class UserController {
             userService.create(userCreateForm);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
+    public ResponseEntity<Token> login(@RequestBody UserCreateForm userCreateForm) {
+        Optional<User> user = userService.getUserByEmail(userCreateForm.getEmail());
+        if (user.isPresent() && PasswordService.checkPassword(userCreateForm.getPassword(), user.get().getPasswordHash())) {
+            String token = tokenHandler.createTokenForUser(user.get());
+            return ResponseEntity.ok(new Token(token));
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public @ResponseBody User getUserById(@PathVariable String id) {
+        Optional<User> user = userService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return null;
+    }
+
+
+    class Token {
+        private String token;
+
+        public Token(String token) {
+            this.token = token;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
     }
 
 }

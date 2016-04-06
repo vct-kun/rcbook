@@ -1,14 +1,17 @@
 package com.rcbook.configuration;
 
+import com.rcbook.service.currentuser.CurrentUserDetailsService;
+import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -28,48 +31,32 @@ import java.io.IOException;
  * Created by vctran on 25/03/16.
  */
 @Configuration
+@EnableWebSecurity
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private CurrentUserDetailsService userDetailsService;
+
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and().authorizeRequests()
-                .antMatchers("/index.html", "/login.html", "/", "/signup").permitAll().anyRequest()
-                .authenticated().and().csrf()
-                .csrfTokenRepository(csrfTokenRepository()).and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
-    }
-
-    private Filter csrfHeaderFilter() {
-        return new OncePerRequestFilter() {
-            @Override
-            protected void doFilterInternal(HttpServletRequest request,
-                                            HttpServletResponse response, FilterChain filterChain)
-                    throws ServletException, IOException {
-                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
-                        .getName());
-                if (csrf != null) {
-                    Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
-                    String token = csrf.getToken();
-                    if (cookie == null || token != null
-                            && !token.equals(cookie.getValue())) {
-                        cookie = new Cookie("XSRF-TOKEN", token);
-                        cookie.setPath("/");
-                        response.addCookie(cookie);
-                    }
-                }
-                filterChain.doFilter(request, response);
-            }
-        };
-    }
-
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
+        http
+                .exceptionHandling().and()
+                .anonymous().and()
+                .servletApi().and()
+                .headers().and()
+                .authorizeRequests()
+                .antMatchers("/index.html", "/login.html", "/", "/signup").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated().and()
+                .csrf().disable()
+                .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -78,5 +65,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
-
 }
+

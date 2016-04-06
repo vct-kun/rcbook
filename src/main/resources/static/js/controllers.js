@@ -88,7 +88,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 }).controller('profileController', function($scope, $http, $location, $rootScope) {
     $scope.user = $rootScope.user;
-}).controller('mainController', function($rootScope, UserService){
+}).controller('mainController', function($rootScope, UserService, $state, $auth, $scope, $location){
     var main = this;
     $rootScope.$on('authorized', function() {
         main.currentUser = UserService.getCurrentUser();
@@ -97,9 +97,33 @@ angular.module('rcbook.controllers', []).controller('navigation',
 
     $rootScope.$on('unauthorized', function() {
         main.currentUser = UserService.setCurrentUser(null);
-        //$state.go('login');
-        $location.go('/');
+        console.log('main controller not authenticated');
+        $state.go('login');
     });
 
     main.currentUser = UserService.getCurrentUser();
+
+    $scope.logout = function() {
+        $auth.logout();
+        $rootScope.authenticated = false;
+        $location.path("/");
+    };
+}).controller('loginController', function($scope, $auth, $rootScope, $state, $http, $location){
+    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+    $rootScope.isNewUser = false;
+    $scope.credentials = {};
+    $scope.login = function() {
+        var user = {
+            email: $scope.credentials.username,
+            password: $scope.credentials.password
+        };
+        $auth.login(user).then(function (response) {
+            $rootScope.$broadcast('authorized');
+            $auth.setToken(response);
+            $http.get(host + '/user/' + $auth.getPayload().sub).then(function(response){
+               $rootScope.user = response.data;
+            });
+            $state.go('home');
+        });
+    };
 });
