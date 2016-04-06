@@ -2,140 +2,6 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 
 	$urlRouterProvider.otherwise('/');
 
-	//$routeProvider.when('/', {
-	//	templateUrl : 'login.html',
-	//	controller : 'loginController'//,
-	//	//controllerAs: 'controller'
-	//}).when('/home', {
-	//	templateUrl : 'home.html',
-	//	controller : 'homeController',
-	//	//controllerAs: 'home'//,
-	//	resolve: {
-	//		dashboard: function($http, $location, UserService, $auth) {
-	//			var user = UserService.getCurrentUser();
-	//			console.log(user);
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/dashboard', {params: {userId:$auth.getPayload().sub}}).then(function(response){
-	//				return response.data;
-	//			})
-	//		},
-	//		races: function(Race) {
-	//			return Race.query();
-	//		}
-	//	}
-	//}).when('/newrace', {
-	//	templateUrl : 'js/race/page_race_new.html',
-	//	controller : 'raceController'//,
-	//	//controllerAs: 'controller'
-	//}).when('/car', {
-	//	templateUrl : 'js/car/page_car.html',
-	//	controller : 'carController',
-	//	//controllerAs: 'controller',
-	//	resolve: {
-	//		master: function($http, $location, $rootScope) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function(response){
-	//				return response.data;
-	//			})
-	//		},
-	//		brands : function($http, $location) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getBrands').then(function(response){
-	//				return response.data;
-	//			})
-	//		}
-	//	}
-	//}).when('/club', {
-	//	templateUrl : 'js/club/page_club.html',
-	//	controller : 'clubController',
-	//	//controllerAs: 'controller'
-	//	resolve: {
-	//		clubs : function(Club) {
-	//			return Club.query();
-	//		}
-	//	}
-	//}).when('/racedetails/:race_id', {
-	//	templateUrl : 'js/race/page_race_details.html',
-	//	controller : 'racedetailsController',
-	//	//controllerAs: 'controller'
-	//	resolve: {
-	//		race: function(Race, $route) {
-	//			return Race.get({id: $route.current.params.race_id});
-	//		},
-	//		userInRace: function($location, $http, $route, $rootScope) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/isUserInRace/'+$route.current.params.race_id+'/'+$rootScope.user.id).then(function (response) {
-	//				return response.data;
-	//			})
-	//		},
-	//		cars: function($http, $location, $rootScope) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
-	//				return response.data;
-	//			})
-	//		}
-	//	}
-	//}).when('/adminclub', {
-	//	templateUrl : 'js/club/page_club_new.html',
-	//	controller : 'adminclubController'//,
-	//	//controllerAs: 'controller'
-	//}).when('/clubdetails/:club_id', {
-	//	templateUrl : 'js/club/page_club_details.html',
-	//	controller : 'clubdetailsController',
-	//	//controllerAs: 'controller'
-	//	resolve: {
-	//		club : function(Club, $route) {
-	//			return Club.get({id: $route.current.params.club_id});
-	//		},
-	//		races: function($http, $location, $route) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getRacesByClub', {params: {clubId: $route.current.params.club_id}}).then(function(response){
-	//				return response.data;
-	//			})
-	//		}
-	//	}
-	//}).when('/mgtclub', {
-	//	templateUrl : 'js/club/page_club_owner.html',
-	//	controller : 'clubmgtController',
-	//	//controllerAs: 'controller'
-	//	resolve : {
-	//		currentClub : function(Club, $rootScope) {
-	//			return Club.get({id:$rootScope.ownerClub.id});
-	//		},
-	//		races: function($http, $location, $rootScope) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).then(function (response) {
-	//				return response.data;
-	//			})
-	//		}
-	//	}
-	//}).when('/profile', {
-	//	templateUrl : 'js/user/profile.html',
-	//	controller : 'profileController'//,
-	//	//controllerAs: 'controller'
-	//}).when('/closerace/:race_id', {
-	//	templateUrl : 'js/race/page_race_close.html',
-	//	controller : 'closeRaceController',
-	//	//controllerAs: 'controller'
-	//	resolve: {
-	//		race: function(Race, $route) {
-	//			return Race.get({id: $route.current.params.race_id});
-	//		}
-	//	}
-	//}).when('/yourclub', {
-	//	templateUrl : 'js/club/page_club.html',
-	//	controller : 'yourclubController',
-	//	//controllerAs: 'controller'
-	//	resolve: {
-	//		clubs: function($http, $location, $rootScope) {
-	//			var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-	//			return $http.get(host + '/getClubsByUserId/'+$rootScope.user.id).then(function (response) {
-	//				return response.data;
-	//			})
-	//		}
-	//	}
-	//}).otherwise('/');
-
 	$stateProvider
 		.state('login', {
 			url: '/',
@@ -148,9 +14,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			controller: 'homeController',
 			resolve: {
 				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
-				dashboard: function($http, $location, UserService, $auth) {
-					var user = UserService.getCurrentUser();
-					console.log(user);
+				dashboard: function($http, $location, $auth) {
 					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
 					return $http.get(host + '/dashboard', {params: {userId:$auth.getPayload().sub}}).then(function(response){
 						return response.data;
@@ -159,6 +23,14 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				races: function(Race) {
 					return Race.query();
 				}
+			}
+		})
+		.state('newrace', {
+			url: '/newrace',
+			templateUrl : 'js/race/page_race_new.html',
+			controller : 'raceController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated
 			}
 		})
 		.state('car', {
@@ -180,7 +52,117 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 						})
 					}
 				}
+		})
+		.state('club', {
+			url: '/club',
+			templateUrl : 'js/club/page_club.html',
+			controller : 'clubController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				clubs : function(Club) {
+					return Club.query();
+				}
+			}
+		})
+		.state('racedetails', {
+			url: '/racedetails/:race_id',
+			templateUrl : 'js/race/page_race_details.html',
+			controller : 'racedetailsController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				race: function (Race, $stateParams) {
+					return Race.get({id: $stateParams.race_id});
+				},
+				userInRace: function ($location, $http, $rootScope, $stateParams) {
+					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+					return $http.get(host + '/isUserInRace/' + $stateParams.race_id + '/' + $rootScope.user.id).then(function (response) {
+						return response.data;
+					})
+				},
+				cars: function ($http, $location, $rootScope) {
+					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+					return $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
+						return response.data;
+					})
+				}
+			}
+		})
+		.state('adminclub', {
+			url: '/adminclub',
+			templateUrl : 'js/club/page_club_new.html',
+			controller : 'adminclubController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated
+			}
+		})
+		.state('clubdetails', {
+			url: '/clubdetails/:club_id',
+			templateUrl : 'js/club/page_club_details.html',
+			controller : 'clubdetailsController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				club : function(Club, $stateParams) {
+					return Club.get({id: $stateParams.club_id});
+				},
+				races: function($http, $location, $stateParams) {
+					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+					return $http.get(host + '/getRacesByClub', {params: {clubId: $stateParams.club_id}}).then(function(response){
+						return response.data;
+					})
+				}
+			}
+		})
+		.state('mgtclub', {
+			url: '/mgtclub',
+			templateUrl : 'js/club/page_club_owner.html',
+			controller : 'clubmgtController',
+			resolve : {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				currentClub : function(Club, $rootScope) {
+					return Club.get({id:$rootScope.ownerClub.id});
+				},
+				races: function($http, $location, $rootScope) {
+					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+					return $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).then(function (response) {
+						return response.data;
+					})
+				}
+			}
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl : 'js/user/profile.html',
+			controller : 'profileController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated
+			}
+		})
+		.state('closerace', {
+			url: '/closerace/:race_id',
+			templateUrl : 'js/race/page_race_close.html',
+			controller : 'closeRaceController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				race: function(Race, $stateParams) {
+					return Race.get({id: $stateParams.race_id});
+				}
+			}
+		})
+		.state('yourclub', {
+			url: '/yourclub',
+			templateUrl : 'js/club/page_club.html',
+			controller : 'yourclubController',
+			resolve: {
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				clubs: function($http, $location, $rootScope) {
+					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+					return $http.get(host + '/getClubsByUserId/'+$rootScope.user.id).then(function (response) {
+						return response.data;
+					})
+				}
+			}
 		});
+
 
 	function _redirectIfNotAuthenticated($q, $state, $auth) {
 		var defer = $q.defer();
@@ -197,7 +179,5 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 	}
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	$httpProvider.interceptors.push('APIInterceptor');
-
 	$authProvider.loginUrl = '/demo-0.0.1-SNAPSHOT/auth/login';
 });

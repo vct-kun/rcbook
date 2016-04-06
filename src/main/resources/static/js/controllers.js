@@ -3,7 +3,7 @@
  */
 angular.module('rcbook.controllers', []).controller('navigation',
 
-    function($rootScope, $http, $location, $route, $scope, UserService) {
+    function($rootScope, $http, $location, $route, $scope) {
         //var self = this;
         $scope.tab = function(route) {
             return $route.current && route === $route.current.controller;
@@ -20,8 +20,6 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 if (data.name) {
                     $rootScope.authenticated = true;
                     $rootScope.user = data.principal.user;
-                    UserService.setCurrentUser(data.principal.user);
-                    $rootScope.$broadcast('authorized');
                     $rootScope.isOwner = data.principal.user.role == 'OWNER';
                     if ($rootScope.isOwner) {
                         $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
@@ -88,25 +86,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     };
 }).controller('profileController', function($scope, $http, $location, $rootScope) {
     $scope.user = $rootScope.user;
-}).controller('mainController', function($rootScope, UserService, $state, $auth, $scope, $location){
-    var main = this;
-    $rootScope.$on('authorized', function() {
-        main.currentUser = UserService.getCurrentUser();
-        $rootScope.authenticated = true;
-    });
-
-    $rootScope.$on('unauthorized', function() {
-        main.currentUser = UserService.setCurrentUser(null);
-        console.log('main controller not authenticated');
-        $state.go('login');
-    });
-
-    main.currentUser = UserService.getCurrentUser();
-
+}).controller('mainController', function($rootScope, $state, $auth, $scope){
     $scope.logout = function() {
         $auth.logout();
         $rootScope.authenticated = false;
-        $location.path("/");
+        $state.go("login");
     };
 }).controller('loginController', function($scope, $auth, $rootScope, $state, $http, $location){
     var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
@@ -118,10 +102,19 @@ angular.module('rcbook.controllers', []).controller('navigation',
             password: $scope.credentials.password
         };
         $auth.login(user).then(function (response) {
-            $rootScope.$broadcast('authorized');
             $auth.setToken(response);
+            $rootScope.authenticated = true;
             $http.get(host + '/user/' + $auth.getPayload().sub).then(function(response){
-               $rootScope.user = response.data;
+                $rootScope.user = response.data;
+                $rootScope.isOwner = $rootScope.user.role == 'OWNER';
+                if ($rootScope.isOwner) {
+                    $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+                        $rootScope.ownerClub = data;
+                    });
+                }
+                $http.get('userHasClub', {params: {userId :$rootScope.user.id }}).success(function(data) {
+                    $rootScope.haveClub = data;
+                });
             });
             $state.go('home');
         });
