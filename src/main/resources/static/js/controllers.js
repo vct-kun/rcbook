@@ -75,14 +75,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('homeController', function($scope, $location, dashboard, races) {
+    }).controller('homeController', function($scope, $state, dashboard, races) {
     $scope.dashboard = dashboard;
     $scope.races = races;
-    $scope.go = function (path) {
-        $location.path(path);
-    };
     $scope.goRace = function(race) {
-        $location.path('/racedetails/'+race.id);
+        $state.go('racedetails', {race_id:race.id});
     };
 }).controller('profileController', function($scope, $rootScope) {
     $scope.user = $rootScope.user;
