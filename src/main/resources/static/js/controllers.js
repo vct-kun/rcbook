@@ -92,8 +92,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $rootScope.authenticated = false;
         $state.go("login");
     };
-}).controller('loginController', function($scope, $auth, $rootScope, $state, $http, $location){
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+}).controller('loginController', function($scope, $auth, $rootScope, $state, $http){
     $rootScope.isNewUser = false;
     $scope.credentials = {};
     $scope.login = function() {
@@ -104,7 +103,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $auth.login(user).then(function (response) {
             $auth.setToken(response);
             $rootScope.authenticated = true;
-            $http.get(host + '/user/' + $auth.getPayload().sub).then(function(response){
+            $http.get('user/' + $auth.getPayload().sub).then(function(response){
                 $rootScope.user = response.data;
                 $rootScope.isOwner = $rootScope.user.role == 'OWNER';
                 if ($rootScope.isOwner) {

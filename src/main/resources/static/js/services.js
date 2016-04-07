@@ -1,9 +1,8 @@
 /**
  * Created by vctran on 17/03/16.
  */
-angular.module('rcbook.services', []).factory('Race', function($location, $resource) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    return $resource(host + '/race/:id', { id: '@id'}, {
+angular.module('rcbook.services', []).factory('Race', function($resource) {
+    return $resource('race/:id', { id: '@id'}, {
         update: {
             method: 'PUT'
         }
@@ -15,9 +14,8 @@ angular.module('rcbook.services', []).factory('Race', function($location, $resou
             method: 'PUT'
         }
     });
-}).factory('Car', function($location, $resource) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    return $resource(host + '/car/:id', { id: '@id'}, {
+}).factory('Car', function($resource) {
+    return $resource('car/:id', { id: '@id'}, {
         update: {
             method: 'PUT'
         }
@@ -29,4 +27,13 @@ angular.module('rcbook.services', []).factory('Race', function($location, $resou
             method: 'PUT'
         }
     });
+}).factory('loginInterceptor', function() {
+    return {
+        'request': function(config) {
+            if (config.url.contains("auth")) {
+                config.url = config.url.substring(1);
+            }
+            return config;
+        }
+    }
 });

@@ -1,8 +1,7 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('car', []).controller('carController', function($scope, $http, $location, Car, $rootScope, master, brands) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
+angular.module('car', []).controller('carController', function($scope, $http, Car, $rootScope, master, brands) {
     $scope.master = master;
     $scope.brands = brands;
     $scope.car = new Car();
@@ -15,7 +14,7 @@ angular.module('car', []).controller('carController', function($scope, $http, $l
         });
     };
     $scope.getChassis = function() {
-        $http.get(host + '/getChassis', {params: {brandId :$scope.currentBrand.id}}).success(function(data){
+        $http.get('getChassis', {params: {brandId :$scope.currentBrand.id}}).success(function(data){
             $scope.chassisList = data;
         });
     };

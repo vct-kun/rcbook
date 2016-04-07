@@ -15,8 +15,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			resolve: {
 				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
 				dashboard: function($http, $location, $auth) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/dashboard', {params: {userId:$auth.getPayload().sub}}).then(function(response){
+					return $http.get('dashboard', {params: {userId:$auth.getPayload().sub}}).then(function(response){
 						return response.data;
 					})
 				},
@@ -179,5 +178,5 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 	}
 
 	$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	$authProvider.loginUrl = '/demo-0.0.1-SNAPSHOT/auth/login';
+	$httpProvider.interceptors.push('loginInterceptor');
 });
