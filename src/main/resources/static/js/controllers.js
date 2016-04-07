@@ -97,6 +97,11 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.goRace = function(race) {
         $state.go('racedetails', {race_id:race.id});
     };
+    $scope.pay = function() {
+        $http.get('payment').success(function() {
+
+        });
+    }
 }).controller('profileController', function($scope, $rootScope) {
     $scope.user = $rootScope.user;
 }).controller('mainController', function($rootScope, $state, $auth, $scope){

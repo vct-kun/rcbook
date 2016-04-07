@@ -28,7 +28,7 @@ angular.module('rcbook.services', []).factory('Race', function($resource) {
 }).factory('loginInterceptor', function() {
     return {
         'request': function(config) {
-            if (config.url.contains("auth")) {
+            if (config.url.indexOf("auth") > -1) {
                 config.url = config.url.substring(1);
             }
             return config;

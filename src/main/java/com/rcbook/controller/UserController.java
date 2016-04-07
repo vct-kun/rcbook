@@ -115,7 +115,7 @@ public class UserController {
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal?cancel=true");
-        redirectUrls.setReturnUrl("http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/payment2");
+        redirectUrls.setReturnUrl("http://localhost:8080/rcbook-0.0.1-SNAPSHOT/payment2");
         payment.setRedirectUrls(redirectUrls);
 
         Payment createdPayment = payment.create(apiContext);
@@ -128,7 +128,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment2", method = RequestMethod.GET)
-    public RedirectView executePayment(@RequestParam("")) throws Exception {
+    public RedirectView executePayment(@RequestParam("paymentId") String id) throws Exception {
         Map<String, String> sdkConfig = new HashMap<String, String>();
         sdkConfig.put("mode", "sandbox");
         String accessToken = "Bearer A101.efzMtOG66PzLP0VOT8IsB5iWITK9JWx2qIqgHilLkPuT4-HoyzPcydQ9zsSrPMca.SSvvJdQKvMIu73a4DAsmNASu158";
@@ -136,11 +136,12 @@ public class UserController {
         apiContext.setConfigurationMap(sdkConfig);
 
         Payment payment = new Payment();
-        payment.setId("PAY-70L235647Y816093FK4DH7HA");
+        payment.setId(id);
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId("Z7B2YXBPZ3HPS");
-        payment.execute(apiContext, paymentExecute);
-        return new RedirectView("#/home");
+        Payment payment2 = payment.execute(apiContext, paymentExecute);
+        payment2.getState();
+        return new RedirectView("http://localhost:8080/rcbook-0.0.1-SNAPSHOT/");
     }
 
     class Token {
