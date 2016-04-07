@@ -84,7 +84,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.goRace = function(race) {
         $location.path('/racedetails/'+race.id);
     };
-}).controller('profileController', function($scope, $http, $location, $rootScope) {
+}).controller('profileController', function($scope, $rootScope) {
     $scope.user = $rootScope.user;
 }).controller('mainController', function($rootScope, $state, $auth, $scope){
     $scope.logout = function() {

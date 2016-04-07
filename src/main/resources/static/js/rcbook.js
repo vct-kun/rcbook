@@ -14,7 +14,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			controller: 'homeController',
 			resolve: {
 				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
-				dashboard: function($http, $location, $auth) {
+				dashboard: function($http, $auth) {
 					return $http.get('dashboard', {params: {userId:$auth.getPayload().sub}}).then(function(response){
 						return response.data;
 					})
@@ -38,15 +38,13 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			controller : 'carController',
 			resolve: {
 					redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
-					master: function($http, $location, $auth) {
-						var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-						return $http.get(host + '/getCarByUserId', {params: {userId:$auth.getPayload().sub}}).then(function(response){
+					master: function($http, $auth) {
+						return $http.get('getCarByUserId', {params: {userId:$auth.getPayload().sub}}).then(function(response){
 							return response.data;
 						})
 					},
-					brands : function($http, $location) {
-						var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-						return $http.get(host + '/getBrands').then(function(response){
+					brands : function($http) {
+						return $http.get('getBrands').then(function(response){
 							return response.data;
 						})
 					}
@@ -72,15 +70,13 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				race: function (Race, $stateParams) {
 					return Race.get({id: $stateParams.race_id});
 				},
-				userInRace: function ($location, $http, $rootScope, $stateParams) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/isUserInRace/' + $stateParams.race_id + '/' + $rootScope.user.id).then(function (response) {
+				userInRace: function ($http, $rootScope, $stateParams) {
+					return $http.get('isUserInRace/' + $stateParams.race_id + '/' + $rootScope.user.id).then(function (response) {
 						return response.data;
 					})
 				},
-				cars: function ($http, $location, $rootScope) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
+				cars: function ($http, $rootScope) {
+					return $http.get('getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
 						return response.data;
 					})
 				}
@@ -103,9 +99,8 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				club : function(Club, $stateParams) {
 					return Club.get({id: $stateParams.club_id});
 				},
-				races: function($http, $location, $stateParams) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/getRacesByClub', {params: {clubId: $stateParams.club_id}}).then(function(response){
+				races: function($http, $stateParams) {
+					return $http.get('getRacesByClub', {params: {clubId: $stateParams.club_id}}).then(function(response){
 						return response.data;
 					})
 				}
@@ -120,9 +115,8 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				currentClub : function(Club, $rootScope) {
 					return Club.get({id:$rootScope.ownerClub.id});
 				},
-				races: function($http, $location, $rootScope) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).then(function (response) {
+				races: function($http, $rootScope) {
+					return $http.get('getRacesByClub', {params: {clubId: $rootScope.ownerClub.id}}).then(function (response) {
 						return response.data;
 					})
 				}
@@ -153,9 +147,8 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			controller : 'yourclubController',
 			resolve: {
 				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
-				clubs: function($http, $location, $rootScope) {
-					var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-					return $http.get(host + '/getClubsByUserId/'+$rootScope.user.id).then(function (response) {
+				clubs: function($http, $rootScope) {
+					return $http.get('getClubsByUserId/'+$rootScope.user.id).then(function (response) {
 						return response.data;
 					})
 				}

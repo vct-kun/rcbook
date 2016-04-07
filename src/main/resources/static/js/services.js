@@ -7,9 +7,8 @@ angular.module('rcbook.services', []).factory('Race', function($resource) {
             method: 'PUT'
         }
     });
-}).factory('Club', function($location, $resource) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    return $resource(host + '/club/:id', { id: '@id'}, {
+}).factory('Club', function($resource) {
+    return $resource('club/:id', { id: '@id'}, {
         update: {
             method: 'PUT'
         }
@@ -20,9 +19,8 @@ angular.module('rcbook.services', []).factory('Race', function($resource) {
             method: 'PUT'
         }
     });
-}).factory('Driver', function($location, $resource) {
-    var host = $location.protocol() + "://" + $location.host() + ":" + $location.port() + "/" + $location.absUrl().split("/")[3];
-    return $resource(host + '/driver/:id', { id: '@id'}, {
+}).factory('Driver', function($resource) {
+    return $resource('driver/:id', { id: '@id'}, {
         update: {
             method: 'PUT'
         }
