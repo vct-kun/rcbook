@@ -75,7 +75,23 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('homeController', function($scope, $state, dashboard, races) {
+    }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
+    console.log("Authenticated"+$auth.isAuthenticated());
+    if ($auth.isAuthenticated()) {
+        $rootScope.authenticated = true;
+        $http.get('user/' + $auth.getPayload().sub).then(function(response){
+            $rootScope.user = response.data;
+            $rootScope.isOwner = $rootScope.user.role == 'OWNER';
+            if ($rootScope.isOwner) {
+                $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+                    $rootScope.ownerClub = data;
+                });
+            }
+            $http.get('userHasClub', {params: {userId :$rootScope.user.id }}).success(function(data) {
+                $rootScope.haveClub = data;
+            });
+        });
+    }
     $scope.dashboard = dashboard;
     $scope.races = races;
     $scope.goRace = function(race) {
@@ -89,7 +105,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $rootScope.authenticated = false;
         $state.go("login");
     };
-}).controller('loginController', function($scope, $auth, $rootScope, $state, $http){
+}).controller('loginController', function($scope, $auth, $rootScope, $state){
     $rootScope.isNewUser = false;
     $scope.credentials = {};
     $scope.login = function() {
@@ -100,19 +116,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $auth.login(user).then(function (response) {
             $auth.setToken(response);
             $rootScope.authenticated = true;
-            $http.get('user/' + $auth.getPayload().sub).then(function(response){
-                $rootScope.user = response.data;
-                $rootScope.isOwner = $rootScope.user.role == 'OWNER';
-                if ($rootScope.isOwner) {
-                    $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
-                        $rootScope.ownerClub = data;
-                    });
-                }
-                $http.get('userHasClub', {params: {userId :$rootScope.user.id }}).success(function(data) {
-                    $rootScope.haveClub = data;
-                });
-            });
             $state.go('home');
         });
     };
+}).controller('paymentController', function($state){
+    $state.go('home');
 });

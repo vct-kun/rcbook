@@ -153,6 +153,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 					})
 				}
 			}
+		})
+		.state('payment', {
+			url: '/payment',
+			templateUrl: 'js/payment.html',
+			controller: 'paymentController'
 		});
 
 
