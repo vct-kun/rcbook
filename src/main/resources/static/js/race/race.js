@@ -1,7 +1,7 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('race', []).controller('raceController', function($scope, $http, $location, $rootScope, Race) {
+angular.module('race', []).controller('raceController', function($scope, $state, $rootScope, Race) {
     $scope.currentClub = $rootScope.ownerClub;
     $scope.race = new Race();
     $scope.race.joinedDriver = [];
@@ -9,12 +9,10 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     $scope.addRace = function() {
         $scope.race.$save(function(){
             $rootScope.ownerClub = $scope.currentClub;
-            $location.path('/mgtclub');
+            $state.go('mgtclub');
         });
     };
-}).controller('racedetailsController', function($scope, $http, $location, $routeParams, Race, $rootScope, Driver, race, cars, userInRace) {
-    var self = this;
-    self.race_id = $routeParams.race_id;
+}).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, userInRace) {
     $scope.cars = [];
     $scope.userHasJoined = false;
     $scope.noCarSelected = false;
@@ -57,15 +55,15 @@ angular.module('race', []).controller('raceController', function($scope, $http, 
     };
 
     $scope.close = function(race) {
-        $location.path('/closerace/'+race.id);
+        $state.go('closerace', {race_id:race.id});
     };
-}).controller('closeRaceController', function($scope, $http, $location, Race, race) {
+}).controller('closeRaceController', function($scope, $state, race) {
     $scope.race = race;
     $scope.close = function(race) {
         $scope.race = race;
         $scope.race.closed = true;
         $scope.race.$update(function(){
-            $location.path('/racedetails/'+race.id);
+            $state.go('racedetails', {race_id:race.id});
         });
     };
 });
