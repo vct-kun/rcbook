@@ -87,7 +87,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public RedirectView payment() throws Exception {
+    public Test payment() throws Exception {
         Map<String, String> sdkConfig = new HashMap<String, String>();
         sdkConfig.put("mode", "sandbox");
         String accessToken = new OAuthTokenCredential("AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd", "EL1tVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX", sdkConfig).getAccessToken();
@@ -115,16 +115,18 @@ public class UserController {
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal?cancel=true");
-        redirectUrls.setReturnUrl("http://localhost:8080/rcbook-0.0.1-SNAPSHOT/payment2");
+        redirectUrls.setReturnUrl("http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/payment2");
         payment.setRedirectUrls(redirectUrls);
 
         Payment createdPayment = payment.create(apiContext);
         for (Links links : createdPayment.getLinks()) {
             if (links.getMethod().equals("REDIRECT")) {
-                return new RedirectView(links.getHref());
+                Test test = new Test();
+                test.setUrl(links.getHref());
+                return test;
             }
         }
-        return new RedirectView("#/home");
+        return null;
     }
 
     @RequestMapping(value = "/payment2", method = RequestMethod.GET)
@@ -141,7 +143,7 @@ public class UserController {
         paymentExecute.setPayerId("Z7B2YXBPZ3HPS");
         Payment payment2 = payment.execute(apiContext, paymentExecute);
         payment2.getState();
-        return new RedirectView("http://localhost:8080/rcbook-0.0.1-SNAPSHOT/");
+        return new RedirectView("http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/");
     }
 
     class Token {
@@ -160,4 +162,15 @@ public class UserController {
         }
     }
 
+    class Test {
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+    }
 }

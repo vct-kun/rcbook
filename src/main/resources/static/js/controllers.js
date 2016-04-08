@@ -98,8 +98,9 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $state.go('racedetails', {race_id:race.id});
     };
     $scope.pay = function() {
-        $http.get('payment').success(function() {
-
+        $http.get('payment').success(function(data) {
+            console.log(data);
+            $location.path(data);
         });
     }
 }).controller('profileController', function($scope, $rootScope) {
