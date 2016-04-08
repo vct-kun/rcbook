@@ -75,7 +75,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
+    }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http, $window) {
     console.log("Authenticated"+$auth.isAuthenticated());
     if ($auth.isAuthenticated()) {
         $rootScope.authenticated = true;
@@ -100,7 +100,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.pay = function() {
         $http.get('payment').success(function(data) {
             console.log(data);
-            $location.path(data);
+            $window.location.href = data.url;
         });
     }
 }).controller('profileController', function($scope, $rootScope) {
