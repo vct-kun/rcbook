@@ -103,7 +103,7 @@ public class UserController {
         transaction.setDescription("creating a payment");
         transaction.setAmount(amount);
 
-        List<Transaction> transactions = new ArrayList<Transaction>();
+        List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
         Payer payer = new Payer();
@@ -115,7 +115,7 @@ public class UserController {
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal?cancel=true");
-        redirectUrls.setReturnUrl("http://localhost:8080/rcbook-0.0.1-SNAPSHOT/payment2");
+        redirectUrls.setReturnUrl("http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/payment2");
         payment.setRedirectUrls(redirectUrls);
 
         Payment createdPayment = payment.create(apiContext);
@@ -130,8 +130,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment2", method = RequestMethod.GET)
-    public RedirectView executePayment(@RequestParam("paymentId") String id) throws Exception {
-        Map<String, String> sdkConfig = new HashMap<String, String>();
+    public RedirectView executePayment(@RequestParam("paymentId") String id, @RequestParam("PayerID") String payerId) throws Exception {
+        Map<String, String> sdkConfig = new HashMap<>();
         sdkConfig.put("mode", "sandbox");
         String accessToken = new OAuthTokenCredential("AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd", "EL1tVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX", sdkConfig).getAccessToken();
         APIContext apiContext = new APIContext(accessToken);
@@ -140,7 +140,7 @@ public class UserController {
         Payment payment = new Payment();
         payment.setId(id);
         PaymentExecution paymentExecute = new PaymentExecution();
-        paymentExecute.setPayerId("Z7B2YXBPZ3HPS");
+        paymentExecute.setPayerId(payerId);
         Payment payment2 = payment.execute(apiContext, paymentExecute);
         payment2.getState();
         return new RedirectView("#/home");
