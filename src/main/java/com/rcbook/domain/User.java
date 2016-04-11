@@ -34,6 +34,9 @@ public class User {
     @Column(name = "country")
     private String country;
 
+    @Column(name = "account")
+    private String account;
+
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 //    private List<Car> cars;
 
@@ -97,7 +100,15 @@ public class User {
         this.country = country;
     }
 
-//    public List<Car> getCars() {
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    //    public List<Car> getCars() {
 //        return cars;
 //    }
 //

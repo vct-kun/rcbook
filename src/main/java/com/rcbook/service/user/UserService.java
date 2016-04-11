@@ -18,4 +18,6 @@ public interface UserService {
 
     void updateRole(long id);
 
+    void update(User user);
+
 }

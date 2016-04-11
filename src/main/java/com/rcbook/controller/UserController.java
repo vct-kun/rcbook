@@ -7,19 +7,18 @@ import com.rcbook.configuration.PasswordService;
 import com.rcbook.configuration.TokenHandler;
 import com.rcbook.domain.User;
 import com.rcbook.domain.UserCreateForm;
-import com.rcbook.service.currentuser.CurrentUserDetailsService;
 import com.rcbook.service.user.CarService;
 import com.rcbook.service.user.RaceService;
 import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 import java.security.Principal;
 import java.util.*;
 
@@ -37,9 +36,6 @@ public class UserController {
 
     @Autowired
     private RaceService raceService;
-
-    @Autowired
-    private CurrentUserDetailsService currentUserDetailsService;
 
     @Autowired
     private TokenHandler tokenHandler;
@@ -87,8 +83,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public Test payment() throws Exception {
-        Map<String, String> sdkConfig = new HashMap<String, String>();
+    public Test payment(HttpServletRequest request) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        StringBuilder baseUrl = new StringBuilder();
+        baseUrl
+                .append(request.getScheme())
+                .append("://")
+                .append(request.getLocalName())
+                .append(":")
+                .append(request.getLocalPort())
+                .append(request.getContextPath());
+
+        Map<String, String> sdkConfig = new HashMap<>();
         sdkConfig.put("mode", "sandbox");
         String accessToken = new OAuthTokenCredential("AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd", "EL1tVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX", sdkConfig).getAccessToken();
 
@@ -96,8 +102,8 @@ public class UserController {
         apiContext.setConfigurationMap(sdkConfig);
 
         Amount amount = new Amount();
-        amount.setCurrency("USD");
-        amount.setTotal("12");
+        amount.setCurrency("EUR");
+        amount.setTotal("10");
 
         Transaction transaction = new Transaction();
         transaction.setDescription("creating a payment");
@@ -114,8 +120,9 @@ public class UserController {
         payment.setPayer(payer);
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("https://devtools-paypal.com/guide/pay_paypal?cancel=true");
-        redirectUrls.setReturnUrl("http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/payment2");
+        redirectUrls.setCancelUrl(baseUrl.toString()+"/#/home");
+        User user = (User) authentication.getDetails();
+        redirectUrls.setReturnUrl(baseUrl.toString()+"/payment2?userId="+user.getId());
         payment.setRedirectUrls(redirectUrls);
 
         Payment createdPayment = payment.create(apiContext);
@@ -130,7 +137,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment2", method = RequestMethod.GET)
-    public RedirectView executePayment(@RequestParam("paymentId") String id, @RequestParam("PayerID") String payerId) throws Exception {
+    public RedirectView executePayment(@RequestParam("paymentId") String id, @RequestParam("PayerID") String payerId, @RequestParam("userId") String userId) throws Exception {
+        System.out.println("UserId:"+userId);
         Map<String, String> sdkConfig = new HashMap<>();
         sdkConfig.put("mode", "sandbox");
         String accessToken = new OAuthTokenCredential("AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd", "EL1tVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX", sdkConfig).getAccessToken();
@@ -142,7 +150,15 @@ public class UserController {
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId(payerId);
         Payment payment2 = payment.execute(apiContext, paymentExecute);
-        payment2.getState();
+        if (payment2!=null) {
+            if ("approved".equals(payment2.getState())) {
+                Optional<User> user = userService.getUserById(Long.valueOf(userId));
+                if (user.isPresent()) {
+                    user.get().setAccount("PREMIUM");
+                    userService.update(user.get());
+                }
+            }
+        }
         return new RedirectView("#/home");
     }
 

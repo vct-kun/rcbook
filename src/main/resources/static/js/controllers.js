@@ -43,12 +43,12 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $scope.login = function() {
             authenticate($scope.credentials, function(authenticated) {
                 if (authenticated) {
-                    console.log("Login succeeded")
+                    console.log("Login succeeded");
                     $location.path("/home");
                     $scope.error = false;
                     $rootScope.authenticated = true;
                 } else {
-                    console.log("Login failed")
+                    console.log("Login failed");
                     $location.path("/login");
                     $scope.error = true;
                     $rootScope.authenticated = false;
