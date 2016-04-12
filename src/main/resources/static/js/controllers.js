@@ -75,7 +75,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
                 $location.path("/login");
             });
         }
-    }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http, $window) {
+    }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
     console.log("Authenticated"+$auth.isAuthenticated());
     if ($auth.isAuthenticated()) {
         $rootScope.authenticated = true;

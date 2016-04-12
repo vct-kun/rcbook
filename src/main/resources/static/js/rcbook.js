@@ -127,7 +127,12 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			templateUrl : 'js/user/profile.html',
 			controller : 'profileController',
 			resolve: {
-				redirectIfNotAuthenticated: _redirectIfNotAuthenticated
+				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+				profile: function($http, $auth) {
+					return $http.get('user/' + $auth.getPayload().sub).then(function(response){
+						return response.data;
+					});
+				}
 			}
 		})
 		.state('closerace', {

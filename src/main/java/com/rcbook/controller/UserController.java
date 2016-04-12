@@ -120,7 +120,7 @@ public class UserController {
         payment.setPayer(payer);
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(baseUrl.toString()+"/#/home");
+        redirectUrls.setCancelUrl(baseUrl.toString()+"/#/profile");
         User user = (User) authentication.getDetails();
         redirectUrls.setReturnUrl(baseUrl.toString()+"/payment2?userId="+user.getId());
         payment.setRedirectUrls(redirectUrls);
