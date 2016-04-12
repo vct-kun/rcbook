@@ -159,7 +159,7 @@ public class UserController {
                 }
             }
         }
-        return new RedirectView("#/home");
+        return new RedirectView("#/profile");
     }
 
     class Token {

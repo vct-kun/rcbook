@@ -82,6 +82,7 @@ angular.module('rcbook.controllers', []).controller('navigation',
         $http.get('user/' + $auth.getPayload().sub).then(function(response){
             $rootScope.user = response.data;
             $rootScope.isOwner = $rootScope.user.role == 'OWNER';
+            $rootScope.isPremium = $rootScope.user.account == 'PREMIUM';
             if ($rootScope.isOwner) {
                 $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
                     $rootScope.ownerClub = data;
@@ -97,14 +98,6 @@ angular.module('rcbook.controllers', []).controller('navigation',
     $scope.goRace = function(race) {
         $state.go('racedetails', {race_id:race.id});
     };
-    $scope.pay = function() {
-        $http.get('payment').success(function(data) {
-            console.log(data);
-            $window.location.href = data.url;
-        });
-    }
-}).controller('profileController', function($scope, $rootScope) {
-    $scope.user = $rootScope.user;
 }).controller('mainController', function($rootScope, $state, $auth, $scope){
     $scope.logout = function() {
         $auth.logout();

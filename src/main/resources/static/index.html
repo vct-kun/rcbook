@@ -33,7 +33,7 @@
 			<li class="active"><a href="#/home">Overview <span class="sr-only">(current)</span></a></li>
 			<li><a href="#/car">Car</a></li>
 			<li><a href="#/club">Club list</a></li>
-			<li ng-show="!isOwner"><a href="#/adminclub">Create a new club</a></li>
+			<li ng-show="!isOwner && isPremium"><a href="#/adminclub">Create a new club</a></li>
 			<li ng-show="isOwner"><a href="#/mgtclub">Club management</a></li>
 			<li ng-show="haveClub"><a href="#/yourclub">Your club</a></li>
 
@@ -47,6 +47,7 @@
 	<script src="js/car/car.js"></script>
 	<script src="js/club/club.js"></script>
 	<script src="js/race/race.js"></script>
+	<script src="js/user/profile.js"></script>
 	<script src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
 	<script src="//cdn.jsdelivr.net/satellizer/0.14.0/satellizer.min.js"></script>

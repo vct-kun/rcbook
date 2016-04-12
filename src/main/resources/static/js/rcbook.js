@@ -1,4 +1,4 @@
-angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race', 'angular-storage', 'ui.router', 'satellizer']).config(function($routeProvider, $httpProvider, $stateProvider, $authProvider, $urlRouterProvider) {
+angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race', 'angular-storage', 'ui.router', 'satellizer', 'profile']).config(function($routeProvider, $httpProvider, $stateProvider, $authProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/');
 
