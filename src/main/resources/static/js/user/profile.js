@@ -9,5 +9,11 @@ angular.module('profile', []).controller('profileController', function($scope, p
             console.log(data);
             $window.location.href = data.url;
         });
-    }
+    };
+    $scope.subscribe = function() {
+        $http.get('subscription').success(function(data) {
+            console.log(data);
+            $window.location.href = data.url;
+        });
+    };
 });

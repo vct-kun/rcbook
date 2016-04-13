@@ -128,8 +128,9 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 			controller : 'profileController',
 			resolve: {
 				redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
-				profile: function($http, $auth) {
+				profile: function($http, $auth, $rootScope) {
 					return $http.get('user/' + $auth.getPayload().sub).then(function(response){
+						$rootScope.authenticated = true;
 						return response.data;
 					});
 				}
