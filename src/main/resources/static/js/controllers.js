@@ -76,21 +76,17 @@ angular.module('rcbook.controllers', []).controller('navigation',
             });
         }
     }).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
-    console.log("Authenticated"+$auth.isAuthenticated());
     if ($auth.isAuthenticated()) {
         $rootScope.authenticated = true;
         $http.get('user/' + $auth.getPayload().sub).then(function(response){
             $rootScope.user = response.data;
-            $rootScope.isOwner = $rootScope.user.role == 'OWNER';
-            $rootScope.isPremium = $rootScope.user.account == 'PREMIUM';
+            $rootScope.isOwner = $rootScope.user.isOwner;
+            $rootScope.haveClub = $rootScope.user.userHasClub;
             if ($rootScope.isOwner) {
                 $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
                     $rootScope.ownerClub = data;
                 });
             }
-            $http.get('userHasClub', {params: {userId :$rootScope.user.id }}).success(function(data) {
-                $rootScope.haveClub = data;
-            });
         });
     }
     $scope.dashboard = dashboard;

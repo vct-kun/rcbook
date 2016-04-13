@@ -2,9 +2,11 @@ package com.rcbook.controller;
 
 import com.rcbook.configuration.PasswordService;
 import com.rcbook.configuration.TokenHandler;
+import com.rcbook.domain.Club;
 import com.rcbook.domain.User;
 import com.rcbook.domain.UserCreateForm;
 import com.rcbook.service.user.CarService;
+import com.rcbook.service.user.ClubService;
 import com.rcbook.service.user.RaceService;
 import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired
     private RaceService raceService;
+
+    @Autowired
+    private ClubService clubService;
 
     @Autowired
     private TokenHandler tokenHandler;
@@ -73,6 +78,10 @@ public class UserController {
     public @ResponseBody User getUserById(@PathVariable String id) {
         Optional<User> user = userService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
+            Club club = clubService.getClubByUser(user.get());
+            if (club!=null) {
+                user.get().setUserHasClub(true);
+            }
             return user.get();
         }
         return null;

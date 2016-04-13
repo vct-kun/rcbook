@@ -37,8 +37,14 @@ public class User {
     @Column(name = "account")
     private String account;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<Car> cars;
+    @Transient
+    private boolean isPremium = "PREMIUM".equals(account);
+
+    @Transient
+    private boolean isOwner = "OWNER".equals(role);
+
+    @Transient
+    private boolean userHasClub = false;
 
     public Long getId() {
         return id;
@@ -108,13 +114,29 @@ public class User {
         this.account = account;
     }
 
-    //    public List<Car> getCars() {
-//        return cars;
-//    }
-//
-//    public void setCars(List<Car> cars) {
-//        this.cars = cars;
-//    }
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+    }
+
+    public boolean isUserHasClub() {
+        return userHasClub;
+    }
+
+    public void setUserHasClub(boolean userHasClub) {
+        this.userHasClub = userHasClub;
+    }
 
     @Override
     public String toString() {

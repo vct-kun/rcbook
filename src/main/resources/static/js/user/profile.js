@@ -3,7 +3,7 @@
  */
 angular.module('profile', []).controller('profileController', function($scope, profile, $http, $window) {
     $scope.user = profile;
-    $scope.isFree = $scope.user.account == 'FREE';
+    $scope.isPremium = $scope.user.isPremium;
     $scope.pay = function() {
         $http.get('payment').success(function(data) {
             console.log(data);
