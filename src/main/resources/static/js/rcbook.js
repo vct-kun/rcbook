@@ -136,8 +136,8 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				profile: function($http, $auth, $rootScope) {
 					return $http.get('user/' + $auth.getPayload().sub).then(function(response){
 						$rootScope.authenticated = true;
-						$rootScope.isOwner = $rootScope.user.isOwner;
-						$rootScope.haveClub = $rootScope.user.userHasClub;
+						$rootScope.isOwner = response.data.isOwner;
+						$rootScope.haveClub = response.data.userHasClub;
 						return response.data;
 					});
 				}

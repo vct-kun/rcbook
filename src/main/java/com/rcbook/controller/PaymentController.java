@@ -7,15 +7,16 @@ import com.paypal.base.rest.OAuthTokenCredential;
 import com.rcbook.domain.User;
 import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -110,6 +111,13 @@ public class PaymentController {
         return apiContext;
     }
 
+    private String getCurrentDateInISO8601() {
+        TimeZone tz = TimeZone.getTimeZone("Europe/Paris");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        df.setTimeZone(tz);
+        return df.format(new Date());
+    }
+
     @RequestMapping(value = "/subscription", method = RequestMethod.GET)
     public Test subscription(HttpServletRequest request) throws Exception {
         StringBuilder baseUrl = new StringBuilder();
@@ -126,7 +134,7 @@ public class PaymentController {
         Plan agreementPlan = new Plan();
         agreementPlan.setId("P-4HE985578R210570KB7UZYYY");
         Agreement agreement = new Agreement();
-        agreement.setStartDate("2016-04-14T00:00:00Z");
+        agreement.setStartDate(getCurrentDateInISO8601());
         agreement.setName("rcbook agreement");
         agreement.setDescription("agreement for rcbook plan");
         agreement.setPlan(agreementPlan);
@@ -157,11 +165,45 @@ public class PaymentController {
     public RedirectView finalizeSubscription(@RequestParam("token") String token, @RequestParam("userId") String userId) throws Exception {
         Agreement executedAgreement = Agreement.execute(getApiContext(), token);
         if (executedAgreement!=null) {
+            User user = userService.getUserById(Long.valueOf(userId))
+                    .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id=%s was not found", userId)));
+            user.setAgreementId(executedAgreement.getId());
+            user.setAccount("PREMIUM");
+            userService.update(user);
             return new RedirectView("#/profile");
         }
-        return null;
+        return new RedirectView("#/error");
     }
 
+    @RequestMapping(value = "/suspend", method = RequestMethod.GET)
+    public ResponseEntity suspendSubscription(@RequestParam("userId") String userId) throws Exception {
+        User user = userService.getUserById(Long.valueOf(userId))
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id=%s was not found", userId)));
+        Agreement agreement = Agreement.get(getApiContext(), user.getAgreementId());
+        if (agreement!=null) {
+            AgreementStateDescriptor stateDescriptor = new AgreementStateDescriptor();
+            stateDescriptor.setNote(String.format("Cancel agreement id=%s for user=%s", agreement.getId(), userId));
+            agreement.suspend(getApiContext(), stateDescriptor);
+            user.setAccount("FREE");
+            userService.update(user);
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/reactivate", method = RequestMethod.GET)
+    public ResponseEntity reactivateSubscription(@RequestParam("userId") String userId) throws Exception {
+        User user = userService.getUserById(Long.valueOf(userId))
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id=%s was not found", userId)));
+        Agreement agreement = Agreement.get(getApiContext(), user.getAgreementId());
+        if (agreement!=null) {
+            AgreementStateDescriptor stateDescriptor = new AgreementStateDescriptor();
+            stateDescriptor.setNote(String.format("Reactivate agreement id=%s for user=%s", agreement.getId(), userId));
+            agreement.reActivate(getApiContext(), stateDescriptor);
+            user.setAccount("PREMIUM");
+            userService.update(user);
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public Test payment(HttpServletRequest request) throws Exception {

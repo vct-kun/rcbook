@@ -46,6 +46,9 @@ public class User {
     @Transient
     private boolean userHasClub = false;
 
+    @Column(name = "agreement_id")
+    private String agreementId;
+
     public Long getId() {
         return id;
     }
@@ -136,6 +139,14 @@ public class User {
 
     public void setUserHasClub(boolean userHasClub) {
         this.userHasClub = userHasClub;
+    }
+
+    public String getAgreementId() {
+        return agreementId;
+    }
+
+    public void setAgreementId(String agreementId) {
+        this.agreementId = agreementId;
     }
 
     @Override
