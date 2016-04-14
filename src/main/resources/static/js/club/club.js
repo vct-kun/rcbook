@@ -1,7 +1,7 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('club', []).controller('adminclubController', function($scope, $location, Club, $rootScope) {
+angular.module('club', []).controller('adminclubController', function($scope, $state, Club, $rootScope) {
     $scope.club = new Club();
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
@@ -12,28 +12,18 @@ angular.module('club', []).controller('adminclubController', function($scope, $l
             console.log("saving club");
             $rootScope.isOwner = true;
             $rootScope.ownerClub = $scope.club;
-            $location.path('/mgtclub');
+            $state.go('mgtclub');
         });
     };
-}).controller('clubController', function($scope, $location, clubs) {
+}).controller('clubController', function($scope, clubs, $state) {
     $scope.clubs = clubs;
     $scope.go = function(club) {
-        $location.path('/clubdetails/'+club.id);
+        $state.go('clubdetails', {club_id: club.id});
     };
-}).controller('clubdetailsController', function($scope, $location, Club, $rootScope, club, races) {
+}).controller('clubdetailsController', function($scope, $state, Club, $rootScope, club, races, userInClub) {
     $scope.club = club;
     $scope.races = races;
-
-    function checkUserInClub(array) {
-        for (var i = 0;i<array.length;i++) {
-            if (array[i].id == $rootScope.user.id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    $scope.userHasJoined = checkUserInClub($scope.club.users);
+    $scope.userHasJoined = userInClub;
 
     $scope.join = function() {
         $scope.club.waitingUsers = $scope.club.waitingUsers.concat($rootScope.user);
@@ -60,17 +50,17 @@ angular.module('club', []).controller('adminclubController', function($scope, $l
     };
 
     $scope.go = function(race) {
-        $location.path('/racedetails/'+race.id);
+        $state.go('racedetails', {race_id: race.id});
     };
 
-}).controller('clubmgtController', function($scope, $location, Club, currentClub, races) {
+}).controller('clubmgtController', function($scope, $state, Club, currentClub, races) {
     $scope.currentClub = currentClub;
     $scope.races = races;
     $scope.goToRace = function() {
-        $location.path('/newrace');
+        $state.go('newrace');
     };
     $scope.go = function(race) {
-        $location.path('/racedetails/'+race.id);
+        $state.go('racedetails/', {race_id:race.id});
     };
     function indexOfObject(array, object) {
         for (var i=0;i<array.length;i++) {
@@ -96,9 +86,9 @@ angular.module('club', []).controller('adminclubController', function($scope, $l
         $scope.currentClub.waitingUsers.splice(index, 1);
         $scope.currentClub.$update();
     };
-}).controller('yourclubController', function($scope, $location, clubs) {
+}).controller('yourclubController', function($scope, $state, clubs) {
     $scope.clubs = clubs;
     $scope.go = function(club) {
-        $location.path('/clubdetails/'+club.id);
+        $state.go('clubdetails', {club_id:club.id});
     };
 });

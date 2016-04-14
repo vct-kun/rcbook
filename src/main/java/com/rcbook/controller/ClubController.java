@@ -66,4 +66,17 @@ public class ClubController {
         Optional<User> user = userService.getUserById(Long.valueOf(id));
         return clubService.getListClubByUser(user.get());
     }
+
+    @RequestMapping(value = "/isUserInClub", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody boolean getClubsByUserId(@RequestParam("userId") String userId, @RequestParam("clubId") String clubId) {
+        Optional<User> user = userService.getUserById(Long.valueOf(userId));
+        List<Club> clubs = clubService.getListClubByUser(user.get());
+
+        for (Club club: clubs) {
+            if (club.getId() == Long.valueOf(clubId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

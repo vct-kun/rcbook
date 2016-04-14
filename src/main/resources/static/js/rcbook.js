@@ -102,7 +102,12 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				races: function($http, $stateParams) {
 					return $http.get('getRacesByClub', {params: {clubId: $stateParams.club_id}}).then(function(response){
 						return response.data;
-					})
+					});
+				},
+				userInClub: function($http, $stateParams, $rootScope) {
+					return $http.get('isUserInClub', {params: {userId: $rootScope.user.id, clubId: $stateParams.club_id}}).then(function(response){
+						return response.data;
+					});
 				}
 			}
 		})
