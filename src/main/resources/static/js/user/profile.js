@@ -16,12 +16,12 @@ angular.module('profile', []).controller('profileController', function($scope, p
     };
     $scope.suspend = function() {
         $http.get('suspend', {params:{userId:$scope.user.id}}).success(function() {
-            $state.go('profile');
+            $state.reload();
         });
     };
     $scope.reactivate = function() {
         $http.get('reactivate', {params:{userId:$scope.user.id}}).success(function() {
-            $state.go('profile');
+            $state.reload();
         });
     };
 });
