@@ -1,0 +1,10 @@
+<div ng-if="authenticated" class="col-sm-3 col-md-2 sidebar ng-cloak" ng-cloak>
+    <ul class="nav nav-sidebar">
+        <li class="active"><a href="#/home">Overview <span class="sr-only">(current)</span></a></li>
+        <li><a href="#/car">Car</a></li>
+        <li><a href="#/club">Club list</a></li>
+        <li ng-show="!isOwner && isPremium"><a href="#/adminclub">Create a new club</a></li>
+        <li ng-show="isOwner"><a href="#/mgtclub">Club management</a></li>
+        <li ng-show="haveClub"><a href="#/yourclub">Your club</a></li>
+    </ul>
+</div>

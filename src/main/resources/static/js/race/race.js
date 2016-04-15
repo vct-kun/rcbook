@@ -9,7 +9,7 @@ angular.module('race', []).controller('raceController', function($scope, $state,
     $scope.addRace = function() {
         $scope.race.$save(function(){
             $rootScope.ownerClub = $scope.currentClub;
-            $state.go('mgtclub');
+            $state.go('main.mgtclub');
         });
     };
 }).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, userInRace) {
@@ -55,7 +55,7 @@ angular.module('race', []).controller('raceController', function($scope, $state,
     };
 
     $scope.close = function(race) {
-        $state.go('closerace', {race_id:race.id});
+        $state.go('main.closerace', {race_id:race.id});
     };
 }).controller('closeRaceController', function($scope, $state, race) {
     $scope.race = race;
@@ -63,7 +63,7 @@ angular.module('race', []).controller('raceController', function($scope, $state,
         $scope.race = race;
         $scope.race.closed = true;
         $scope.race.$update(function(){
-            $state.go('racedetails', {race_id:race.id});
+            $state.go('main.racedetails', {race_id:race.id});
         });
     };
 });

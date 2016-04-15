@@ -82,6 +82,8 @@ public class UserController {
             if (club!=null) {
                 user.get().setUserHasClub(true);
             }
+            user.get().setPremium(user.get().getAccount().equals("PREMIUM"));
+            user.get().setOwner(user.get().getRole().equals("OWNER"));
             return user.get();
         }
         return null;

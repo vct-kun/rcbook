@@ -12,13 +12,13 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
             console.log("saving club");
             $rootScope.isOwner = true;
             $rootScope.ownerClub = $scope.club;
-            $state.go('mgtclub');
+            $state.go('main.mgtclub');
         });
     };
 }).controller('clubController', function($scope, clubs, $state) {
     $scope.clubs = clubs;
     $scope.go = function(club) {
-        $state.go('clubdetails', {club_id: club.id});
+        $state.go('main.clubdetails', {club_id: club.id});
     };
 }).controller('clubdetailsController', function($scope, $state, Club, $rootScope, club, races, userInClub) {
     $scope.club = club;
@@ -50,17 +50,17 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
     };
 
     $scope.go = function(race) {
-        $state.go('racedetails', {race_id: race.id});
+        $state.go('main.racedetails', {race_id: race.id});
     };
 
 }).controller('clubmgtController', function($scope, $state, Club, currentClub, races) {
     $scope.currentClub = currentClub;
     $scope.races = races;
     $scope.goToRace = function() {
-        $state.go('newrace');
+        $state.go('main.newrace');
     };
     $scope.go = function(race) {
-        $state.go('racedetails/', {race_id:race.id});
+        $state.go('main.racedetails/', {race_id:race.id});
     };
     function indexOfObject(array, object) {
         for (var i=0;i<array.length;i++) {
@@ -89,6 +89,6 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
 }).controller('yourclubController', function($scope, $state, clubs) {
     $scope.clubs = clubs;
     $scope.go = function(club) {
-        $state.go('clubdetails', {club_id:club.id});
+        $state.go('main.clubdetails', {club_id:club.id});
     };
 });

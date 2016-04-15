@@ -4,29 +4,19 @@
 angular.module('rcbook.controllers', []).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
     if ($auth.isAuthenticated()) {
         $rootScope.authenticated = true;
-        $http.get('user/' + $auth.getPayload().sub).then(function(response){
-            $rootScope.user = response.data;
-            $rootScope.isOwner = $rootScope.user.isOwner;
-            $rootScope.haveClub = $rootScope.user.userHasClub;
-            if ($rootScope.isOwner) {
-                $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
-                    $rootScope.ownerClub = data;
-                });
-            }
-        });
     }
     $scope.dashboard = dashboard;
     $scope.races = races;
     $scope.goRace = function(race) {
-        $state.go('racedetails', {race_id:race.id});
+        $state.go('main.racedetails', {race_id:race.id});
     };
 }).controller('mainController', function($rootScope, $state, $auth, $scope){
     $scope.logout = function() {
         $auth.logout();
         $rootScope.authenticated = false;
-        $state.go("login");
+        $state.go("main");
     };
-}).controller('loginController', function($scope, $auth, $rootScope, $state){
+}).controller('loginController', function($scope, $auth, $rootScope, $state, $http){
     $rootScope.isNewUser = false;
     $scope.credentials = {};
     $scope.login = function() {
@@ -37,9 +27,25 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
         $auth.login(user).then(function (response) {
             $auth.setToken(response);
             $rootScope.authenticated = true;
-            $state.go('home');
+            $http.get('user/' + $auth.getPayload().sub).then(function(response){
+                $rootScope.user = response.data;
+                $rootScope.isOwner = $rootScope.user.owner;
+                $rootScope.haveClub = $rootScope.user.userHasClub;
+                $rootScope.isPremium = $rootScope.user.premium;
+                if ($rootScope.isOwner) {
+                    $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+                        $rootScope.ownerClub = data;
+                    });
+                }
+                $state.go('main.home', {}, {notify:true});
+            });
         });
     };
-}).controller('paymentController', function($state){
-    $state.go('home');
+}).controller('sidebarController', function($scope, $rootScope){
+    $scope.$on('$stateChangeSuccess', function() {
+        $scope.authenticated = $rootScope.authenticated;
+        $scope.isPremium = $rootScope.isPremium;
+        $scope.isOwner = $rootScope.isOwner;
+        $scope.haveClub = $rootScope.haveClub;
+    });
 });
