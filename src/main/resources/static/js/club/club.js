@@ -59,7 +59,7 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
         $state.go('main.newrace');
     };
     $scope.go = function(race) {
-        $state.go('main.racedetails/', {race_id:race.id});
+        $state.go('main.racedetails', {race_id:race.id});
     };
     function indexOfObject(array, object) {
         for (var i=0;i<array.length;i++) {
