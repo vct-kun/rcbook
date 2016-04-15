@@ -1,10 +1,7 @@
 /**
  * Created by vctran on 17/03/16.
  */
-angular.module('rcbook.controllers', []).controller('homeController', function($scope, $state, dashboard, races, $auth, $rootScope, $http) {
-    if ($auth.isAuthenticated()) {
-        $rootScope.authenticated = true;
-    }
+angular.module('rcbook.controllers', []).controller('homeController', function($scope, $state, dashboard, races) {
     $scope.dashboard = dashboard;
     $scope.races = races;
     $scope.goRace = function(race) {

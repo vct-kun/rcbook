@@ -9,7 +9,6 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
     $scope.club.users = $scope.club.users.concat($rootScope.user);
     $scope.addClub = function() {
         $scope.club.$save(function(){
-            console.log("saving club");
             $rootScope.isOwner = true;
             $rootScope.ownerClub = $scope.club;
             $state.go('main.mgtclub');
@@ -71,17 +70,13 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
         return -1;
     }
     $scope.approve = function(user) {
-        console.log("approve user id"+user.id);
         $scope.currentClub.users = $scope.currentClub.users.concat(user);
         var index = indexOfObject($scope.currentClub.waitingUsers, user);
         $scope.currentClub.waitingUsers.splice(index, 1);
-        $scope.currentClub.$update(function() {
-
-        });
+        $scope.currentClub.$update();
     };
 
     $scope.decline = function(user) {
-        console.log("decline user id"+user.id);
         var index = indexOfObject($scope.currentClub.waitingUsers, user);
         $scope.currentClub.waitingUsers.splice(index, 1);
         $scope.currentClub.$update();

@@ -30,7 +30,6 @@ angular.module('race', []).controller('raceController', function($scope, $state,
             $scope.noCarSelected = false;
             $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
             $scope.race.$update(function() {
-                console.log('ok updating!');
                 $scope.userHasJoined = true;
             });
         }
