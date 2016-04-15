@@ -10,7 +10,10 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
     $scope.goRace = function(race) {
         $state.go('main.racedetails', {race_id:race.id});
     };
-}).controller('mainController', function($rootScope, $state, $auth, $scope){
+}).controller('navbarController', function($rootScope, $state, $auth, $scope){
+    $scope.$on('$stateChangeSuccess', function() {
+        $scope.authenticated = $rootScope.authenticated;
+    });
     $scope.logout = function() {
         $auth.logout();
         $rootScope.authenticated = false;

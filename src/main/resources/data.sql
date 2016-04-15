@@ -1,5 +1,5 @@
 INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)
-VALUES ('test@test.com', '$2a$10$ChzgOnCfwBioGU0dbZMj5uzJLsr41kID6xIm1qWkbATWDB/8LvAfC', 'OWNER', 'Van Charles', 'Tran', 'Le Port Marly', 'France', 'FREE');
+VALUES ('test@test.com', '$2a$10$ChzgOnCfwBioGU0dbZMj5uzJLsr41kID6xIm1qWkbATWDB/8LvAfC', 'OWNER', 'Van Charles', 'Tran', 'Le Port Marly', 'France', 'PREMIUM');
 INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)
 VALUES ('admin@test.com', '$2a$10$ngCKnYKRRBz3KHjcm2j9HuBCKqA2NdYTNhUtuvgFzFPkJznnjWbv6', 'USER', 'admin', 'admin', 'Paris', 'France', 'FREE');
 INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)

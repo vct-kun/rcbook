@@ -6,6 +6,10 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 		.state('main', {
 			url: '/',
 			views: {
+				'navbar': {
+					templateUrl: 'js/navbar.html',
+					controller: 'navbarController'
+				},
 				'sidebar':{
 					templateUrl: 'js/sidebar.html',
 					controller: 'sidebarController'
