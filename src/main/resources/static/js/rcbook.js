@@ -189,6 +189,7 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 								$rootScope.authenticated = true;
 								$rootScope.isOwner = response.data.isOwner;
 								$rootScope.haveClub = response.data.userHasClub;
+								$rootScope.isPremium = response.data.premium;
 								return response.data;
 							});
 						}
