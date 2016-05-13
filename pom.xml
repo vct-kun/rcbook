@@ -216,6 +216,11 @@
 						<artifactId>angular-messages</artifactId>
 						<version>${angular-messages.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.webjars</groupId>
+						<artifactId>ng-file-upload</artifactId>
+						<version>12.0.1</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 			<plugin>

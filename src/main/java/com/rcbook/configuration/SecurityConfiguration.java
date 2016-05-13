@@ -58,6 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/finalize").permitAll()
                 .antMatchers("/getPlans").permitAll()
                 .antMatchers("/createPlan").permitAll()
+                .antMatchers("/upload").permitAll()
                 .anyRequest().authenticated().and()
                 .csrf().disable()
                 .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);

@@ -1,13 +1,22 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('club', []).controller('adminclubController', function($scope, $state, Club, $rootScope) {
+angular.module('club', []).controller('adminclubController', function($scope, $state, Club, $rootScope, Upload, $timeout) {
     $scope.club = new Club();
     $scope.club.users = [];
     $scope.club.waitingUsers = [];
     $scope.club.owner = $rootScope.user;
     $scope.club.users = $scope.club.users.concat($rootScope.user);
-    $scope.addClub = function() {
+    $scope.addClub = function(file) {
+        file.upload = Upload.upload({
+           url: 'http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/upload',
+            data: {file: file}
+        });
+        file.upload.then(function (response) {
+            $timeout(function () {
+                file.result = response.data;
+            });
+        });
         $scope.club.$save(function(){
             $rootScope.isOwner = true;
             $rootScope.ownerClub = $scope.club;
