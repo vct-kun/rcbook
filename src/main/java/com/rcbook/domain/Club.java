@@ -38,6 +38,9 @@ public class Club {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
+    @Column(name = "logo")
+    private String logoUrl;
+
     public Long getId() {
         return id;
     }
@@ -102,4 +105,11 @@ public class Club {
         this.owner = owner;
     }
 
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
 }
