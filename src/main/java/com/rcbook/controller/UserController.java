@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -78,8 +79,8 @@ public class UserController {
     public @ResponseBody User getUserById(@PathVariable String id) {
         Optional<User> user = userService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
-            Club club = clubService.getClubByUser(user.get());
-            if (club!=null) {
+            List<Club> clubs = clubService.getListClubByUser(user.get());
+            if (clubs!=null && !clubs.isEmpty()) {
                 user.get().setUserHasClub(true);
             }
             user.get().setPremium(user.get().getAccount().equals("PREMIUM"));
