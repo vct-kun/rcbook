@@ -229,6 +229,21 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 					}
 				}
 			}
+		})
+		.state('main.carDetails', {
+			url: 'cardetails/:car_id',
+			views: {
+				'content@': {
+					templateUrl: 'js/car/page_car_details.html',
+					controller: 'cardetailsController',
+					resolve: {
+						redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+						car: function (Car, $stateParams) {
+							return Car.get({id: $stateParams.car_id});
+						}
+					}
+				}
+			}
 		});
 
 	function _redirectIfNotAuthenticated($q, $state, $auth) {

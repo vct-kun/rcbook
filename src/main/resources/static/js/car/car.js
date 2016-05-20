@@ -1,7 +1,7 @@
 /**
  * Created by vctran on 25/03/16.
  */
-angular.module('car', []).controller('carController', function($scope, $http, Car, $rootScope, master, brands) {
+angular.module('car', []).controller('carController', function($scope, $http, Car, $rootScope, master, brands, $state) {
     $scope.master = master;
     $scope.brands = brands;
     $scope.car = new Car();
@@ -18,4 +18,9 @@ angular.module('car', []).controller('carController', function($scope, $http, Ca
             $scope.chassisList = data;
         });
     };
+    $scope.set = function(car) {
+        $state.go('main.carDetails', {car_id: car.id});
+    }
+}).controller('cardetailsController', function($scope, car) {
+    $scope.car = car;
 });

@@ -32,4 +32,9 @@ public class CarServiceImpl implements CarService {
         List<Car> cars = carRepository.findByUser(user);
         return Long.valueOf(cars.size());
     }
+
+    @Override
+    public Car getCarById(Long id) {
+        return carRepository.findOne(id);
+    }
 }

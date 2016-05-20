@@ -1,9 +1,6 @@
 package com.rcbook.controller;
 
-import com.rcbook.domain.Brand;
-import com.rcbook.domain.Car;
-import com.rcbook.domain.Chassis;
-import com.rcbook.domain.User;
+import com.rcbook.domain.*;
 import com.rcbook.service.user.BrandService;
 import com.rcbook.service.user.CarService;
 import com.rcbook.service.user.ChassisService;
@@ -52,5 +49,10 @@ public class CarController {
     public @ResponseBody List<Car> getCar(@RequestParam String userId) {
         Optional<User> user = userService.getUserById(Long.valueOf(userId));
         return carService.getAllCarByUser(user.get());
+    }
+
+    @RequestMapping(value = "/car/{id}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody Car getCarDetails(@PathVariable String id) {
+        return carService.getCarById(Long.valueOf(id));
     }
 }

@@ -10,7 +10,7 @@
                 </tr>
             </thead>
 
-            <tr ng-repeat="car in master">
+            <tr ng-repeat="car in master" ng-click="set(car)">
                 <td>{{car.id}}</td>
                 <td>{{car.chassis.name}}</td>
             </tr>

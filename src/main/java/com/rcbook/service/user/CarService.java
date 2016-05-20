@@ -16,4 +16,6 @@ public interface CarService {
 
     Long countCarByUser(User user);
 
+    Car getCarById(Long id);
+
 }
