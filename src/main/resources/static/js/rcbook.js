@@ -240,6 +240,21 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 						redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
 						car: function (Car, $stateParams) {
 							return Car.get({id: $stateParams.car_id});
+						},
+						motors: function($http) {
+							return $http.get('getMotors').then(function (response) {
+								return response.data;
+							});
+						},
+						escList: function($http) {
+							return $http.get('getEsc').then(function (response) {
+								return response.data;
+							});
+						},
+						settings: function($http, $stateParams) {
+							return $http.get('getSettingsByCarId/' + $stateParams.car_id).then(function (response) {
+								return response.data;
+							});
 						}
 					}
 				}

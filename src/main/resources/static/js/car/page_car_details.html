@@ -1,3 +1,52 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1>{{car.chassis.name}}</h1>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Settings List</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Motor</th>
+                    <th>Esc</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="setting in settings">
+                    <td>{{setting.motor.name}}</td>
+                    <td>{{setting.esc.name}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Settings</div>
+        <div class="panel-body">
+            <form ng-submit="addSetup(car)" class="form-horizontal">
+                <div class="form-group">
+                    <label for="motor" class="col-sm-2 control-label">Motor</label>
+                    <div class="col-sm-10">
+                        <select id="motor" ng-model="currentMotor" class="form-control"
+                                ng-options="motor.name for motor in motors" name="motor">
+                            <option value="">---Please select---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="chassis" class="col-sm-2 control-label">ESC</label>
+                    <div class="col-sm-10">
+                        <select id="chassis" ng-model="currentEsc" class="form-control" ng-options="esc.name for esc in escList">
+                            <option value="">---Please select---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default" aria-label="Left Align">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

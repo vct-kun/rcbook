@@ -21,6 +21,18 @@ angular.module('car', []).controller('carController', function($scope, $http, Ca
     $scope.set = function(car) {
         $state.go('main.carDetails', {car_id: car.id});
     }
-}).controller('cardetailsController', function($scope, car) {
+}).controller('cardetailsController', function($scope, car, motors, escList, Setting, settings) {
     $scope.car = car;
+    $scope.motors = motors;
+    $scope.escList = escList;
+    $scope.settings = settings;
+    $scope.addSetup = function(car) {
+        $scope.setting = new Setting();
+        $scope.setting.motor = $scope.currentMotor;
+        $scope.setting.esc = $scope.currentEsc;
+        $scope.setting.car = car;
+        $scope.setting.$save(function(){
+            
+        });
+    };
 });

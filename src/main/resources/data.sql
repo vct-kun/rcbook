@@ -34,3 +34,7 @@ INSERT INTO driver(user_id, car_id)
 VALUES (2, 2);
 INSERT INTO race_joined_driver(race_id, joined_driver_id)
 VALUES (1, 1);
+INSERT INTO motor (name)
+VALUES ('GForce - Extreme 13.5T');
+INSERT INTO esc (name)
+VALUES ('GForce - TS120A');
