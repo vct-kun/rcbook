@@ -26,6 +26,9 @@ public class Setting {
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @Column(name = "name")
+    private String name;
+
     public Long getId() {
         return id;
     }
@@ -56,5 +59,13 @@ public class Setting {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -7,12 +7,14 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th>Name</th>
                     <th>Motor</th>
                     <th>Esc</th>
                 </tr>
                 </thead>
 
                 <tr ng-repeat="setting in settings">
+                    <td>{{setting.name}}</td>
                     <td>{{setting.motor.name}}</td>
                     <td>{{setting.esc.name}}</td>
                 </tr>
@@ -24,6 +26,12 @@
         <div class="panel-heading">Settings</div>
         <div class="panel-body">
             <form ng-submit="addSetup(car)" class="form-horizontal">
+                <div class="form-group">
+                    <label for="settingName" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="settingName" ng-model="settingName" class="form-control" />
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="motor" class="col-sm-2 control-label">Motor</label>
                     <div class="col-sm-10">

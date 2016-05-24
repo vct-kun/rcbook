@@ -31,6 +31,7 @@ angular.module('car', []).controller('carController', function($scope, $http, Ca
         $scope.setting.motor = $scope.currentMotor;
         $scope.setting.esc = $scope.currentEsc;
         $scope.setting.car = car;
+        $scope.setting.name = $scope.settingName;
         $scope.setting.$save(function(){
             $scope.settings = $scope.settings.concat($scope.setting);
         });

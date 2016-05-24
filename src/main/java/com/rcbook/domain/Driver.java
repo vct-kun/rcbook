@@ -31,6 +31,10 @@ public class Driver {
     @Column(name = "best_lap")
     private String bestLap;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "setting_id")
+    private Setting setting;
+
     public Long getId() {
         return id;
     }
@@ -77,5 +81,13 @@ public class Driver {
 
     public void setBestLap(String bestLap) {
         this.bestLap = bestLap;
+    }
+
+    public Setting getSetting() {
+        return setting;
+    }
+
+    public void setSetting(Setting setting) {
+        this.setting = setting;
     }
 }

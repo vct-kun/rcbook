@@ -12,7 +12,7 @@ angular.module('race', []).controller('raceController', function($scope, $state,
             $state.go('main.mgtclub');
         });
     };
-}).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, userInRace) {
+}).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, userInRace, $http) {
     $scope.cars = [];
     $scope.userHasJoined = false;
     $scope.noCarSelected = false;
@@ -24,6 +24,7 @@ angular.module('race', []).controller('raceController', function($scope, $state,
         $scope.driver = new Driver();
         $scope.driver.user = $rootScope.user;
         $scope.driver.car = $scope.currentCar;
+        $scope.driver.setting = $scope.currentSetting;
         if ($scope.currentCar == null) {
             $scope.noCarSelected = true;
         } else {
@@ -55,6 +56,12 @@ angular.module('race', []).controller('raceController', function($scope, $state,
 
     $scope.close = function(race) {
         $state.go('main.closerace', {race_id:race.id});
+    };
+
+    $scope.getSettings = function() {
+        $http.get('getSettingsByCarId/' + $scope.currentCar.id).success(function(data){
+            $scope.settings = data;
+        });
     };
 }).controller('closeRaceController', function($scope, $state, race) {
     $scope.race = race;
