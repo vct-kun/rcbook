@@ -25,10 +25,18 @@ angular.module('race', []).controller('raceController', function($scope, $state,
         $scope.driver.user = $rootScope.user;
         $scope.driver.car = $scope.currentCar;
         $scope.driver.setting = $scope.currentSetting;
-        if ($scope.currentCar == null) {
-            $scope.noCarSelected = true;
+        if ($scope.currentCar == null || $scope.currentSetting == null) {
+            if ($scope.currentCar == null) {
+                $scope.noCarSelected = true;
+            } else {
+                $scope.noCarSelected = false;
+            }
+            if ($scope.currentSetting == null) {
+                $scope.noSettingSelected = true;
+            }
         } else {
             $scope.noCarSelected = false;
+            $scope.noSettingSelected = false;
             $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
             $scope.race.$update(function() {
                 $scope.userHasJoined = true;
