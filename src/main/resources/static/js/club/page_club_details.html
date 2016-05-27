@@ -89,20 +89,18 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Start at</th>
-                        <th>Finish at</th>
+                        <th>Start time</th>
+                        <th>End time</th>
                         <th>Track</th>
                         <th>Town</th>
-                        <th>Country</th>
                     </tr>
                 </thead>
-                <tr ng-repeat="training in club.trainings">
+                <tr ng-repeat="training in trainings">
                     <td>{{training.date}}</td>
-                    <td>{{training.startAt}}</td>
-                    <td>{{training.finishAt}}</td>
+                    <td>{{training.startTime}}</td>
+                    <td>{{training.endTime}}</td>
                     <td>{{training.track}}</td>
                     <td>{{training.town}}</td>
-                    <td>{{training.country}}</td>
                 </tr>
             </table>
         </div>

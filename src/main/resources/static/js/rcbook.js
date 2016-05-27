@@ -151,6 +151,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 							}).then(function (response) {
 								return response.data;
 							});
+						},
+						trainings: function ($http, $stateParams) {
+							return $http.get('getTrainingsByClub', {params: {clubId: $stateParams.club_id}}).then(function (response) {
+								return response.data;
+							});
 						}
 					}
 				}
@@ -255,6 +260,21 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 							return $http.get('getSettingsByCarId/' + $stateParams.car_id).then(function (response) {
 								return response.data;
 							});
+						}
+					}
+				}
+			}
+		})
+		.state('main.clubtraining', {
+			url: 'settraining/:club_id',
+			views: {
+				'content@': {
+					templateUrl: 'js/club/page_club_training.html',
+					controller: 'clubTrainingController',
+					resolve: {
+						redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+						currentClub: function (Club, $stateParams) {
+							return Club.get({id: $stateParams.club_id});
 						}
 					}
 				}

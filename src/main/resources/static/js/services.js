@@ -31,6 +31,12 @@ angular.module('rcbook.services', []).factory('Race', function($resource) {
             method: 'PUT'
         }
     });
+}).factory('Training', function($resource) {
+    return $resource('training/:id', { id: '@id'}, {
+        update: {
+            method: 'PUT'
+        }
+    });
 }).factory('loginInterceptor', function() {
     return {
         'request': function(config) {

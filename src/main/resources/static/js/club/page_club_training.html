@@ -1,0 +1,45 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1>Training</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Set Training Session</div>
+        <div class="panel-body">
+            <form ng-submit="addTraining(training)" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-5 control-label">Date</label>
+                    <div class="col-sm-7">
+                        <md-datepicker ng-model="currentDate" md-placeholder="Enter date"></md-datepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="startTime" class="col-sm-5 control-label">Start time:</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="startTime" ng-model="startTime" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="endTime" class="col-sm-5 control-label">End time:</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="endTime" ng-model="endTime" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="track" class="col-sm-5 control-label">Track:</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="track" ng-model="track" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="town" class="col-sm-5 control-label">Town:</label>
+                    <div class="col-sm-7">
+                        <input type="text" id="town" ng-model="town" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default" aria-label="Left Align">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

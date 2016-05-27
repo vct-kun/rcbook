@@ -1,8 +1,10 @@
 package com.rcbook.service.user;
 
 import com.rcbook.domain.Club;
+import com.rcbook.domain.Training;
 import com.rcbook.domain.User;
 import com.rcbook.repository.ClubRepository;
+import com.rcbook.repository.TrainingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class ClubServiceImpl implements ClubService {
 
     @Autowired
     private ClubRepository clubRepository;
+
+    @Autowired
+    private TrainingRepository trainingRepository;
 
     @Override
     public Club createClub(Club club) {
@@ -40,5 +45,15 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public List<Club> getListClubByUser(User user) {
         return clubRepository.findByUsers(user);
+    }
+
+    @Override
+    public Training addTraining(Training training) {
+        return trainingRepository.save(training);
+    }
+
+    @Override
+    public List<Training> getTrainingsByClub(Club club) {
+        return trainingRepository.findByClub(club);
     }
 }

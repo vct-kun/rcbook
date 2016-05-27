@@ -1,6 +1,7 @@
 package com.rcbook.controller;
 
 import com.rcbook.domain.Club;
+import com.rcbook.domain.Training;
 import com.rcbook.domain.User;
 import com.rcbook.service.user.ClubService;
 import com.rcbook.service.user.UserService;
@@ -68,7 +69,7 @@ public class ClubController {
     }
 
     @RequestMapping(value = "/isUserInClub", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody boolean getClubsByUserId(@RequestParam("userId") String userId, @RequestParam("clubId") String clubId) {
+    public @ResponseBody boolean isUserInClub(@RequestParam("userId") String userId, @RequestParam("clubId") String clubId) {
         Optional<User> user = userService.getUserById(Long.valueOf(userId));
         List<Club> clubs = clubService.getListClubByUser(user.get());
 
@@ -78,5 +79,16 @@ public class ClubController {
             }
         }
         return false;
+    }
+
+    @RequestMapping(value = "/training", method = RequestMethod.POST)
+    public @ResponseBody Training addTraining(@RequestBody Training training) {
+        return clubService.addTraining(training);
+    }
+
+    @RequestMapping(value = "/getTrainingsByClub", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Training> getTrainingsByClub(@RequestParam String clubId) {
+        Club club = clubService.getClubById(Long.valueOf(clubId));
+        return clubService.getTrainingsByClub(club);
     }
 }

@@ -28,11 +28,11 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
     $scope.go = function(club) {
         $state.go('main.clubdetails', {club_id: club.id});
     };
-}).controller('clubdetailsController', function($scope, $state, Club, $rootScope, club, races, userInClub) {
+}).controller('clubdetailsController', function($scope, $state, Club, $rootScope, club, races, userInClub, trainings) {
     $scope.club = club;
     $scope.races = races;
     $scope.userHasJoined = userInClub;
-
+    $scope.trainings = trainings;
     $scope.join = function() {
         $scope.club.waitingUsers = $scope.club.waitingUsers.concat($rootScope.user);
         $scope.club.$update(function() {
@@ -90,9 +90,27 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
         $scope.currentClub.waitingUsers.splice(index, 1);
         $scope.currentClub.$update();
     };
+
+    $scope.goToTraining = function(club) {
+        $state.go('main.clubtraining', {club_id:club.id});
+    };
 }).controller('yourclubController', function($scope, $state, clubs) {
     $scope.clubs = clubs;
     $scope.go = function(club) {
         $state.go('main.clubdetails', {club_id:club.id});
+    };
+}).controller('clubTrainingController', function($scope, Training, currentClub) {
+    $scope.currentClub = currentClub;
+    $scope.addTraining = function() {
+        $scope.training = new Training();
+        $scope.training.date = $scope.currentDate;
+        $scope.training.startTime = $scope.startTime;
+        $scope.training.endTime = $scope.endTime;
+        $scope.training.track = $scope.track;
+        $scope.training.town = $scope.town;
+        $scope.training.club = $scope.currentClub;
+        $scope.training.$save(function(){
+
+        });
     };
 });

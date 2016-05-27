@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()
+                .antMatchers("/fonts/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/payment2").permitAll()
                 .antMatchers("/finalize").permitAll()
