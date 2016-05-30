@@ -11,6 +11,7 @@ angular.module('car', []).controller('carController', function($scope, $http, Ca
         $scope.car.$save(function(){
             $scope.master = $scope.master.concat($scope.car);
             $scope.car = new Car();
+            $scope.car.user = $rootScope.user;
         });
     };
     $scope.getChassis = function() {
