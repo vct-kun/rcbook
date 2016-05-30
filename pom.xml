@@ -90,6 +90,7 @@
 		<angular-animate.version>1.5.3</angular-animate.version>
 		<angular-aria.version>1.5.3</angular-aria.version>
 		<angular-messages.version>1.5.3</angular-messages.version>
+		<ng-file-upload.version>12.0.1</ng-file-upload.version>
 	</properties>
 
 	<build>
@@ -224,7 +225,7 @@
 					<dependency>
 						<groupId>org.webjars</groupId>
 						<artifactId>ng-file-upload</artifactId>
-						<version>12.0.1</version>
+						<version>${ng-file-upload.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
