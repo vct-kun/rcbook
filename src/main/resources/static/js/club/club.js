@@ -99,7 +99,7 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
     $scope.go = function(club) {
         $state.go('main.clubdetails', {club_id:club.id});
     };
-}).controller('clubTrainingController', function($scope, Training, currentClub) {
+}).controller('clubTrainingController', function($scope, Training, currentClub, $state) {
     $scope.currentClub = currentClub;
     $scope.addTraining = function() {
         $scope.training = new Training();
@@ -110,7 +110,7 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
         $scope.training.town = $scope.town;
         $scope.training.club = $scope.currentClub;
         $scope.training.$save(function(){
-
+            $state.go('main.clubdetails', {club_id:$scope.currentClub.id});
         });
     };
 });
