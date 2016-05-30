@@ -38,3 +38,5 @@ INSERT INTO motor (name)
 VALUES ('GForce - Extreme 13.5T');
 INSERT INTO esc (name)
 VALUES ('GForce - TS120A');
+INSERT INTO setting (id, motor_id, esc_id, car_id, name)
+VALUES (1, 1, 1, 1, 'Carpet');
