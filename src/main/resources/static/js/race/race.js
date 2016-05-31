@@ -25,6 +25,9 @@ angular.module('race', []).controller('raceController', function($scope, $state,
         $scope.driver.user = $rootScope.user;
         $scope.driver.car = $scope.currentCar;
         $scope.driver.setting = $scope.currentSetting;
+        if ($scope.race.haveFees == true) {
+            $scope.driver.joiningStatus = 'WAITING';
+        }
         if ($scope.currentCar == null || $scope.currentSetting == null) {
             if ($scope.currentCar == null) {
                 $scope.noCarSelected = true;

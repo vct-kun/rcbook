@@ -46,6 +46,9 @@ public class Race {
     @Column(name = "closed")
     private boolean closed;
 
+    @Column(name = "have_fees")
+    private boolean haveFees;
+
     public Long getId() {
         return id;
     }
@@ -132,5 +135,13 @@ public class Race {
 
     public void setClosed(boolean closed) {
         this.closed = closed;
+    }
+
+    public boolean isHaveFees() {
+        return haveFees;
+    }
+
+    public void setHaveFees(boolean haveFees) {
+        this.haveFees = haveFees;
     }
 }

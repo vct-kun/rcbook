@@ -35,6 +35,9 @@ public class Driver {
     @JoinColumn(name = "setting_id")
     private Setting setting;
 
+    @Column(name = "joining_status")
+    private String joiningStatus;
+
     public Long getId() {
         return id;
     }
@@ -89,5 +92,13 @@ public class Driver {
 
     public void setSetting(Setting setting) {
         this.setting = setting;
+    }
+
+    public String getJoiningStatus() {
+        return joiningStatus;
+    }
+
+    public void setJoiningStatus(String joiningStatus) {
+        this.joiningStatus = joiningStatus;
     }
 }
