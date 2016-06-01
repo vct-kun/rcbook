@@ -12,13 +12,14 @@ angular.module('race', []).controller('raceController', function($scope, $state,
             $state.go('main.mgtclub');
         });
     };
-}).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, userInRace, $http) {
+}).controller('racedetailsController', function($scope, $state, $rootScope, Driver, race, cars, currentDriver, $http, drivers) {
     $scope.cars = [];
-    $scope.userHasJoined = false;
     $scope.noCarSelected = false;
     $scope.race = race;
     $scope.cars = cars;
-    $scope.userHasJoined = userInRace;
+    $scope.userHasJoined = currentDriver != "";
+    $scope.currentDriver = currentDriver;
+    $scope.drivers = drivers;
 
     $scope.join = function() {
         $scope.driver = new Driver();
@@ -40,9 +41,11 @@ angular.module('race', []).controller('raceController', function($scope, $state,
         } else {
             $scope.noCarSelected = false;
             $scope.noSettingSelected = false;
-            $scope.race.joinedDriver = $scope.race.joinedDriver.concat($scope.driver);
-            $scope.race.$update(function() {
+            $scope.driver.race = $scope.race;
+            $scope.driver.$save(function() {
                 $scope.userHasJoined = true;
+                $scope.drivers = $scope.drivers.concat($scope.driver);
+                $scope.currentDriver = $scope.driver;
             });
         }
     };
@@ -57,9 +60,9 @@ angular.module('race', []).controller('raceController', function($scope, $state,
     }
 
     $scope.leave = function() {
-        var index = indexOfObject($scope.race.joinedDriver, $scope.currentDriver);
-        $scope.race.joinedDriver.splice(index, 1);
-        $scope.race.$update(function() {
+        var index = indexOfObject($scope.drivers, $scope.currentDriver);
+        $scope.drivers.splice(index, 1);
+        Driver.remove({id: $scope.currentDriver.id}, function() {
             $scope.userHasJoined = false;
             $scope.currentDriver = '';
         });

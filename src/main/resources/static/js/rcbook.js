@@ -100,13 +100,18 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 						race: function (Race, $stateParams) {
 							return Race.get({id: $stateParams.race_id});
 						},
-						userInRace: function ($http, $rootScope, $stateParams) {
+						currentDriver: function ($http, $rootScope, $stateParams) {
 							return $http.get('isUserInRace/' + $stateParams.race_id + '/' + $rootScope.user.id).then(function (response) {
 								return response.data;
 							})
 						},
 						cars: function ($http, $rootScope) {
 							return $http.get('getCarByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
+								return response.data;
+							})
+						},
+						drivers: function($http, $stateParams) {
+							return $http.get('getDriversByRace', {params: {raceId: $stateParams.race_id}}).then(function (response) {
 								return response.data;
 							})
 						}

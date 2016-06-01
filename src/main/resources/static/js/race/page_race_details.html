@@ -116,7 +116,7 @@
                 </tr>
                 </thead>
 
-                <tr ng-repeat="driver in race.joinedDriver | orderBy: 'rank'">
+                <tr ng-repeat="driver in drivers | orderBy: 'rank'">
                     <td>{{driver.user.firstName}}</td>
                     <td>{{driver.user.lastName}}</td>
                     <td>{{driver.user.town}}</td>

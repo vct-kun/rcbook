@@ -38,6 +38,10 @@ public class Driver {
     @Column(name = "joining_status")
     private String joiningStatus;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "race_id")
+    private Race race;
+
     public Long getId() {
         return id;
     }
@@ -100,5 +104,13 @@ public class Driver {
 
     public void setJoiningStatus(String joiningStatus) {
         this.joiningStatus = joiningStatus;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

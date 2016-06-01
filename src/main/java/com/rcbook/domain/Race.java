@@ -21,9 +21,6 @@ public class Race {
     @Column(name = "nb_driver")
     private String nbDriver;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Driver> joinedDriver;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id")
     private Club raceClub;
@@ -71,14 +68,6 @@ public class Race {
 
     public void setNbDriver(String nbDriver) {
         this.nbDriver = nbDriver;
-    }
-
-    public Set<Driver> getJoinedDriver() {
-        return joinedDriver;
-    }
-
-    public void setJoinedDriver(Set<Driver> joinedDriver) {
-        this.joinedDriver = joinedDriver;
     }
 
     public Club getRaceClub() {

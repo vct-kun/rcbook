@@ -23,6 +23,9 @@ angular.module('rcbook.services', []).factory('Race', function($resource) {
     return $resource('driver/:id', { id: '@id'}, {
         update: {
             method: 'PUT'
+        },
+        remove: {
+            method: 'DELETE'
         }
     });
 }).factory('Setting', function($resource) {
