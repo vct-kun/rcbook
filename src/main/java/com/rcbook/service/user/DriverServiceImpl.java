@@ -37,4 +37,14 @@ public class DriverServiceImpl implements DriverService {
     public void deleteDriverById(Long driverId) {
         driverRepository.delete(driverId);
     }
+
+    @Override
+    public Driver findDriverById(Long id) {
+        return driverRepository.findOne(id);
+    }
+
+    @Override
+    public void updateDriver(Driver driver) {
+        driverRepository.save(driver);
+    }
 }

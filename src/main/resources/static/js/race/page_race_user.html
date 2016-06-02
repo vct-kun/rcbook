@@ -1,0 +1,26 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1>Your Races</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Joined races</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Town</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="driver in joinedRaces">
+                    <td>{{driver.race.name}}</td>
+                    <td>{{driver.race.town}}</td>
+                    <td>{{driver.race.startDate}}</td>
+                    <td>{{driver.joiningStatus}}</td>
+                    <td><button ng-show="driver.joiningStatus == 'WAITING'" ng-click="payRace(driver)">Pay</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

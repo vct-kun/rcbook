@@ -284,7 +284,33 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 					}
 				}
 			}
-		});
+		}).state('main.yourraces', {
+		url: 'yourraces',
+		views: {
+			'content@': {
+				templateUrl: 'js/race/page_race_user.html',
+				controller: 'yourRacesController',
+				resolve: {
+					redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
+					joinedRaces: function($http, $rootScope) {
+						return $http.get('getRacesByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
+							return response.data;
+						});
+					},
+					profile: function ($http, $auth, $rootScope) {
+						return $http.get('user/' + $auth.getPayload().sub).then(function (response) {
+							$rootScope.authenticated = true;
+							$rootScope.isOwner = response.data.isOwner;
+							$rootScope.haveClub = response.data.userHasClub;
+							$rootScope.isPremium = response.data.premium;
+							$rootScope.user = response.data;
+							return response.data;
+						});
+					}
+				}
+			}
+		}
+	});
 
 	function _redirectIfNotAuthenticated($q, $state, $auth) {
 		var defer = $q.defer();

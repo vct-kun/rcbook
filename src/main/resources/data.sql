@@ -22,8 +22,8 @@ INSERT INTO car (chassis_id, user_id)
 VALUES (1, 2);
 INSERT INTO club (name, town, country, url, owner_id, logo)
 VALUES ('RCA', 'Argenteuil', 'France', 'www.rc-argenteuil.com', 1, 'https://s3.eu-central-1.amazonaws.com/rcbook.bucket/1-Ridelogo_001.jpg');
-INSERT INTO race (name, start_date, end_date, track, town, country, club_id, nb_driver, closed, have_fees)
-VALUES ('Amicale Spring 2016', '2016-03-23T23:00:00.000Z', '2016-03-24T23:00:00.000Z', 'Gymnase Vallon', 'Argenteuil', 'France', 1, '10', false, false);
+INSERT INTO race (name, start_date, end_date, track, town, country, club_id, nb_driver, closed, have_fees, price)
+VALUES ('Amicale Spring 2016', '2016-03-23T23:00:00.000Z', '2016-03-24T23:00:00.000Z', 'Gymnase Vallon', 'Argenteuil', 'France', 1, '10', false, true, '8');
 INSERT INTO club_users(club_id, user_id)
 VALUES (1, 1);
 INSERT INTO club_users(club_id, user_id)

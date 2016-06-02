@@ -18,4 +18,8 @@ public interface DriverService {
     List<Driver> findDriverByRace(Race race);
 
     void deleteDriverById(Long driverId);
+
+    Driver findDriverById(Long id);
+
+    void updateDriver(Driver driver);
 }

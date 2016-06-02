@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,5 +94,14 @@ public class RaceController {
     public ResponseEntity<Void> deleteDriver(@PathVariable String id) {
         driverService.deleteDriverById(Long.valueOf(id));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getRacesByUserId", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Driver> getRacesByUserId(@RequestParam String userId) {
+        Optional<User> user = userService.getUserById(Long.valueOf(userId));
+        if (user.isPresent()) {
+            return driverService.findDriverByUser(user.get());
+        }
+        return new ArrayList<>();
     }
 }

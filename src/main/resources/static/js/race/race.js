@@ -86,4 +86,12 @@ angular.module('race', []).controller('raceController', function($scope, $state,
             $state.go('main.racedetails', {race_id:race.id});
         });
     };
+}).controller('yourRacesController', function($scope, joinedRaces, $http, $window) {
+    $scope.joinedRaces = joinedRaces;
+
+    $scope.payRace = function(driver) {
+        $http.get('payRace', {params:{driverId: driver.id, raceId: driver.race.id}}).success(function(data){
+            $window.location.href = data.url;
+        });
+    };
 });

@@ -46,6 +46,9 @@ public class Race {
     @Column(name = "have_fees")
     private boolean haveFees;
 
+    @Column(name = "price")
+    private String price;
+
     public Long getId() {
         return id;
     }
@@ -132,5 +135,13 @@ public class Race {
 
     public void setHaveFees(boolean haveFees) {
         this.haveFees = haveFees;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

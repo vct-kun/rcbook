@@ -4,7 +4,17 @@ import com.paypal.api.payments.*;
 import com.paypal.api.payments.Currency;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
+import com.paypal.svcs.services.AdaptivePaymentsService;
+import com.paypal.svcs.types.ap.PayRequest;
+import com.paypal.svcs.types.ap.PayResponse;
+import com.paypal.svcs.types.ap.Receiver;
+import com.paypal.svcs.types.ap.ReceiverList;
+import com.paypal.svcs.types.common.RequestEnvelope;
+import com.rcbook.domain.Driver;
+import com.rcbook.domain.Race;
 import com.rcbook.domain.User;
+import com.rcbook.service.user.DriverService;
+import com.rcbook.service.user.RaceService;
 import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +37,12 @@ public class PaymentController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RaceService raceService;
+
+    @Autowired
+    private DriverService driverService;
 
     @RequestMapping(value = "/createPlan", method = RequestMethod.GET)
     public Plan createPlan(HttpServletRequest request) throws Exception {
@@ -282,6 +298,61 @@ public class PaymentController {
                 }
             }
         }
+        return new RedirectView("#/profile");
+    }
+
+    @RequestMapping(value = "/payRace", method = RequestMethod.GET)
+    public Test payRace(HttpServletRequest request, @RequestParam("driverId") String driverId, @RequestParam("raceId") String raceId) throws Exception {
+        StringBuilder baseUrl = new StringBuilder();
+        baseUrl
+                .append(request.getScheme())
+                .append("://")
+                .append(request.getLocalName())
+                .append(":")
+                .append(request.getLocalPort())
+                .append(request.getContextPath());
+
+        Race race = raceService.getRaceById(Long.valueOf(raceId));
+        String raceOwnerEmail = race.getRaceClub().getOwner().getEmail();
+
+        PayRequest payRequest = new PayRequest();
+        List<Receiver> receivers = new ArrayList<>();
+        Receiver receiver = new Receiver();
+        receiver.setAmount(Double.valueOf(race.getPrice()));
+        receiver.setEmail("tran_vcharles-facilitator@yahoo.fr");
+        receivers.add(receiver);
+        ReceiverList receiverList = new ReceiverList(receivers);
+
+        payRequest.setReceiverList(receiverList);
+
+        RequestEnvelope requestEnvelope = new RequestEnvelope("fr_FR");
+        payRequest.setRequestEnvelope(requestEnvelope);
+        payRequest.setActionType("PAY");
+        payRequest.setCancelUrl(baseUrl.toString()+"/#/profile");
+        payRequest.setReturnUrl(baseUrl.toString()+"/confirmRacePayment?driverId="+driverId+"&raceId="+raceId);
+        payRequest.setCurrencyCode("EUR");
+        payRequest.setIpnNotificationUrl(baseUrl.toString());
+
+        Map<String, String> sdkConfig = new HashMap<>();
+        sdkConfig.put("mode", "sandbox");
+        sdkConfig.put("acct1.UserName", "tran_vcharles-facilitator_api1.yahoo.fr");
+        sdkConfig.put("acct1.Password", "RT85TBM2E63T4UG2");
+        sdkConfig.put("acct1.Signature", "AfXSUWQ.gOQ0Fd7msGpkmoWillSfAGSMWeVoVSZbsQU0pEHcqEz33DA6");
+        sdkConfig.put("acct1.AppId", "APP-80W284485P519543T");
+
+        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+        PayResponse payResponse = adaptivePaymentsService.pay(payRequest);
+        Test test = new Test();
+        test.setUrl("https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+payResponse.getPayKey());
+        return test;
+    }
+
+    @RequestMapping(value = "/confirmRacePayment", method = RequestMethod.GET)
+    public RedirectView confirmRacePayment(@RequestParam("driverId") String driverId, @RequestParam("raceId") String raceId) throws Exception {
+        Driver driver = driverService.findDriverById(Long.valueOf(driverId));
+        driver.setJoiningStatus("CONFIRMED");
+        driverService.updateDriver(driver);
+        //Notify race owner payment
         return new RedirectView("#/profile");
     }
 
