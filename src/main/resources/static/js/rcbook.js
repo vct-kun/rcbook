@@ -1,4 +1,4 @@
-angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race', 'ui.router', 'satellizer', 'profile', 'ngFileUpload']).config(function($httpProvider, $stateProvider, $authProvider, $urlRouterProvider) {
+angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','rcbook.services', 'rcbook.controllers', 'car', 'club', 'race', 'ui.router', 'satellizer', 'profile', 'ngFileUpload', 'payment']).config(function($httpProvider, $stateProvider, $authProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/');
 
@@ -296,7 +296,18 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 						return $http.get('getRacesByUserId', {params: {userId: $rootScope.user.id}}).then(function (response) {
 							return response.data;
 						});
-					},
+					}
+				}
+			}
+		}
+	}).state('main.payment', {
+		url: 'paymentdone',
+		views: {
+			'content@': {
+				templateUrl: 'js/payment/page_payment_done.html',
+				controller: 'paymentController',
+				resolve: {
+					redirectIfNotAuthenticated: _redirectIfNotAuthenticated,
 					profile: function ($http, $auth, $rootScope) {
 						return $http.get('user/' + $auth.getPayload().sub).then(function (response) {
 							$rootScope.authenticated = true;

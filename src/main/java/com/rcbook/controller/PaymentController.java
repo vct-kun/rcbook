@@ -353,7 +353,7 @@ public class PaymentController {
         driver.setJoiningStatus("CONFIRMED");
         driverService.updateDriver(driver);
         //Notify race owner payment
-        return new RedirectView("#/profile");
+        return new RedirectView("#/paymentdone");
     }
 
     class Test {
