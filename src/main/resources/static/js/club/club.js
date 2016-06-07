@@ -9,7 +9,7 @@ angular.module('club', []).controller('adminclubController', function($scope, $s
     $scope.club.users = $scope.club.users.concat($rootScope.user);
     $scope.addClub = function(file) {
         var test = Upload.upload({
-           url: 'http://192.168.56.101:8080/demo-0.0.1-SNAPSHOT/upload',
+           url: 'upload',
             data: {file: file, userId: $rootScope.user.id}
         });
         test.then(function (response) {
