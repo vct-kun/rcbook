@@ -5,11 +5,6 @@ angular.module('profile', []).controller('profileController', function($scope, p
     $scope.user = profile;
     $scope.isPremium = $scope.user.premium;
     $scope.isSuspended = ($scope.user.account == 'FREE' && $scope.user.agreementId != null);
-    $scope.pay = function() {
-        $http.get('payment').success(function(data) {
-            $window.location.href = data.url;
-        });
-    };
     $scope.subscribe = function() {
         $http.get('subscription').success(function(data) {
             $window.location.href = data.url;
