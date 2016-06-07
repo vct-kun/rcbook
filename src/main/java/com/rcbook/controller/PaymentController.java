@@ -17,6 +17,7 @@ import com.rcbook.service.user.DriverService;
 import com.rcbook.service.user.RaceService;
 import com.rcbook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,16 +45,12 @@ public class PaymentController {
     @Autowired
     private DriverService driverService;
 
+    @Value("${application.domain.name}")
+    private String domain;
+
     @RequestMapping(value = "/createPlan", method = RequestMethod.GET)
     public Plan createPlan(HttpServletRequest request) throws Exception {
-        StringBuilder baseUrl = new StringBuilder();
-        baseUrl
-                .append(request.getScheme())
-                .append("://")
-                .append(request.getLocalName())
-                .append(":")
-                .append(request.getLocalPort())
-                .append(request.getContextPath());
+        StringBuilder baseUrl = getBaseUrl(request);
 
         Plan plan = new Plan();
         plan.setName("Rcbook plan");
@@ -136,14 +133,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/subscription", method = RequestMethod.GET)
     public UrlToRedirect subscription(HttpServletRequest request) throws Exception {
-        StringBuilder baseUrl = new StringBuilder();
-        baseUrl
-                .append(request.getScheme())
-                .append("://")
-                .append(request.getLocalName())
-                .append(":")
-                .append(request.getLocalPort())
-                .append(request.getContextPath());
+        StringBuilder baseUrl = getBaseUrl(request);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getDetails();
 
@@ -223,14 +213,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/payRace", method = RequestMethod.GET)
     public UrlToRedirect payRace(HttpServletRequest request, @RequestParam("driverId") String driverId, @RequestParam("raceId") String raceId) throws Exception {
-        StringBuilder baseUrl = new StringBuilder();
-        baseUrl
-                .append(request.getScheme())
-                .append("://")
-                .append(request.getLocalName())
-                .append(":")
-                .append(request.getLocalPort())
-                .append(request.getContextPath());
+        StringBuilder baseUrl = getBaseUrl(request);
 
         Race race = raceService.getRaceById(Long.valueOf(raceId));
         String raceOwnerEmail = race.getRaceClub().getOwner().getEmail();
@@ -265,6 +248,18 @@ public class PaymentController {
         UrlToRedirect urlToRedirect = new UrlToRedirect();
         urlToRedirect.setUrl("https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+payResponse.getPayKey());
         return urlToRedirect;
+    }
+
+    private StringBuilder getBaseUrl(HttpServletRequest request) {
+        StringBuilder baseUrl = new StringBuilder();
+        baseUrl
+                .append(request.getScheme())
+                .append("://")
+                .append(domain)
+                .append(":")
+                .append(request.getLocalPort())
+                .append(request.getContextPath());
+        return baseUrl;
     }
 
     @RequestMapping(value = "/confirmRacePayment", method = RequestMethod.GET)
