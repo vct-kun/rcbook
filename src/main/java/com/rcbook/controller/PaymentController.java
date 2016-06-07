@@ -176,9 +176,9 @@ public class PaymentController {
             user.setAgreementId(executedAgreement.getId());
             user.setAccount("PREMIUM");
             userService.update(user);
-            return new RedirectView("#/profile");
+            return new RedirectView("/#/profile", true);
         }
-        return new RedirectView("#/error");
+        return new RedirectView("/#/error", true);
     }
 
     @RequestMapping(value = "/suspend", method = RequestMethod.GET)
@@ -268,7 +268,7 @@ public class PaymentController {
         driver.setJoiningStatus("CONFIRMED");
         driverService.updateDriver(driver);
         //Notify race owner payment
-        return new RedirectView("#/paymentdone");
+        return new RedirectView("/#/paymentdone", true);
     }
 
     class UrlToRedirect {
