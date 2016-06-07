@@ -135,7 +135,7 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/subscription", method = RequestMethod.GET)
-    public Test subscription(HttpServletRequest request) throws Exception {
+    public UrlToRedirect subscription(HttpServletRequest request) throws Exception {
         StringBuilder baseUrl = new StringBuilder();
         baseUrl
                 .append(request.getScheme())
@@ -168,9 +168,9 @@ public class PaymentController {
 
         for (Links links: createdAgreement.getLinks()) {
             if (links.getMethod().equals("REDIRECT")) {
-                Test test = new Test();
-                test.setUrl(links.getHref());
-                return test;
+                UrlToRedirect urlToRedirect = new UrlToRedirect();
+                urlToRedirect.setUrl(links.getHref());
+                return urlToRedirect;
             }
         }
 
@@ -222,7 +222,7 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payRace", method = RequestMethod.GET)
-    public Test payRace(HttpServletRequest request, @RequestParam("driverId") String driverId, @RequestParam("raceId") String raceId) throws Exception {
+    public UrlToRedirect payRace(HttpServletRequest request, @RequestParam("driverId") String driverId, @RequestParam("raceId") String raceId) throws Exception {
         StringBuilder baseUrl = new StringBuilder();
         baseUrl
                 .append(request.getScheme())
@@ -262,9 +262,9 @@ public class PaymentController {
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         PayResponse payResponse = adaptivePaymentsService.pay(payRequest);
-        Test test = new Test();
-        test.setUrl("https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+payResponse.getPayKey());
-        return test;
+        UrlToRedirect urlToRedirect = new UrlToRedirect();
+        urlToRedirect.setUrl("https://www.sandbox.paypal.com/webscr?cmd=_ap-payment&paykey="+payResponse.getPayKey());
+        return urlToRedirect;
     }
 
     @RequestMapping(value = "/confirmRacePayment", method = RequestMethod.GET)
@@ -276,7 +276,7 @@ public class PaymentController {
         return new RedirectView("#/paymentdone");
     }
 
-    class Test {
+    class UrlToRedirect {
         private String url;
 
         public String getUrl() {
