@@ -4,6 +4,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +28,12 @@ import java.nio.file.Paths;
 public class FileController {
 
     private String BUCKET_NAME = "rcbook.bucket";
-    private String FILES_TEMP_PATH = "/home/vctran/Images/";
+
+    @Value("${application.files.temp.path}")
+    private String FILES_TEMP_PATH;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Test handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) throws Exception {
+    public UrlToRedirect handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) throws Exception {
         System.out.println("REST request to handleFileUpload");
 
         AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
@@ -42,24 +45,12 @@ public class FileController {
             URL url = s3Client.getUrl(BUCKET_NAME, userId+"-"+file.getOriginalFilename());
             System.out.println("You successfully uploaded " + file.getName() + "!");
             Files.delete(path);
-            Test test = new Test();
-            test.setUrl(url.toURI().toString());
-            return test;
+            UrlToRedirect urlToRedirect = new UrlToRedirect();
+            urlToRedirect.setUrl(url.toURI().toString());
+            return urlToRedirect;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    class Test {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
     }
 }
