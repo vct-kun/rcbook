@@ -62,9 +62,16 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
         $auth.signup(user)
             .then(function (response) {
                 $scope.accountCreated = true;
-                $timeout(function(){
-                    $state.go('main');
-                }, 5000);
+                $scope.counter = 5;
+                $scope.onTimeout = function() {
+                    if ($scope.counter > 0) {
+                        $scope.counter--;
+                        redirect = $timeout($scope.onTimeout, 1000);
+                    } else {
+                        $state.go('main');
+                    }
+                };
+                var redirect = $timeout($scope.onTimeout(), 1000);
             })
             .catch(function (response) {
 
