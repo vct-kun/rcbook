@@ -51,7 +51,7 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
         $scope.isOwner = $rootScope.isOwner;
         $scope.haveClub = $rootScope.haveClub;
     });
-}).controller('signupController', function($scope, $auth){
+}).controller('signupController', function($scope, $auth, $timeout, $state){
     $scope.credentials = {};
     $scope.accountCreated = false;
     $scope.signup = function() {
