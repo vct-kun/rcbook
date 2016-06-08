@@ -201,6 +201,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 								$rootScope.haveClub = response.data.userHasClub;
 								$rootScope.isPremium = response.data.premium;
 								$rootScope.user = response.data;
+								if ($rootScope.isOwner) {
+									$http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+										$rootScope.ownerClub = data;
+									});
+								}
 								return response.data;
 							});
 						}
@@ -315,6 +320,11 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 							$rootScope.haveClub = response.data.userHasClub;
 							$rootScope.isPremium = response.data.premium;
 							$rootScope.user = response.data;
+							if ($rootScope.isOwner) {
+								$http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+									$rootScope.ownerClub = data;
+								});
+							}
 							return response.data;
 						});
 					}
