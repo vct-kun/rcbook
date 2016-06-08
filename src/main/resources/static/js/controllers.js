@@ -17,29 +17,32 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
         $state.go("main");
     };
 }).controller('loginController', function($scope, $auth, $rootScope, $state, $http){
-    $rootScope.isNewUser = false;
     $scope.credentials = {};
     $scope.login = function() {
         var user = {
             email: $scope.credentials.username,
             password: $scope.credentials.password
         };
-        $auth.login(user).then(function (response) {
-            $auth.setToken(response);
-            $rootScope.authenticated = true;
-            $http.get('user/' + $auth.getPayload().sub).then(function(response){
-                $rootScope.user = response.data;
-                $rootScope.isOwner = $rootScope.user.owner;
-                $rootScope.haveClub = $rootScope.user.userHasClub;
-                $rootScope.isPremium = $rootScope.user.premium;
-                if ($rootScope.isOwner) {
-                    $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
-                        $rootScope.ownerClub = data;
-                    });
-                }
-                $state.go('main.home', {}, {notify:true});
+        $auth.login(user)
+            .then(function (response) {
+                $auth.setToken(response);
+                $rootScope.authenticated = true;
+                $http.get('user/' + $auth.getPayload().sub).then(function(response){
+                    $rootScope.user = response.data;
+                    $rootScope.isOwner = $rootScope.user.owner;
+                    $rootScope.haveClub = $rootScope.user.userHasClub;
+                    $rootScope.isPremium = $rootScope.user.premium;
+                    if ($rootScope.isOwner) {
+                        $http.get('getOwnerClub', {params: {userId :$rootScope.user.id }}).success(function(data){
+                            $rootScope.ownerClub = data;
+                        });
+                    }
+                    $state.go('main.home', {}, {notify:true});
+                });
+            })
+            .catch(function(response){
+                $scope.error = true;
             });
-        });
     };
 }).controller('sidebarController', function($scope, $rootScope){
     $scope.$on('$stateChangeSuccess', function() {
@@ -48,4 +51,23 @@ angular.module('rcbook.controllers', []).controller('homeController', function($
         $scope.isOwner = $rootScope.isOwner;
         $scope.haveClub = $rootScope.haveClub;
     });
+}).controller('signupController', function($scope, $auth){
+    $scope.credentials = {};
+    $scope.accountCreated = false;
+    $scope.signup = function() {
+        var user = {
+            email: $scope.credentials.username,
+            password: $scope.credentials.password
+        };
+        $auth.signup(user)
+            .then(function (response) {
+                $scope.accountCreated = true;
+                $timeout(function(){
+                    $state.go('main');
+                }, 5000);
+            })
+            .catch(function (response) {
+
+            });
+    }
 });

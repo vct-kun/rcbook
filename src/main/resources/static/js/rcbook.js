@@ -331,7 +331,16 @@ angular.module('rcbook', [ 'ngRoute', 'ngMaterial', 'ngMessages','ngResource','r
 				}
 			}
 		}
-	});
+	})
+		.state('main.signup', {
+			url: 'signup',
+			views: {
+				'content@': {
+					templateUrl: 'signup.html',
+					controller: 'signupController'
+				}
+			}
+		});
 
 	function _redirectIfNotAuthenticated($q, $state, $auth) {
 		var defer = $q.defer();

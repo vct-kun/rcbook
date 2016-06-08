@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .servletApi().and()
                 .headers().and()
                 .authorizeRequests()
-                .antMatchers("/index.html", "/login.html", "/", "/signup").permitAll()
+                .antMatchers("/index.html", "/login.html", "/", "/signup.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()

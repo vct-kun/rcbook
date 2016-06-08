@@ -28,7 +28,10 @@ public class TokenHandler {
                 .getBody()
                 .getSubject();
         Optional<User> user = userService.getUserById(Long.valueOf(id));
-        return user.get();
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return null;
     }
 
     public String createTokenForUser(User user) {

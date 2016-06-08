@@ -56,8 +56,8 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody UserCreateForm userCreateForm, HttpServletRequest request) {
+    @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
+    public ResponseEntity<Void> signup(@RequestBody UserCreateForm userCreateForm) {
         Optional<User> user = userService.getUserByEmail(userCreateForm.getEmail());
         if (!user.isPresent()) {
             userService.create(userCreateForm);
