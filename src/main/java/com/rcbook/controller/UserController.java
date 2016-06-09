@@ -5,21 +5,19 @@ import com.rcbook.configuration.TokenHandler;
 import com.rcbook.domain.Club;
 import com.rcbook.domain.User;
 import com.rcbook.domain.UserCreateForm;
-import com.rcbook.service.user.CarService;
-import com.rcbook.service.user.ClubService;
-import com.rcbook.service.user.RaceService;
-import com.rcbook.service.user.UserService;
+import com.rcbook.domain.VerificationToken;
+import com.rcbook.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by vctran on 25/03/16.
@@ -42,6 +40,15 @@ public class UserController {
     @Autowired
     private TokenHandler tokenHandler;
 
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Value("${application.domain.name}")
+    private String domain;
+
     @RequestMapping("/user")
     public Principal user(Principal user) {
         return user;
@@ -57,10 +64,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/auth/signup", method = RequestMethod.POST)
-    public ResponseEntity<Void> signup(@RequestBody UserCreateForm userCreateForm) {
+    public ResponseEntity<Void> signup(@RequestBody UserCreateForm userCreateForm, HttpServletRequest request) {
         Optional<User> user = userService.getUserByEmail(userCreateForm.getEmail());
         if (!user.isPresent()) {
-            userService.create(userCreateForm);
+            User registred = userService.create(userCreateForm);
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registred, getBaseUrl(request).toString()));
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -69,8 +77,10 @@ public class UserController {
     public ResponseEntity<Token> login(@RequestBody UserCreateForm userCreateForm) {
         Optional<User> user = userService.getUserByEmail(userCreateForm.getEmail());
         if (user.isPresent() && PasswordService.checkPassword(userCreateForm.getPassword(), user.get().getPasswordHash())) {
-            String token = tokenHandler.createTokenForUser(user.get());
-            return ResponseEntity.ok(new Token(token));
+            if (user.get().isEnabled()) {
+                String token = tokenHandler.createTokenForUser(user.get());
+                return ResponseEntity.ok(new Token(token));
+            }
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
@@ -90,6 +100,22 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
+    public RedirectView confirmRegistration(@RequestParam("token") String token, HttpServletRequest request) {
+        VerificationToken verificationToken = tokenService.getVerificationToken(token);
+        if (verificationToken!=null) {
+            User user = verificationToken.getUser();
+            Calendar cal = Calendar.getInstance();
+            if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+                //error
+            }
+            user.setEnabled(true);
+            userService.update(user);
+
+        }
+        return new RedirectView(getBaseUrl(request).toString());
+    }
+
     class Token {
         private String token;
 
@@ -104,6 +130,18 @@ public class UserController {
         public void setToken(String token) {
             this.token = token;
         }
+    }
+
+    private StringBuilder getBaseUrl(HttpServletRequest request) {
+        StringBuilder baseUrl = new StringBuilder();
+        baseUrl
+                .append(request.getScheme())
+                .append("://")
+                .append(domain)
+                .append(":")
+                .append(request.getLocalPort())
+                .append(request.getContextPath());
+        return baseUrl;
     }
 
 }

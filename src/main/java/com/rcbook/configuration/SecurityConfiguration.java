@@ -61,6 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/upload").permitAll()
                 .antMatchers("/payRace").permitAll()
                 .antMatchers("/confirmRacePayment").permitAll()
+                .antMatchers("/registrationConfirm").permitAll()
                 .anyRequest().authenticated().and()
                 .csrf().disable()
                 .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);

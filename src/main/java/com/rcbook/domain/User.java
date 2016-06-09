@@ -49,6 +49,9 @@ public class User {
     @Column(name = "agreement_id")
     private String agreementId;
 
+    @Column(name = "enabled")
+    private boolean enabled = false;
+
     public Long getId() {
         return id;
     }
@@ -147,6 +150,14 @@ public class User {
 
     public void setAgreementId(String agreementId) {
         this.agreementId = agreementId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

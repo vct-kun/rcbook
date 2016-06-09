@@ -1,9 +1,9 @@
-INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)
-VALUES ('test@test.com', '$2a$10$ChzgOnCfwBioGU0dbZMj5uzJLsr41kID6xIm1qWkbATWDB/8LvAfC', 'OWNER', 'Van Charles', 'Tran', 'Le Port Marly', 'France', 'PREMIUM');
-INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)
-VALUES ('admin@test.com', '$2a$10$ngCKnYKRRBz3KHjcm2j9HuBCKqA2NdYTNhUtuvgFzFPkJznnjWbv6', 'USER', 'admin', 'admin', 'Paris', 'France', 'FREE');
-INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account)
-VALUES ('test2@test.com', '$2a$10$0aE4IlQzZzBPYz5ZSNTlge0vEz.SOoKUBn/6Vze0sboAPLpTslEIu', 'USER', 'Laurent', 'Cobos', 'Poissy', 'France', 'FREE');
+INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account, enabled)
+VALUES ('test@test.com', '$2a$10$ChzgOnCfwBioGU0dbZMj5uzJLsr41kID6xIm1qWkbATWDB/8LvAfC', 'OWNER', 'Van Charles', 'Tran', 'Le Port Marly', 'France', 'PREMIUM', true);
+INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account, enabled)
+VALUES ('admin@test.com', '$2a$10$ngCKnYKRRBz3KHjcm2j9HuBCKqA2NdYTNhUtuvgFzFPkJznnjWbv6', 'USER', 'admin', 'admin', 'Paris', 'France', 'FREE', true);
+INSERT INTO user (email, password_hash, role, first_name, last_name, town, country, account, enabled)
+VALUES ('test2@test.com', '$2a$10$0aE4IlQzZzBPYz5ZSNTlge0vEz.SOoKUBn/6Vze0sboAPLpTslEIu', 'USER', 'Laurent', 'Cobos', 'Poissy', 'France', 'FREE', true);
 INSERT INTO brand (name)
 VALUES ('Tamiya');
 INSERT INTO brand (name)
