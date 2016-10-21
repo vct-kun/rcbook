@@ -73,12 +73,9 @@ public class ClubController {
         Optional<User> user = userService.getUserById(Long.valueOf(userId));
         List<Club> clubs = clubService.getListClubByUser(user.get());
 
-        for (Club club: clubs) {
-            if (club.getId() == Long.valueOf(clubId)) {
-                return true;
-            }
-        }
-        return false;
+        return clubs
+                .stream()
+                .anyMatch((club) -> club.getId() == Long.valueOf(clubId));
     }
 
     @RequestMapping(value = "/training", method = RequestMethod.POST)
